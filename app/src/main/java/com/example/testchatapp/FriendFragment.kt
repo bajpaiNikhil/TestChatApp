@@ -22,7 +22,7 @@ class FriendFragment : Fragment() {
     lateinit var recyclerView : RecyclerView
     lateinit var FriendList : ArrayList<FriendsList>
     var friendListIs = mutableListOf<String>()
-    lateinit var connctionList : ArrayList<FirendsDetails>
+    lateinit var connectionList : ArrayList<FriendsDetails>
 
     lateinit var auth : FirebaseAuth
 
@@ -45,7 +45,7 @@ class FriendFragment : Fragment() {
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FriendList = arrayListOf()
-        connctionList = arrayListOf()
+        connectionList = arrayListOf()
         auth = Firebase.auth
         recyclerView = view.findViewById(R.id.FriendRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -84,24 +84,24 @@ class FriendFragment : Fragment() {
             override fun onDataChange(snapshot : DataSnapshot) {
 
                 if (snapshot.exists()) {
+                    connectionList.clear()
                     for (friendSnapshot in snapshot.children) {
-
-                        val friendAre = friendSnapshot.getValue(FirendsDetails::class.java)
+                        val friendAre = friendSnapshot.getValue(FriendsDetails::class.java)
                         if (friendAre?.userId in friendListIs) {
-                            connctionList.add(friendAre!!)
+                            connectionList.add(friendAre!!)
 //                            Log.d("FriendList" , "conneciton list $connctionList")
                         }
                     }
-                    fun onItemSelected(firendsDetails : FirendsDetails) {
-                        val bundle = bundleOf("userId" to firendsDetails.userId)
+                    fun onItemSelected(friendsDetails : FriendsDetails) {
+                        val bundle = bundleOf("userId" to friendsDetails.userId)
                         findNavController().navigate(
                             R.id.action_friendFragment_to_chatFragment,
                             bundle
                         )
                     }
 
-                    recyclerView.adapter = FriendAdater(connctionList, ::onItemSelected)
-                    Log.d("FriendList", "conneciton list $connctionList")
+                    recyclerView.adapter = FriendAdater(connectionList, ::onItemSelected)
+                    Log.d("FriendList", "conneciton list $connectionList")
                 }
 
             }
@@ -148,7 +148,7 @@ class FriendFragment : Fragment() {
 data class FriendsList(
     val FriendId : String? = ""
 )
-data class FirendsDetails(
+data class FriendsDetails(
     val userId : String? = "",
     val emailR : String? = "",
     val usernameR : String? = "",
