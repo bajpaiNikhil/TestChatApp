@@ -88,10 +88,7 @@ class ChatFragment : Fragment() {
             }
 
             readMessage(auth.currentUser?.uid!! , userId!!)
-
         }
-
-
     }
 
     private fun findUserToChat() {

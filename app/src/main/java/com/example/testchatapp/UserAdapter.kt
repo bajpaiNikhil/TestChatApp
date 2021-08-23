@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class UserAdapter(val userList : ArrayList<UserDetails>, val listner : (UserDetails)->Unit) : RecyclerView.Adapter<UserAdapter.UserHolder>() {
+class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<UserAdapter.UserHolder>() {
     lateinit var auth : FirebaseAuth
     var rId : String? = ""
     class UserHolder(view : View) : RecyclerView.ViewHolder(view) {
@@ -21,7 +21,6 @@ class UserAdapter(val userList : ArrayList<UserDetails>, val listner : (UserDeta
         val userEmail = view.findViewById<TextView>(R.id.temp)
         val statusFlag= view.findViewById<TextView>(R.id.tvStatus)
         val addButton = view.findViewById<ImageView>(R.id.addUserButton)
-        var rId : String? = ""
     }
 
     override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : UserHolder {
@@ -37,9 +36,6 @@ class UserAdapter(val userList : ArrayList<UserDetails>, val listner : (UserDeta
         holder.userEmail.text  = currentItem.emailR
         holder.statusFlag.text = currentItem.status
 
-        holder.itemView.setOnClickListener{
-            listner(currentItem)
-        }
         holder.addButton.setOnClickListener {
             Log.d("UserFragment" , "button is pressed")
             val builder = AlertDialog.Builder(holder.itemView.context)
@@ -60,8 +56,6 @@ class UserAdapter(val userList : ArrayList<UserDetails>, val listner : (UserDeta
                 hashMap.put("message" , "IamStupid comrade? ")
 
                 val ref = FirebaseDatabase.getInstance().getReference("Request").push().setValue(hashMap)
-
-
             })
             builder.setNegativeButton("No" , DialogInterface.OnClickListener { dialog, which ->
                 dialog.cancel()

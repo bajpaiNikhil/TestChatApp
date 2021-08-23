@@ -28,11 +28,6 @@ class UserFragment : Fragment() {
     lateinit var recyclerView : RecyclerView
     lateinit var userArrayList : ArrayList<UserDetails>
 
-
-    override fun onCreate(savedInstanceState : Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
         savedInstanceState : Bundle?
@@ -50,10 +45,6 @@ class UserFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         getUser()
-
-        setHasOptionsMenu(true)
-
-
     }
 
     private fun getUser() {
@@ -70,15 +61,7 @@ class UserFragment : Fragment() {
                             userArrayList.add(userIs!!)
                         }
                     }
-                    fun onItemSelected(userDetails : UserDetails) {
-
-                        val bundle = bundleOf("userId" to userDetails.userId)
-                        findNavController().navigate(R.id.action_userFragment_to_chatFragment , bundle)
-
-                    }
-
-                    recyclerView.adapter = UserAdapter(userArrayList , ::onItemSelected)
-
+                    recyclerView.adapter = UserAdapter(userArrayList)
                 }
             }
 
@@ -87,50 +70,6 @@ class UserFragment : Fragment() {
             }
 
         })
-    }
-
-    override fun onCreateOptionsMenu(menu : Menu, inflater : MenuInflater) {
-        inflater.inflate(R.menu.home_menu , menu)
-    }
-
-    override fun onOptionsItemSelected(item : MenuItem) : Boolean {
-        when(item.itemId){
-            R.id.Logout ->{
-                changeStatus()
-            }
-            R.id.Request ->{
-                findNavController().navigate(R.id.action_userFragment_to_requestFragment)
-            }
-            R.id.Friends ->{
-                findNavController().navigate(R.id.action_userFragment_to_friendFragment)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun changeStatus() {
-//        val ref = FirebaseDatabase.getInstance().getReference("Users")
-//        ref.addValueEventListener(object  : ValueEventListener{
-//            override fun onDataChange(snapshot : DataSnapshot) {
-//                if(snapshot.exists()){
-//                    for(statusSnapshot in snapshot.children){
-//                        if(auth.currentUser?.uid.toString() == statusSnapshot.key){
-//                            ref.child(auth.currentUser?.uid.toString()).child("status").setValue("InActive")
-//                            auth.signOut()
-//                            findNavController().navigate(R.id.action_userFragment_to_loginFragment)
-//
-//                            break
-//                        }
-//
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error : DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
     }
 }
 
