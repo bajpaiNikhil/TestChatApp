@@ -120,12 +120,10 @@ class FriendFragment : Fragment() {
     override fun onOptionsItemSelected(item : MenuItem) : Boolean {
         when (item.itemId) {
             R.id.Logout -> {
-
-                FirebaseDatabase.getInstance().getReference("Users")
-                    .child(auth.currentUser?.uid.toString()).child("status").setValue("InActive")
+                val lastUser = auth.currentUser?.uid
                 auth.signOut()
+                FirebaseDatabase.getInstance().getReference("Users").child(lastUser.toString()).child("status").setValue("InActive")
                 findNavController().navigate(R.id.action_friendFragment_to_loginFragment)
-
             }
 
             R.id.Request -> {
@@ -138,11 +136,6 @@ class FriendFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun changeStatus() {
-        Log.d("login"  , "${auth.signOut()}")
-        auth.signOut()
-        findNavController().navigate(R.id.action_friendFragment_to_loginFragment)
-    }
 }
 
 data class FriendsList(

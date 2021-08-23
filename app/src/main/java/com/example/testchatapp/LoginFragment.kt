@@ -46,9 +46,10 @@ class LoginFragment : Fragment() {
 
         val currentUser = auth.currentUser
         Log.d("login" , currentUser.toString())
+
         if(currentUser != null){
             Log.d("login" , "Value is $currentUser")
-            changeStatus()
+            FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("status").setValue("Active")
             findNavController().navigate(R.id.action_loginFragment_to_friendFragment)
         }
 
@@ -63,27 +64,12 @@ class LoginFragment : Fragment() {
             auth.signInWithEmailAndPassword(eMail,passWord)
                 .addOnCompleteListener{
                     if(it.isSuccessful){
-
-                        changeStatus()
+                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("status").setValue("Active")
                         findNavController().navigate(R.id.action_loginFragment_to_friendFragment)
                     }else{
                         Toast.makeText(context, "Something wrong...", Toast.LENGTH_LONG).show()
                     }
                 }
         }
-    }
-    private fun changeStatus() {
-        val ref = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-        ref.addValueEventListener(object  : ValueEventListener{
-            override fun onDataChange(snapshot : DataSnapshot) {
-                if(snapshot.exists()){
-                    ref.child("status").setValue("Active")
-                    //findNavController().navigate(R.id.friendFragment)
-                }
-            }
-            override fun onCancelled(error : DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
     }
 }
