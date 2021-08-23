@@ -41,38 +41,26 @@
             tools:text="IamStupid" />
 
         <TextView
+            android:id="@+id/FriendTvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/FriendUserImage"
+            app:layout_constraintTop_toBottomOf="@+id/FriendUserName" />
+
+        <TextView
             android:id="@+id/FriendEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:maxLines="1"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/FriendUserImage"
-            app:layout_constraintTop_toBottomOf="@+id/onlineIv"
+            app:layout_constraintTop_toBottomOf="@+id/FriendTvStatus"
             tools:text="IamStupid" />
-
-        <ImageView
-            android:id="@+id/onlineIv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/FriendUserImage"
-            app:layout_constraintTop_toBottomOf="@+id/FriendUserName"
-            app:srcCompat="@android:drawable/presence_online" />
-
-        <ImageView
-            android:id="@+id/offlineIv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="-18dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/onlineIv"
-            app:layout_constraintStart_toEndOf="@+id/onlineIv"
-            app:layout_constraintTop_toBottomOf="@+id/FriendUserName"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@android:drawable/ic_notification_overlay" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
