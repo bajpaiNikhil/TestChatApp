@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class UserAdapter(val userList : ArrayList<UserDetails> , val listner : (UserDetails)->Unit) : RecyclerView.Adapter<UserAdapter.UserHolder>() {
+class UserAdapter(val userList : ArrayList<UserDetails>, val listner : (UserDetails)->Unit) : RecyclerView.Adapter<UserAdapter.UserHolder>() {
     lateinit var auth : FirebaseAuth
     var rId : String? = ""
     class UserHolder(view : View) : RecyclerView.ViewHolder(view) {
@@ -69,19 +69,6 @@ class UserAdapter(val userList : ArrayList<UserDetails> , val listner : (UserDet
             })
             builder.create().show()
         }
-    }
-
-    private fun sendFriendRequest() {
-        auth = FirebaseAuth.getInstance()
-
-        Log.d("UserFragment" , "herr again ${rId!!}")
-
-        val hashMap : HashMap<String , String> = HashMap()
-        hashMap.put("senderId" , auth.currentUser?.uid.toString())
-        hashMap.put("receiverId" , rId!! )
-        hashMap.put("message" , "IamStupid comrade? ")
-
-        val ref = FirebaseDatabase.getInstance().getReference("Request").push().setValue(hashMap)
     }
 
     override fun getItemCount() : Int {

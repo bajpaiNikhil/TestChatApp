@@ -6,8 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -56,6 +55,7 @@ class RequestFragment : Fragment() {
     }
 
     private fun requestView() {
+        requestList.clear()
         val ref  = FirebaseDatabase.getInstance().getReference("Request")
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot : DataSnapshot) {
@@ -70,8 +70,8 @@ class RequestFragment : Fragment() {
                         }
 
                     }
-                    recyclerView.adapter = RequestAdapter(requestList)
 
+                    recyclerView.adapter = RequestAdapter(requestList)
 
                 }
 

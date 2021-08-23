@@ -109,28 +109,28 @@ class UserFragment : Fragment() {
     }
 
     private fun changeStatus() {
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
-        ref.addValueEventListener(object  : ValueEventListener{
-            override fun onDataChange(snapshot : DataSnapshot) {
-                if(snapshot.exists()){
-                    for(statusSnapshot in snapshot.children){
-                        if(auth.currentUser?.uid.toString() == statusSnapshot.key){
-                            ref.child(auth.currentUser?.uid.toString()).child("status").setValue("InActive")
-                            auth.signOut()
-                            findNavController().navigate(R.id.action_userFragment_to_loginFragment)
-
-                            break
-                        }
-
-                    }
-                }
-            }
-
-            override fun onCancelled(error : DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
+//        val ref = FirebaseDatabase.getInstance().getReference("Users")
+//        ref.addValueEventListener(object  : ValueEventListener{
+//            override fun onDataChange(snapshot : DataSnapshot) {
+//                if(snapshot.exists()){
+//                    for(statusSnapshot in snapshot.children){
+//                        if(auth.currentUser?.uid.toString() == statusSnapshot.key){
+//                            ref.child(auth.currentUser?.uid.toString()).child("status").setValue("InActive")
+//                            auth.signOut()
+//                            findNavController().navigate(R.id.action_userFragment_to_loginFragment)
+//
+//                            break
+//                        }
+//
+//                    }
+//                }
+//            }
+//
+//            override fun onCancelled(error : DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
     }
 }
 

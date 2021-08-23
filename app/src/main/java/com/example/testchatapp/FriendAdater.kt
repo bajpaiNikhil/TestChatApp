@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class FriendAdater(val FriendList : ArrayList<FirendsDetails>) : RecyclerView.Adapter<FriendAdater.FriendHolder>() {
+class FriendAdater(val FriendList : ArrayList<FirendsDetails> , val listner : (FirendsDetails)->Unit) : RecyclerView.Adapter<FriendAdater.FriendHolder>() {
     class FriendHolder(view : View) : RecyclerView.ViewHolder(view) {
         val userNameIs = view.findViewById<TextView>(R.id.FriendUserName)
         val userEmail  = view.findViewById<TextView>(R.id.FriendEmail)
@@ -24,6 +24,9 @@ class FriendAdater(val FriendList : ArrayList<FirendsDetails>) : RecyclerView.Ad
         holder.userNameIs.text = currentItem.usernameR
         holder.userEmail.text  = currentItem.emailR
         holder.statusFlag.text = currentItem.status
+        holder.itemView.setOnClickListener{
+            listner(currentItem)
+        }
     }
 
     override fun getItemCount() : Int {

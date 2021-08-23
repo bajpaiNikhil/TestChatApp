@@ -2,23 +2,28 @@ package com.example.testchatapp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 
 
 class FriendFragment : Fragment() {
 
     lateinit var recyclerView : RecyclerView
-    lateinit var FriendList : ArrayList<FirendsDetails>
+    lateinit var FriendList : ArrayList<FriendsList>
+    var friendListIs = mutableListOf<String>()
+    lateinit var connctionList : ArrayList<FirendsDetails>
+
     lateinit var auth : FirebaseAuth
 
 
@@ -40,11 +45,15 @@ class FriendFragment : Fragment() {
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FriendList = arrayListOf()
-        auth = FirebaseAuth.getInstance()
+        connctionList = arrayListOf()
+        auth = Firebase.auth
         recyclerView = view.findViewById(R.id.FriendRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         findFriends()
+
+        setHasOptionsMenu(true)
+
     }
 
     private fun findFriends() {
@@ -55,33 +64,44 @@ class FriendFragment : Fragment() {
                 if (snapshot.exists()) {
                     for (friendSnapshot in snapshot.children) {
                         val friendsId = friendSnapshot.getValue(FriendsList::class.java)
-                        Log.d("FriendsFragment", "Friends Id is ${friendsId?.FriendId}")
-                        val connectionId = friendsId?.FriendId.toString()
-                        //findConnction(connectionId)
-                        val refIs =
-                            FirebaseDatabase.getInstance().getReference("Users").child(connectionId)
-                        refIs.addValueEventListener(object : ValueEventListener {
-                            override fun onDataChange(snapshot : DataSnapshot) {
-                                if (snapshot.exists()) {
-                                    for (connectionSnapshot in snapshot.children) {
-                                        val friendIs =
-                                            connectionSnapshot.getValue(FirendsDetails::class.java)
-                                        FriendList.add(friendIs!!)
-                                        recyclerView.adapter = FriendAdater(FriendList)
-                                    }
+                        friendListIs.add(friendsId?.FriendId.toString())
+                        FriendList.add(friendsId!!)
+                        //Log.d("FriendsFragment", "Friends Id is ${friendsId?.FriendId}")
+                    }
+                    Log.d("FriendsFragment", "Friend list is ${friendListIs}")
+                    Log.d("FriendsFragment", "Friends Id is ${FriendList}")
+                }
 
-                                }
+            }
 
-                            }
+            override fun onCancelled(error : DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
-                            override fun onCancelled(error : DatabaseError) {
-                                TODO("Not yet implemented")
-                            }
+        })
+        val friendRef = FirebaseDatabase.getInstance().getReference("Users")
+        friendRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot : DataSnapshot) {
 
-                        })
+                if (snapshot.exists()) {
+                    for (friendSnapshot in snapshot.children) {
 
+                        val friendAre = friendSnapshot.getValue(FirendsDetails::class.java)
+                        if (friendAre?.userId in friendListIs) {
+                            connctionList.add(friendAre!!)
+//                            Log.d("FriendList" , "conneciton list $connctionList")
+                        }
+                    }
+                    fun onItemSelected(firendsDetails : FirendsDetails) {
+                        val bundle = bundleOf("userId" to firendsDetails.userId)
+                        findNavController().navigate(
+                            R.id.action_friendFragment_to_chatFragment,
+                            bundle
+                        )
                     }
 
+                    recyclerView.adapter = FriendAdater(connctionList, ::onItemSelected)
+                    Log.d("FriendList", "conneciton list $connctionList")
                 }
 
             }
@@ -93,32 +113,38 @@ class FriendFragment : Fragment() {
         })
     }
 
-    private fun findConnction(connectionId : String) {
-//        Log.d("FriendsFragment" , "Friends Id here is  $connectionId")
-//
-//        val ref = FirebaseDatabase.getInstance().getReference("Users").child(connectionId)
-//        ref.addValueEventListener(object : ValueEventListener{
-//            override fun onDataChange(snapshot : DataSnapshot) {
-//                if(snapshot.exists()){
-//                    for(connectionSnapshot in snapshot.children){
-//                        val friendIs = connectionSnapshot.getValue(UserDetails::class.java)
-//                        FriendList.add(friendIs!!)
-//                        recyclerView.adapter = FriendAdater(FriendList)
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error : DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//
-//
-//        })
-//
-//    }
+    override fun onCreateOptionsMenu(menu : Menu, inflater : MenuInflater) {
+        inflater.inflate(R.menu.home_menu, menu)
+    }
 
+    override fun onOptionsItemSelected(item : MenuItem) : Boolean {
+        when (item.itemId) {
+            R.id.Logout -> {
+
+                FirebaseDatabase.getInstance().getReference("Users")
+                    .child(auth.currentUser?.uid.toString()).child("status").setValue("InActive")
+                auth.signOut()
+                findNavController().navigate(R.id.action_friendFragment_to_loginFragment)
+
+            }
+
+            R.id.Request -> {
+                findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
+            }
+            R.id.Friends -> {
+                findNavController().navigate(R.id.action_friendFragment_to_userFragment3)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun changeStatus() {
+        Log.d("login"  , "${auth.signOut()}")
+        auth.signOut()
+        findNavController().navigate(R.id.action_friendFragment_to_loginFragment)
     }
 }
+
 data class FriendsList(
     val FriendId : String? = ""
 )
