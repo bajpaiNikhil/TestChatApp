@@ -19,7 +19,6 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
     class UserHolder(view : View) : RecyclerView.ViewHolder(view) {
         val userNameIs = view.findViewById<TextView>(R.id.userName)
         val userEmail = view.findViewById<TextView>(R.id.temp)
-        val statusFlag= view.findViewById<TextView>(R.id.tvStatus)
         val addButton = view.findViewById<ImageView>(R.id.addUserButton)
     }
 
@@ -34,7 +33,6 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
         Log.d("UserFragment" , rId!!)
         holder.userNameIs.text = currentItem.usernameR
         holder.userEmail.text  = currentItem.emailR
-        holder.statusFlag.text = currentItem.status
 
         holder.addButton.setOnClickListener {
             Log.d("UserFragment" , "button is pressed")
