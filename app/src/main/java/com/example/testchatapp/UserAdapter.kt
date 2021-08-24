@@ -51,7 +51,7 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
 
                 hashMap.put("senderId" , auth.currentUser?.uid.toString())
                 hashMap.put("receiverId" , currentItem.userId.toString() )
-                hashMap.put("message" , "SENT YOU A FRIEND REQUEST!")
+                hashMap.put("message" , "SENT YOU A FRIEND REQUEST!!")
 
                 val ref = FirebaseDatabase.getInstance().getReference("Request").push().setValue(hashMap)
             })
