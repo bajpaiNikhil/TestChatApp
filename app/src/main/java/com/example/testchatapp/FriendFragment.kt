@@ -100,7 +100,7 @@ class FriendFragment : Fragment() {
                         )
                     }
 
-                    recyclerView.adapter = FriendAdater(connectionList, ::onItemSelected)
+                    recyclerView.adapter = FriendAdapter(connectionList, ::onItemSelected)
                     Log.d("FriendList", "conneciton list $connectionList")
                 }
 
@@ -129,8 +129,9 @@ class FriendFragment : Fragment() {
             R.id.Request -> {
                 findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
             }
-            R.id.Friends -> {
-                findNavController().navigate(R.id.action_friendFragment_to_userFragment3)
+            R.id.Add_Friends -> {
+                val bundle = bundleOf("friendListIs" to friendListIs)
+                findNavController().navigate(R.id.action_friendFragment_to_userFragment3 , bundle)
             }
         }
         return super.onOptionsItemSelected(item)

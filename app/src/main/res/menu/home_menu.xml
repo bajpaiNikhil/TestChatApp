@@ -8,7 +8,7 @@
         android:id="@+id/Request"
         android:title="Request" />
     <item
-        android:id="@+id/Friends"
+        android:id="@+id/Add_Friends"
         android:title="Find Friends" />
     <item android:title="ToTOAdd" />
 </menu>

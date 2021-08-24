@@ -28,6 +28,14 @@ class UserFragment : Fragment() {
     lateinit var recyclerView : RecyclerView
     lateinit var userArrayList : ArrayList<UserDetails>
 
+    var userConnection = mutableListOf<String>()
+
+    override fun onCreate(savedInstanceState : Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments.let {
+            userConnection = it?.getStringArrayList("friendListIs")!!
+        }
+    }
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
         savedInstanceState : Bundle?
@@ -43,6 +51,7 @@ class UserFragment : Fragment() {
         userArrayList = arrayListOf()
         recyclerView = view.findViewById(R.id.userRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
+        Log.d("userFragment" , "userConnection $userConnection")
 
         getUser()
     }
@@ -58,9 +67,13 @@ class UserFragment : Fragment() {
                     for(userSnapShot in snapshot.children){
                         val userIs = userSnapShot.getValue(UserDetails::class.java)
                         if(userIs?.userId != auth.currentUser?.uid){
-                            userArrayList.add(userIs!!)
+                            if(userIs?.userId !in userConnection){
+                                Log.d("userFragment" , "${userIs?.userId} , $userConnection , ${userIs?.userId !in userConnection}")
+                                userArrayList.add(userIs!!)
+                            }
                         }
                     }
+                    Log.d("userFragment" , "userArrayList $userArrayList")
                     recyclerView.adapter = UserAdapter(userArrayList)
                 }
             }
