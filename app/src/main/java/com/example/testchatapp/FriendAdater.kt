@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 
 class FriendAdater(val friendList : ArrayList<FriendsDetails>, val listner : (FriendsDetails)->Unit) : RecyclerView.Adapter<FriendAdater.FriendHolder>() {
 
-
     class FriendHolder(view : View) : RecyclerView.ViewHolder(view) {
         val userNameIs = view.findViewById<TextView>(R.id.FriendUserName)
         val userEmail  = view.findViewById<TextView>(R.id.FriendEmail)
         val onlineImage = view.findViewById<ImageView>(R.id.onlineIv)
         val offlineImage = view.findViewById<ImageView>(R.id.offlineIv)
+
 //        val statusFlag = view.findViewById<TextView>(R.id.FriendTvStatus)
 
     }
