@@ -36,6 +36,7 @@ class UserFragment : Fragment() {
             userConnection = it?.getStringArrayList("friendListIs")!!
         }
     }
+
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
         savedInstanceState : Bundle?
