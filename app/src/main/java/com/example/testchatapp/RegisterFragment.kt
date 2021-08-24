@@ -2,15 +2,11 @@ package com.example.testchatapp
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -21,10 +17,19 @@ class RegisterFragment : Fragment() {
     lateinit var passwordR: EditText
     lateinit var usernameR: EditText
     lateinit var phoneNumberR: EditText
-    lateinit var auth : FirebaseAuth
-    lateinit var db : FirebaseDatabase
+    lateinit var confirmPasswordR: EditText
+    lateinit var designationR: EditText
+    lateinit var cityRS: Spinner
+    var cityNameR = ""
+    lateinit var  forgetPassQuesR: Spinner
+    var forgetPassQuesString = ""
+    lateinit var forgetPassAns: EditText
     lateinit var registerButton : Button
     lateinit var loginTextView: TextView
+
+
+    lateinit var auth : FirebaseAuth
+    lateinit var db : FirebaseDatabase
 
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
@@ -39,37 +44,144 @@ class RegisterFragment : Fragment() {
         passwordR  =view.findViewById(R.id.password)
         usernameR = view.findViewById(R.id.name)
         phoneNumberR = view.findViewById(R.id.phone)
+        confirmPasswordR = view.findViewById(R.id.passwordConfirm)
+        designationR = view.findViewById(R.id.designation)
+
+        // city spinner
+        cityRS = view.findViewById(R.id.cityRS)
+        val cityList: MutableList<String?> = ArrayList()
+        cityList.add(0, "Select a city from the list")
+        cityList.add("Mumbai")
+        cityList.add("Delhi")
+        cityList.add("Kolkata")
+        cityList.add("Bengaluru")
+        cityList.add("Hyderabad")
+        cityList.add("Chennai")
+        cityList.add("Ahmedabad")
+        cityList.add("Pune")
+        cityList.add("Surat")
+        cityList.add("Visakhapatnam")
+        cityList.add("Other")
+
+        val cityArrayAdapter: ArrayAdapter<String?>? =
+            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, cityList) }
+        cityArrayAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        cityRS.adapter = cityArrayAdapter
+        cityRS.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (parent?.getItemAtPosition(position) == "Select a city from the list") {
+                }
+                else {
+                    cityNameR = parent?.getItemAtPosition(position).toString()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        // forget password question's spinner
+        forgetPassQuesR = view.findViewById(R.id.forgetPassQuesRS)
+        val quesList: MutableList<String?> = ArrayList()
+        quesList.add(0, "Select a Ques from the list")
+        quesList.add("Favourite Dish?")
+        quesList.add("Birth Place?")
+        quesList.add("First Pet's Name?")
+
+        val quesArrayAdapter: ArrayAdapter<String?>? =
+            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, quesList) }
+        quesArrayAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        forgetPassQuesR.adapter = quesArrayAdapter
+        forgetPassQuesR.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (parent?.getItemAtPosition(position) == "Select a ques from the list") {
+                }
+                else {
+                    forgetPassQuesString = parent?.getItemAtPosition(position).toString()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        forgetPassAns = view.findViewById(R.id.forgetPassAns)
         registerButton = view.findViewById(R.id.registerB)
         loginTextView = view.findViewById(R.id.loginTv)
+
         auth = FirebaseAuth.getInstance()
         db = Firebase.database
+
         loginTextView.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
         registerButton.setOnClickListener {
-            val userName = usernameR.text.toString()
             val eMail = emailR.text.toString()
             val passWord = passwordR.text.toString()
+            val confirmPassword = confirmPasswordR.text.toString()
             val phoneNumber = phoneNumberR.text.toString()
-            Log.d("Register",userName)
+            val designation = designationR.text.toString()
+            val city = cityNameR
+            val forgetPassQues = forgetPassQuesString
+            val forgetPassAns = forgetPassAns.text.toString()
 
-            auth.createUserWithEmailAndPassword(eMail,passWord)
-                .addOnCompleteListener{
-                    if(it.isSuccessful){
-                        addUserInDb()
-                        Toast.makeText(context , "Registration Complete" , Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-                    }else{
-                        Toast.makeText(context , "Registration InComplete" , Toast.LENGTH_SHORT).show()
+            if(eMail.isNotEmpty() && passWord.isNotEmpty() && confirmPassword.isNotEmpty() && phoneNumber.isNotEmpty()
+                && designation.isNotEmpty() && city.isNotEmpty() && forgetPassQues.isNotEmpty() && forgetPassAns.isNotEmpty()
+                ) {
+                if(passWord.length>8 && passWord == confirmPassword) {
+                    if (phoneNumber.length == 10) {
+                        auth.createUserWithEmailAndPassword(eMail, passWord).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                addUserInDb()
+                                Toast.makeText(context, "Registration Complete", Toast.LENGTH_SHORT)
+                                    .show()
+                                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Registration InComplete",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                    else{
+                        Toast.makeText(context, "Phone Number should be of 10 Digits", Toast.LENGTH_SHORT).show()
                     }
                 }
+                else{
+                    Toast.makeText(context, "Password length should be greater than 8", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else{
+                Toast.makeText(context, "Please check if all fields are filled", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
     private fun addUserInDb(){
         val userName = usernameR.text.toString()
         val email = "${emailR.text}"
         val phoneNumber = phoneNumberR.text.toString()
-        val UserObj = UserDetail(auth.currentUser?.uid.toString(), email,userName,phoneNumber , "InActive")
+        val designation = designationR.text.toString()
+        val city = cityNameR
+        val forgetPassQues = forgetPassQuesString
+        val forgetPassAns = forgetPassAns.text.toString()
+        val UserObj = UserDetail(auth.currentUser?.uid.toString(), email,userName,phoneNumber , "InActive", designation,city,forgetPassQues,forgetPassAns)
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.child(auth.currentUser?.uid.toString()).setValue(UserObj)
     }
@@ -80,17 +192,29 @@ class UserDetail() {
     var usernameR : String = ""
     var phoneNumberR : String = ""
     var status : String = ""
+    var designation : String =""
+    var city : String =""
+    var forgetPassQues : String=""
+    var forgetPassAns: String =""
     constructor(
         userId : String,
         emailR : String,
         usernameR : String,
         phoneNumberR : String,
-        status : String
+        status : String,
+        designation : String,
+        city : String,
+        forgetPassQues : String,
+        forgetPassAns : String
     ) : this(){
         this.userId             = userId
         this.emailR             = emailR
         this.usernameR          = usernameR
         this.phoneNumberR       = phoneNumberR
         this.status             = status
+        this.designation        = designation
+        this.city               = city
+        this.forgetPassQues     = forgetPassQues
+        this.forgetPassAns      = forgetPassAns
     }
 }
