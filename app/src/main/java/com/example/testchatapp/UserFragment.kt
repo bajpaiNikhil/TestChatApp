@@ -3,6 +3,7 @@ package com.example.testchatapp
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +17,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-
 class UserFragment : Fragment() {
 
     lateinit var auth :  FirebaseAuth
@@ -25,6 +25,10 @@ class UserFragment : Fragment() {
     lateinit var userArrayList : ArrayList<UserDetails>
 
     var userConnection = mutableListOf<String>()
+
+    var searchText = ""
+    var flag = 0
+
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,11 +66,31 @@ class UserFragment : Fragment() {
         db = Firebase.database
         auth = FirebaseAuth.getInstance()
         userArrayList = arrayListOf()
+
+        val searchView = view.findViewById<SearchView>(R.id.seachBar)
+
         recyclerView = view.findViewById(R.id.userRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         Log.d("userFragment" , "userConnection $userConnection")
 
         getUser()
+        searchView.setOnQueryTextListener(object  : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchText = newText!!
+                if(flag == 1){
+                    getUser()
+                }else if(searchText.length>=3){
+                    flag = 1
+                    getUser()
+                }
+             return false
+            }
+
+        })
     }
 
     private fun getUser() {
@@ -81,8 +105,10 @@ class UserFragment : Fragment() {
                         val userIs = userSnapShot.getValue(UserDetails::class.java)
                         if(userIs?.userId != auth.currentUser?.uid){
                             if(userIs?.userId !in userConnection){
-                                Log.d("userFragment" , "${userIs?.userId} , $userConnection , ${userIs?.userId !in userConnection}")
-                                userArrayList.add(userIs!!)
+                                if(userIs?.usernameR?.lowercase()?.contains(searchText.lowercase()) == true){
+                                    Log.d("userFragment" , "${userIs?.userId} , $userConnection , ${userIs?.userId !in userConnection}")
+                                    userArrayList.add(userIs!!)
+                                }
                             }
                         }
                     }
@@ -94,7 +120,6 @@ class UserFragment : Fragment() {
             override fun onCancelled(error : DatabaseError) {
 
             }
-
         })
     }
 }

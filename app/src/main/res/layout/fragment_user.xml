@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <SearchView
+            android:id="@+id/seachBar"
             android:layout_width="308dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5">

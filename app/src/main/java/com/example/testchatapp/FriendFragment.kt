@@ -3,6 +3,7 @@ package com.example.testchatapp
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
@@ -27,6 +28,8 @@ class FriendFragment : Fragment() {
 
     lateinit var auth: FirebaseAuth
 
+    var searchText = ""
+    var flag = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,8 +75,26 @@ class FriendFragment : Fragment() {
         auth = Firebase.auth
         recyclerView = view.findViewById(R.id.FriendRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
+        val friendSearchViewIs = view.findViewById<SearchView>(R.id.friendSearchView)
 
         findFriends()
+        friendSearchViewIs.setOnQueryTextListener(object  : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchText = newText!!
+                if(flag == 1){
+                    findFriends()
+                }else if(searchText.length>=3){
+                    flag = 1
+                    findFriends()
+                }
+                return false
+            }
+
+        })
     }
 
     private fun findFriends() {
@@ -108,7 +129,10 @@ class FriendFragment : Fragment() {
                     for (friendSnapshot in snapshot.children) {
                         val friendAre = friendSnapshot.getValue(FriendsDetails::class.java)
                         if (friendAre?.userId in friendListIs) {
-                            connectionList.add(friendAre!!)
+                            if(friendAre?.usernameR?.lowercase()?.contains(searchText.lowercase()) == true){
+                                connectionList.add(friendAre)
+                            }
+
 //                            Log.d("FriendList" , "conneciton list $connctionList")
                         }
                     }

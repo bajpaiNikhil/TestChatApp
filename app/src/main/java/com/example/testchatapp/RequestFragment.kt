@@ -22,9 +22,7 @@ class RequestFragment : Fragment() {
     // TODO: Rename and change types of parameters
     lateinit var auth : FirebaseAuth
     lateinit var requestList : ArrayList<chatDataClass>
-
     lateinit var recyclerView : RecyclerView
-
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,8 +65,8 @@ class RequestFragment : Fragment() {
 
         requestList = arrayListOf()
 
-
         requestView()
+
     }
 
     private fun requestView() {

@@ -38,7 +38,9 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
                     val senderName = snapshot.child("usernameR").value
                     Log.d("requestAdapter" , "username : ${senderName.toString()}")
                     holder.senderName.text = senderName.toString()
+
                 }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -46,8 +48,6 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
             }
 
         })
-
-
 
         holder.requestMessage.text = currentItem.message.toString()
         holder.addButton.setOnClickListener {
