@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Adapter
-import android.widget.Button
-import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testchatapp.R
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -42,7 +38,23 @@ class UserFragment : Fragment() {
         savedInstanceState : Bundle?
     ) : View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false)
+        val view = inflater.inflate(R.layout.fragment_user, container, false)
+
+        val logout = view.findViewById<BottomNavigationItemView>(R.id.Logout)
+        logout.setOnClickListener {
+            val lastUser = auth.currentUser?.uid
+            auth.signOut()
+            FirebaseDatabase.getInstance().getReference("Users").child(lastUser.toString())
+                .child("status").setValue("InActive")
+            findNavController().navigate(R.id.action_userFragment_to_loginFragment)
+        }
+
+        val requests = view.findViewById<BottomNavigationItemView>(R.id.FriendList)
+        requests.setOnClickListener {
+            findNavController().navigate(R.id.action_userFragment_to_friendFragment)
+        }
+
+        return view
     }
 
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {

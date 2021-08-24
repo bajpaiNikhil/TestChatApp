@@ -85,5 +85,12 @@
         android:id="@+id/requestFragment"
         android:name="com.example.testchatapp.RequestFragment"
         android:label="fragment_request"
-        tools:layout="@layout/fragment_request" />
+        tools:layout="@layout/fragment_request" >
+        <action
+            android:id="@+id/action_requestFragment_to_friendFragment"
+            app:destination="@id/friendFragment" />
+        <action
+            android:id="@+id/action_requestFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

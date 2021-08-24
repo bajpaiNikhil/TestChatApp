@@ -11,12 +11,8 @@ class FriendAdapter(val friendList : ArrayList<FriendsDetails>, val listener : (
 
     class FriendHolder(view : View) : RecyclerView.ViewHolder(view) {
         val userNameIs = view.findViewById<TextView>(R.id.FriendUserName)
-        val userEmail  = view.findViewById<TextView>(R.id.FriendEmail)
         val onlineImage = view.findViewById<ImageView>(R.id.onlineIv)
         val offlineImage = view.findViewById<ImageView>(R.id.offlineIv)
-
-//        val statusFlag = view.findViewById<TextView>(R.id.FriendTvStatus)
-
     }
 
     override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : FriendHolder {
@@ -30,7 +26,6 @@ class FriendAdapter(val friendList : ArrayList<FriendsDetails>, val listener : (
         holder.offlineImage.visibility = View.INVISIBLE
 
         holder.userNameIs.text = currentItem.usernameR
-        holder.userEmail.text  = currentItem.emailR
 
         if(currentItem.status == "Active") {
             holder.onlineImage.visibility = View.VISIBLE
