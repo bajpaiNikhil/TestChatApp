@@ -38,7 +38,7 @@
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/FriendUserImage"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="IamStupid" />
+            tools:text="UserName" />
 
         <TextView
             android:id="@+id/FriendEmail"
@@ -50,7 +50,7 @@
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/FriendUserImage"
             app:layout_constraintTop_toBottomOf="@+id/onlineIv"
-            tools:text="IamStupid" />
+            tools:text="Email" />
 
         <ImageView
             android:id="@+id/onlineIv"

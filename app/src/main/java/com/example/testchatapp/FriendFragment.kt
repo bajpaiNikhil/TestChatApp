@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -19,15 +20,15 @@ import com.google.firebase.ktx.Firebase
 
 class FriendFragment : Fragment() {
 
-    lateinit var recyclerView : RecyclerView
-    lateinit var FriendList : ArrayList<FriendsList>
+    lateinit var recyclerView: RecyclerView
+    lateinit var FriendList: ArrayList<FriendsList>
     var friendListIs = mutableListOf<String>()
-    lateinit var connectionList : ArrayList<FriendsDetails>
+    lateinit var connectionList: ArrayList<FriendsDetails>
 
-    lateinit var auth : FirebaseAuth
+    lateinit var auth: FirebaseAuth
 
 
-    override fun onCreate(savedInstanceState : Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
 
@@ -35,14 +36,36 @@ class FriendFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater : LayoutInflater, container : ViewGroup?,
-        savedInstanceState : Bundle?
-    ) : View? {
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friend, container, false)
+        val view = inflater.inflate(R.layout.fragment_friend, container, false)
+
+        val logout = view.findViewById<BottomNavigationItemView>(R.id.Logout)
+        logout.setOnClickListener {
+            val lastUser = auth.currentUser?.uid
+            auth.signOut()
+            FirebaseDatabase.getInstance().getReference("Users").child(lastUser.toString())
+                .child("status").setValue("InActive")
+            findNavController().navigate(R.id.action_friendFragment_to_loginFragment)
+        }
+
+        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
+        requests.setOnClickListener {
+            findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
+        }
+
+        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
+        addNewFriends.setOnClickListener {
+            val bundle = bundleOf("friendListIs" to friendListIs)
+            findNavController().navigate(R.id.action_friendFragment_to_userFragment3, bundle)
+        }
+
+        return view
     }
 
-    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FriendList = arrayListOf()
         connectionList = arrayListOf()
@@ -51,16 +74,13 @@ class FriendFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         findFriends()
-
-        setHasOptionsMenu(true)
-
     }
 
     private fun findFriends() {
         val ref = FirebaseDatabase.getInstance().getReference("Users")
             .child(auth.currentUser?.uid.toString()).child("Friends")
         ref.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot : DataSnapshot) {
+            override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (friendSnapshot in snapshot.children) {
                         val friendsId = friendSnapshot.getValue(FriendsList::class.java)
@@ -74,14 +94,14 @@ class FriendFragment : Fragment() {
 
             }
 
-            override fun onCancelled(error : DatabaseError) {
+            override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
         })
         val friendRef = FirebaseDatabase.getInstance().getReference("Users")
         friendRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot : DataSnapshot) {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
                 if (snapshot.exists()) {
                     connectionList.clear()
@@ -92,7 +112,7 @@ class FriendFragment : Fragment() {
 //                            Log.d("FriendList" , "conneciton list $connctionList")
                         }
                     }
-                    fun onItemSelected(friendsDetails : FriendsDetails) {
+                    fun onItemSelected(friendsDetails: FriendsDetails) {
                         val bundle = bundleOf("userId" to friendsDetails.userId)
                         findNavController().navigate(
                             R.id.action_friendFragment_to_chatFragment,
@@ -106,38 +126,14 @@ class FriendFragment : Fragment() {
 
             }
 
-            override fun onCancelled(error : DatabaseError) {
+            override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
         })
     }
-
-    override fun onCreateOptionsMenu(menu : Menu, inflater : MenuInflater) {
-        inflater.inflate(R.menu.home_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item : MenuItem) : Boolean {
-        when (item.itemId) {
-            R.id.Logout -> {
-                val lastUser = auth.currentUser?.uid
-                auth.signOut()
-                FirebaseDatabase.getInstance().getReference("Users").child(lastUser.toString()).child("status").setValue("InActive")
-                findNavController().navigate(R.id.action_friendFragment_to_loginFragment)
-            }
-
-            R.id.Request -> {
-                findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
-            }
-            R.id.Add_Friends -> {
-                val bundle = bundleOf("friendListIs" to friendListIs)
-                findNavController().navigate(R.id.action_friendFragment_to_userFragment3 , bundle)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
 }
+
 
 data class FriendsList(
     val FriendId : String? = ""
