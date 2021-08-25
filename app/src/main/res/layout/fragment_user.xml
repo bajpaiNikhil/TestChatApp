@@ -11,26 +11,39 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <SearchView
             android:id="@+id/seachBar"
             android:layout_width="308dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:background="@drawable/search_shape"
+            android:backgroundTint="#D3CFCF">
 
         </SearchView>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgProfile"
+        <ImageButton
+            android:id="@+id/homeB2"
             android:layout_width="wrap_content"
-            android:layout_height="42dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:padding="5dp"
-            android:src="@drawable/profile" />
+            android:background="@color/white"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:scaleType="centerInside"
+            android:soundEffectsEnabled="true"
+            android:src="@drawable/ic_action_home"
+            app:tint="@color/teal_700"
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </LinearLayout>
 
@@ -38,6 +51,9 @@
         android:id="@+id/userRecyclerView"
         android:layout_width="358dp"
         android:layout_height="567dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,12 +64,14 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        android:layout_width="342dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:itemIconTint="#635F5F"
+        app:itemTextColor="#635F5F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/request_fragment_menu" />
+        app:menu="@menu/home_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

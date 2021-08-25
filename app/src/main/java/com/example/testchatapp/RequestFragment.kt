@@ -1,14 +1,17 @@
 package com.example.testchatapp
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
@@ -23,6 +26,7 @@ class RequestFragment : Fragment() {
     lateinit var auth : FirebaseAuth
     lateinit var requestList : ArrayList<chatDataClass>
     lateinit var recyclerView : RecyclerView
+    var friendListIs = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +35,7 @@ class RequestFragment : Fragment() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
         savedInstanceState : Bundle?
@@ -47,8 +52,20 @@ class RequestFragment : Fragment() {
             findNavController().navigate(R.id.action_requestFragment_to_loginFragment)
         }
 
-        val requests = view.findViewById<BottomNavigationItemView>(R.id.FriendList)
-        requests.setOnClickListener {
+        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
+        requests.setIconTintList(ColorStateList.valueOf(Color.BLUE))
+        requests.setTextColor(ColorStateList.valueOf(Color.BLUE))
+
+
+        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
+        addNewFriends.setOnClickListener {
+            findFriends()
+            val bundle = bundleOf("friendListIs" to friendListIs)
+            findNavController().navigate(R.id.action_requestFragment_to_userFragment,bundle)
+        }
+
+        val homeScreen = view.findViewById<ImageButton>(R.id.homeB)
+        homeScreen.setOnClickListener {
             findNavController().navigate(R.id.action_requestFragment_to_friendFragment)
         }
 
@@ -93,6 +110,29 @@ class RequestFragment : Fragment() {
             }
 
             override fun onCancelled(error : DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    private fun findFriends() {
+        val ref = FirebaseDatabase.getInstance().getReference("Users")
+            .child(auth.currentUser?.uid.toString()).child("Friends")
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (friendSnapshot in snapshot.children) {
+                        val friendsId = friendSnapshot.getValue(FriendsList::class.java)
+                        friendListIs.add(friendsId?.FriendId.toString())
+                        //Log.d("FriendsFragment", "Friends Id is ${friendsId?.FriendId}")
+                    }
+                    Log.d("RequestFragment", "Friend list is ${friendListIs}")
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
 

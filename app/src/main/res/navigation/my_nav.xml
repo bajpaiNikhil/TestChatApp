@@ -92,5 +92,8 @@
         <action
             android:id="@+id/action_requestFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_requestFragment_to_userFragment"
+            app:destination="@id/userFragment" />
     </fragment>
 </navigation>

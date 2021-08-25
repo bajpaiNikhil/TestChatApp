@@ -1,8 +1,12 @@
 package com.example.testchatapp
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,6 +27,7 @@ class UserFragment : Fragment() {
     lateinit var db   : FirebaseDatabase
     lateinit var recyclerView : RecyclerView
     lateinit var userArrayList : ArrayList<UserDetails>
+    var friendListIs = mutableListOf<String>()
 
     var userConnection = mutableListOf<String>()
 
@@ -37,6 +42,7 @@ class UserFragment : Fragment() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
         savedInstanceState : Bundle?
@@ -53,8 +59,17 @@ class UserFragment : Fragment() {
             findNavController().navigate(R.id.action_userFragment_to_loginFragment)
         }
 
-        val requests = view.findViewById<BottomNavigationItemView>(R.id.FriendList)
+        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
         requests.setOnClickListener {
+            findNavController().navigate(R.id.action_userFragment_to_requestFragment)
+        }
+
+        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
+        addNewFriends.setIconTintList(ColorStateList.valueOf(Color.BLUE))
+        addNewFriends.setTextColor(ColorStateList.valueOf(Color.BLUE))
+
+        val homeScreen = view.findViewById<ImageButton>(R.id.homeB2)
+        homeScreen.setOnClickListener {
             findNavController().navigate(R.id.action_userFragment_to_friendFragment)
         }
 
