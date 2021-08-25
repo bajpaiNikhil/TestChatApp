@@ -12,9 +12,9 @@
     <!-- color resource for the login screen -->
     <color name="colorPrimary">#2a7ee6</color>
     <color name="colorPrimaryDark">#76a5df</color>
-    <color name="colorAccent">#ffff8800</color>
+    <color name="colorAccent">#000000</color>
     <color name="zircon">#e0e6e4</color>
 
-    <color name="colorItemLeft">#E6E4E4</color>
-    <color name="colorItemRight">#9157DC</color>
+    <color name="colorItemLeft">#A9A9A9</color>
+    <color name="colorItemRight">#60C337</color>
 </resources>
