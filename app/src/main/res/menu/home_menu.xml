@@ -10,7 +10,7 @@
         android:icon="@android:drawable/ic_search_category_default"
         android:title="Find Friends" />
     <item
-        android:id="@+id/Logout"
-        android:icon="@drawable/common_full_open_on_phone"
-        android:title="Logout" />
+        android:id="@+id/Settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="Settings" />
 </menu>

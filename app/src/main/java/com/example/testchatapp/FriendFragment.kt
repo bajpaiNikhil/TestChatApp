@@ -45,13 +45,9 @@ class FriendFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_friend, container, false)
 
-        val logout = view.findViewById<BottomNavigationItemView>(R.id.Logout)
-        logout.setOnClickListener {
-            val lastUser = auth.currentUser?.uid
-            auth.signOut()
-            FirebaseDatabase.getInstance().getReference("Users").child(lastUser.toString())
-                .child("status").setValue("InActive")
-            findNavController().navigate(R.id.action_friendFragment_to_loginFragment)
+        val userSettings = view.findViewById<BottomNavigationItemView>(R.id.Settings)
+        userSettings.setOnClickListener {
+            findNavController().navigate(R.id.action_friendFragment_to_profileFragment)
         }
 
         val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
