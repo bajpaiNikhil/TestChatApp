@@ -60,7 +60,6 @@ class FriendFragment : Fragment() {
             val bundle = bundleOf("friendListIs" to friendListIs)
             findNavController().navigate(R.id.action_friendFragment_to_userFragment3, bundle)
         }
-
         return view
     }
 

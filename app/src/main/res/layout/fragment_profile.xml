@@ -75,7 +75,7 @@
         android:id="@+id/userNameEt"
         android:layout_width="220dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
@@ -111,14 +111,5 @@
         app:layout_constraintStart_toEndOf="@+id/userNameEt"
         app:layout_constraintTop_toTopOf="@+id/userNameEt"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="213dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="25dp"
-        app:layout_constraintEnd_toEndOf="@+id/passTv"
-        app:layout_constraintStart_toStartOf="@+id/passTv"
-        app:layout_constraintTop_toBottomOf="@+id/passTv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
