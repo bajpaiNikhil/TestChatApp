@@ -17,27 +17,55 @@
             android:id="@+id/imgBack"
             android:layout_width="0dp"
             android:layout_height="32dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_weight="0.5"
             android:padding="5dp"
             android:src="@drawable/ic_back" />
+
+        <ImageView
+            android:id="@+id/onlineIv2"
+            android:layout_width="22dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/FriendUserName"
+            app:layout_constraintEnd_toStartOf="@+id/statusTv"
+            app:layout_constraintTop_toTopOf="@+id/FriendUserName"
+            app:srcCompat="@android:drawable/presence_online" />
+
+        <ImageView
+            android:id="@+id/offlineIv2"
+            android:layout_width="22dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="-28dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_notification_overlay" />
+
+        <TextView
+            android:id="@+id/statusTv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:text="Status"
+            app:layout_constraintBottom_toBottomOf="@+id/onlineIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/onlineIv" />
 
         <TextView
             android:id="@+id/tvUserName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
             android:layout_weight="2"
             android:text=""
+            android:textAlignment="textEnd"
             android:textSize="15sp"
             android:textStyle="bold" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgProfile"
-            android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:layout_weight="0.5"
-            android:padding="5dp"
-            android:src="@mipmap/ic_launcher" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

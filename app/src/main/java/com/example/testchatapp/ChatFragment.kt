@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AlertDialogLayout
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,9 +37,12 @@ class ChatFragment : Fragment() {
     lateinit var db : FirebaseDatabase
     lateinit var tvName: TextView
     lateinit var buttonSendClick : AppCompatImageButton
-
+    lateinit var backImageView: ImageView
     lateinit var messageTextView : TextView
     lateinit var recyclerView : RecyclerView
+    lateinit var onlineImageView: ImageView
+    lateinit var offlineImageView: ImageView
+    lateinit var statusTextView: TextView
 
     lateinit var chatList : ArrayList<chatDataClass>
 
@@ -70,9 +75,16 @@ class ChatFragment : Fragment() {
 
         buttonSendClick = view.findViewById(R.id.btnSendMessage)
         messageTextView = view.findViewById(R.id.etMessage)
-
+        backImageView = view.findViewById(R.id.imgBack)
+        onlineImageView = view.findViewById(R.id.onlineIv2)
+        offlineImageView = view.findViewById(R.id.offlineIv2)
+        statusTextView = view.findViewById(R.id.statusTv2)
         recyclerView = view.findViewById(R.id.chatRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+        onlineImageView.visibility = View.INVISIBLE
+        offlineImageView.visibility = View.INVISIBLE
+        statusTextView.visibility = View.INVISIBLE
 
         findUserToChat()
 
@@ -89,6 +101,10 @@ class ChatFragment : Fragment() {
 
             readMessage(auth.currentUser?.uid!! , userId!!)
         }
+
+        backImageView.setOnClickListener {
+            findNavController().navigate(R.id.action_chatFragment_to_friendFragment)
+        }
     }
 
     private fun findUserToChat() {
@@ -97,6 +113,17 @@ class ChatFragment : Fragment() {
             override fun onDataChange(snapshot : DataSnapshot) {
                 val user = snapshot.getValue(userToChar::class.java)
                 tvName.text = user?.usernameR.toString()
+                val userStatus = snapshot.child("status").value
+                if(userStatus == "Active"){
+                    onlineImageView.visibility = View.VISIBLE
+                    statusTextView.visibility = View.VISIBLE
+                    statusTextView.text = "Online"
+                }
+                else{
+                    offlineImageView.visibility = View.VISIBLE
+                    statusTextView.visibility = View.VISIBLE
+                    statusTextView.text = "User's Offline"
+                }
             }
 
             override fun onCancelled(error : DatabaseError) {
@@ -205,5 +232,6 @@ class ChatFragment : Fragment() {
 }
 
 data class userToChar(
-    val usernameR : String? = ""
+    val usernameR : String? = "",
+    val status : String ? =""
 )

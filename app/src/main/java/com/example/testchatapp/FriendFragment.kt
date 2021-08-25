@@ -22,7 +22,7 @@ import com.google.firebase.ktx.Firebase
 class FriendFragment : Fragment() {
 
     lateinit var recyclerView: RecyclerView
-    lateinit var FriendList: ArrayList<FriendsList>
+    lateinit var friendList: ArrayList<FriendsList>
     var friendListIs = mutableListOf<String>()
     lateinit var connectionList: ArrayList<FriendsDetails>
 
@@ -70,7 +70,7 @@ class FriendFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        FriendList = arrayListOf()
+        friendList = arrayListOf()
         connectionList = arrayListOf()
         auth = Firebase.auth
         recyclerView = view.findViewById(R.id.FriendRecyclerView)
@@ -106,11 +106,11 @@ class FriendFragment : Fragment() {
                     for (friendSnapshot in snapshot.children) {
                         val friendsId = friendSnapshot.getValue(FriendsList::class.java)
                         friendListIs.add(friendsId?.FriendId.toString())
-                        FriendList.add(friendsId!!)
+                        friendList.add(friendsId!!)
                         //Log.d("FriendsFragment", "Friends Id is ${friendsId?.FriendId}")
                     }
                     Log.d("FriendsFragment", "Friend list is ${friendListIs}")
-                    Log.d("FriendsFragment", "Friends Id is ${FriendList}")
+                    Log.d("FriendsFragment", "Friends Id is ${friendList}")
                 }
 
             }
@@ -132,8 +132,6 @@ class FriendFragment : Fragment() {
                             if(friendAre?.usernameR?.lowercase()?.contains(searchText.lowercase()) == true){
                                 connectionList.add(friendAre)
                             }
-
-//                            Log.d("FriendList" , "conneciton list $connctionList")
                         }
                     }
                     fun onItemSelected(friendsDetails: FriendsDetails) {

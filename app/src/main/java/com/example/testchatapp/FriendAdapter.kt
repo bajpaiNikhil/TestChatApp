@@ -13,6 +13,7 @@ class FriendAdapter(val friendList : ArrayList<FriendsDetails>, val listener : (
         val userNameIs = view.findViewById<TextView>(R.id.FriendUserName)
         val onlineImage = view.findViewById<ImageView>(R.id.onlineIv)
         val offlineImage = view.findViewById<ImageView>(R.id.offlineIv)
+        val statusTextView = view.findViewById<TextView>(R.id.statusTv)
     }
 
     override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : FriendHolder {
@@ -29,9 +30,11 @@ class FriendAdapter(val friendList : ArrayList<FriendsDetails>, val listener : (
 
         if(currentItem.status == "Active") {
             holder.onlineImage.visibility = View.VISIBLE
+            holder.statusTextView.text = "Online"
         }
         else{
             holder.offlineImage.visibility = View.VISIBLE
+            holder.statusTextView.text = "Offline"
         }
 
         holder.itemView.setOnClickListener{

@@ -5,9 +5,13 @@
     android:id="@+id/layoutUser"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="30dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical"
-    android:paddingTop="2dp">
+    android:paddingTop="2dp"
+    app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -44,8 +48,9 @@
             android:id="@+id/onlineIv"
             android:layout_width="22dp"
             android:layout_height="20dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/FriendUserName"
+            app:layout_constraintEnd_toStartOf="@+id/statusTv"
             app:layout_constraintTop_toTopOf="@+id/FriendUserName"
             app:srcCompat="@android:drawable/presence_online" />
 
@@ -58,6 +63,16 @@
             app:layout_constraintStart_toEndOf="@+id/onlineIv"
             app:layout_constraintTop_toTopOf="@+id/onlineIv"
             app:srcCompat="@android:drawable/ic_notification_overlay" />
+
+        <TextView
+            android:id="@+id/statusTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="Status"
+            app:layout_constraintBottom_toBottomOf="@+id/onlineIv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/onlineIv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
