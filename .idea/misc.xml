@@ -15,7 +15,6 @@
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/drawable/item_right_side_background.xml" value="0.3828125" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/drawable/round_background.xml" value="0.2203125" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/fragment_channel.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/fragment_chat.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/fragment_friend.xml" value="0.36666666666666664" />
@@ -23,19 +22,22 @@
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/fragment_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/fragment_register.xml" value="0.5" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/fragment_request.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/fragment_spash.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/fragment_user.xml" value="0.33" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/item_friend.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/item_left.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/item_request.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/item_right.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/layout/item_user.xml" value="0.75" />
-        <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/menu/drawer_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/NikhilBajpai/AndroidStudioProjects/TestChatApp/app/src/main/res/menu/home_menu.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/drawable-anydpi/ic_action_addUser.xml" value="0.26615384615384613" />
+        <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/drawable-anydpi/ic_action_findUser.xml" value="0.26615384615384613" />
+        <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/drawable-anydpi/ic_action_friendslist.xml" value="0.26615384615384613" />
         <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/drawable-anydpi/ic_action_home.xml" value="0.2703125" />
+        <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/drawable-anydpi/ic_action_profilepage.xml" value="0.26615384615384613" />
         <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/drawable-anydpi/ic_action_settings.xml" value="0.2703125" />
+        <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/drawable/item_right_side_background.xml" value="0.26615384615384613" />
         <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/drawable/search_shape.xml" value="0.2703125" />
-        <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/layout/fragment_chat.xml" value="0.536" />
+        <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/layout/fragment_chat.xml" value="0.4742468415937804" />
         <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/layout/fragment_friend.xml" value="0.264" />
         <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
@@ -52,9 +54,6 @@
         <entry key="..\:/Users/yashi/Downloads/TestChatApp/app/src/main/res/menu/request_fragment_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
-  </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_spash.xml" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

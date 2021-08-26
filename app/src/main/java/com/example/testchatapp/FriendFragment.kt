@@ -1,5 +1,8 @@
 package com.example.testchatapp
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -38,6 +41,7 @@ class FriendFragment : Fragment() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,9 +49,14 @@ class FriendFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_friend, container, false)
 
-        val userSettings = view.findViewById<BottomNavigationItemView>(R.id.Settings)
+        val userSettings = view.findViewById<BottomNavigationItemView>(R.id.UserProfile)
         userSettings.setOnClickListener {
             findNavController().navigate(R.id.action_friendFragment_to_profileFragment)
+        }
+
+        val settings = view.findViewById<BottomNavigationItemView>(R.id.Settings)
+        settings.setOnClickListener {
+//            findNavController().navigate(R.id.action_requestFragment_to_profileFragment)
         }
 
         val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
@@ -60,6 +69,11 @@ class FriendFragment : Fragment() {
             val bundle = bundleOf("friendListIs" to friendListIs)
             findNavController().navigate(R.id.action_friendFragment_to_userFragment3, bundle)
         }
+
+        val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
+        friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
+        friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
+
         return view
     }
 
@@ -82,7 +96,7 @@ class FriendFragment : Fragment() {
                 searchText = newText!!
                 if(flag == 1){
                     findFriends()
-                }else if(searchText.length>=3){
+                }else if(searchText.length>=2){
                     flag = 1
                     findFriends()
                 }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,8 @@ class RequestFragment : Fragment() {
     lateinit var requestList : ArrayList<chatDataClass>
     lateinit var recyclerView : RecyclerView
     var friendListIs = mutableListOf<String>()
+    var searchText = ""
+    var flag = 0
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +46,14 @@ class RequestFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_request, container, false)
 
-        val userSettings = view.findViewById<BottomNavigationItemView>(R.id.Settings)
+        val userSettings = view.findViewById<BottomNavigationItemView>(R.id.UserProfile)
         userSettings.setOnClickListener {
             findNavController().navigate(R.id.action_requestFragment_to_profileFragment)
+        }
+
+        val settings = view.findViewById<BottomNavigationItemView>(R.id.Settings)
+        settings.setOnClickListener {
+//            findNavController().navigate(R.id.action_requestFragment_to_profileFragment)
         }
 
         val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
@@ -60,8 +68,8 @@ class RequestFragment : Fragment() {
             findNavController().navigate(R.id.action_requestFragment_to_userFragment,bundle)
         }
 
-        val homeScreen = view.findViewById<ImageButton>(R.id.homeB)
-        homeScreen.setOnClickListener {
+        val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
+        friendsList.setOnClickListener {
             findNavController().navigate(R.id.action_requestFragment_to_friendFragment)
         }
 
@@ -73,6 +81,7 @@ class RequestFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.requestRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
+        val friendSearchViewIs = view.findViewById<SearchView>(R.id.requestSearchView)
 
         auth = FirebaseAuth.getInstance()
 
@@ -80,10 +89,27 @@ class RequestFragment : Fragment() {
 
         requestView()
 
+        friendSearchViewIs.setOnQueryTextListener(object  : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchText = newText!!
+                if(flag == 1){
+                    requestView()
+                }else if(searchText.length>=2){
+                    flag = 1
+                    requestView()
+                }
+                return false
+            }
+
+        })
+
     }
 
     private fun requestView() {
-        requestList.clear()
         val ref  = FirebaseDatabase.getInstance().getReference("Request")
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot : DataSnapshot) {
@@ -93,8 +119,13 @@ class RequestFragment : Fragment() {
                         val requestIs = requestSnapshot.getValue(chatDataClass::class.java)
                         Log.d("requestFragment" , " content is ${requestIs?.message}" +
                                 "${requestIs?.receiverId} , ${requestIs?.senderId} , ${auth.currentUser?.uid.toString()}")
-                        if (requestIs?.receiverId == auth.currentUser?.uid.toString() ){
-                            requestList.add(requestIs)
+                        if(requestIs?.receiverId == auth.currentUser?.uid.toString()){
+                            if(requestIs.receiverId?.lowercase()?.contains(searchText.lowercase()) == true){
+                                requestList.add(requestIs)
+                            }
+                            else{
+                                requestList.add(requestIs)
+                            }
                         }
 
                     }

@@ -31,43 +31,42 @@
 
         </SearchView>
 
-        <ImageButton
-            android:id="@+id/homeB2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@color/white"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            android:scaleType="centerInside"
-            android:soundEffectsEnabled="true"
-            android:src="@drawable/ic_action_home"
-            app:tint="@color/teal_700"
-            tools:ignore="SpeakableTextPresentCheck" />
-
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userRecyclerView"
-        android:layout_width="358dp"
-        android:layout_height="567dp"
+        <ScrollView
+        android:layout_width="355dp"
+        android:layout_height="355dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        tools:listitem="@layout/item_user">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/userRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+                    app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                    tools:listitem="@layout/item_user">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+        </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:itemIconTint="#635F5F"
-        app:itemTextColor="#635F5F"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/home_menu" />
 

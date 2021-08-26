@@ -10,13 +10,11 @@
     android:layout_marginEnd="10dp"
     android:layout_marginBottom="10dp"
     android:orientation="vertical"
-    android:paddingTop="2dp"
     app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:orientation="horizontal">
 
 
@@ -26,9 +24,11 @@
             android:layout_height="67dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:src="@drawable/profile"
             app:civ_border_color="@color/colorPrimary"
             app:civ_border_width="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,10 +36,11 @@
             android:id="@+id/FriendUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
             android:maxLines="1"
-            android:textSize="16sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/FriendUserImage"
             app:layout_constraintTop_toTopOf="@+id/FriendUserImage"
             tools:text="UserName" />
@@ -48,17 +49,16 @@
             android:id="@+id/onlineIv"
             android:layout_width="22dp"
             android:layout_height="20dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/FriendUserName"
-            app:layout_constraintEnd_toStartOf="@+id/statusTv"
-            app:layout_constraintTop_toTopOf="@+id/FriendUserName"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@+id/FriendUserName"
+            app:layout_constraintTop_toBottomOf="@+id/FriendUserName"
             app:srcCompat="@android:drawable/presence_online" />
 
         <ImageView
             android:id="@+id/offlineIv"
             android:layout_width="22dp"
             android:layout_height="20dp"
-            android:layout_marginStart="-19dp"
+            android:layout_marginStart="-22dp"
             app:layout_constraintBottom_toBottomOf="@+id/onlineIv"
             app:layout_constraintStart_toEndOf="@+id/onlineIv"
             app:layout_constraintTop_toTopOf="@+id/onlineIv"
@@ -68,10 +68,10 @@
             android:id="@+id/statusTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="8dp"
             android:text="Status"
             app:layout_constraintBottom_toBottomOf="@+id/onlineIv"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/offlineIv"
             app:layout_constraintTop_toTopOf="@+id/onlineIv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
