@@ -20,12 +20,12 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userImage"
+            android:id="@+id/globalUsersImage"
             android:layout_width="62dp"
             android:layout_height="67dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/profile"
+            android:src="@drawable/image"
             app:civ_border_color="@color/colorPrimary"
             app:civ_border_width="1dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
             android:layout_marginTop="16dp"
             android:maxLines="1"
             android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/userImage"
+            app:layout_constraintStart_toEndOf="@+id/globalUsersImage"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="UserName" />
 
@@ -51,7 +51,7 @@
             android:layout_marginTop="16dp"
             android:maxLines="1"
             android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/userImage"
+            app:layout_constraintStart_toEndOf="@+id/globalUsersImage"
             app:layout_constraintTop_toBottomOf="@+id/userName"
             tools:text="Email" />
 

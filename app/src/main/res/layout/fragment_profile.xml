@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgrounddesignimage"
+    android:backgroundTint="#207E75"
+    android:backgroundTintMode="screen"
     tools:context=".ProfileFragment">
 
     <TextView
@@ -23,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/profileIv"
         android:layout_width="127dp"
         android:layout_height="113dp"
         android:layout_marginTop="60dp"
@@ -37,7 +39,7 @@
         android:id="@+id/logOut"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#192673"
         android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,31 +66,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@android:drawable/ic_menu_edit"
         app:backgroundTint="@color/white"
         app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/profileIv"
+        app:layout_constraintEnd_toEndOf="@+id/profileIv"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/userNameEt"
         android:layout_width="220dp"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userImageFab" />
+        app:layout_constraintTop_toBottomOf="@+id/imageUploadProgress" />
 
     <TextView
         android:id="@+id/passTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:text="Click here to change Password"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
@@ -111,5 +113,17 @@
         app:layout_constraintStart_toEndOf="@+id/userNameEt"
         app:layout_constraintTop_toTopOf="@+id/userNameEt"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <ProgressBar
+        android:id="@+id/imageUploadProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="@+id/profileIv"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/profileIv"
+        app:layout_constraintTop_toBottomOf="@+id/profileIv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

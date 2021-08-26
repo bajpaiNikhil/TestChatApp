@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CD32A8CA"
     tools:context=".FriendFragment">
 
     <LinearLayout
@@ -26,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:background="@drawable/search_shape"
-            android:backgroundTint="#D3CFCF"
+            android:backgroundTint="@color/white"
             android:submitBackground="@drawable/search_shape">
 
         </SearchView>

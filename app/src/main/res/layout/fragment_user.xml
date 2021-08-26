@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CD32A8CA"
     tools:context=".UserFragment">
 
 
@@ -27,37 +28,39 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:background="@drawable/search_shape"
-            android:backgroundTint="#D3CFCF">
+            android:backgroundTint="@color/white">
 
         </SearchView>
 
     </LinearLayout>
-        <ScrollView
+
+    <ScrollView
         android:layout_width="355dp"
         android:layout_height="355dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="@+id/linearLayout2"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-            <LinearLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/userRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-                    app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-                    tools:listitem="@layout/item_user">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                tools:listitem="@layout/item_user">
 
-                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
-            </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

@@ -25,7 +25,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/profile"
+            android:src="@drawable/image"
             app:civ_border_color="@color/colorPrimary"
             app:civ_border_width="1dp"
             app:layout_constraintBottom_toBottomOf="parent"

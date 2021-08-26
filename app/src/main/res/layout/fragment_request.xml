@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CD32A8CA"
     tools:context=".RequestFragment">
 
     <LinearLayout
@@ -26,18 +27,19 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:background="@drawable/search_shape"
-            android:backgroundTint="#D3CFCF">
+            android:backgroundTint="@color/white">
 
         </SearchView>
 
     </LinearLayout>
-        <ScrollView
-            android:layout_width="355dp"
-            android:layout_height="355dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+    <ScrollView
+        android:layout_width="355dp"
+        android:layout_height="355dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,8 +55,8 @@
                 app:layout_constraintStart_toStartOf="@+id/linearLayout2"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                 tools:listitem="@layout/item_request" />
-            </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
