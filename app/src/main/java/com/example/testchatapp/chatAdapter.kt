@@ -23,12 +23,14 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
     private val MESSAGE_TYPE_RIGHT = 1
     lateinit var auth: FirebaseAuth
     var userImageUrl =""
+    var senderImageUrl =""
 
     var firebaseUser : FirebaseUser? = null
 
     class ChatHolder(view : View):RecyclerView.ViewHolder(view) {
         val message = view.findViewById<TextView>(R.id.tvMessage)
         val userImageView = view.findViewById<CircleImageView>(R.id.userImage)
+        val friendImageView = view.findViewById<CircleImageView>(R.id.friendImage)
     }
 
     override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : ChatHolder {
@@ -55,6 +57,18 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
                 TODO("Not yet implemented")
             }
         })
+        val friendImageRef = FirebaseDatabase.getInstance().getReference("Users").child(currentItem.senderId.toString())
+        friendImageRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                senderImageUrl = snapshot.child("userProfileImgUrl").value.toString()
+                holder.friendImageView?.let { Glide.with(it).load(senderImageUrl).into(holder.friendImageView) }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
         holder.message.text = currentItem.message
     }
 

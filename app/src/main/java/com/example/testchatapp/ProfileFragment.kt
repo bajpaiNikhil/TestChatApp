@@ -31,7 +31,7 @@ class ProfileFragment : Fragment() {
 
     //user image
     lateinit var uri: Uri
-    var imageUrl: String = ""
+    var imageUrl: String? = null
     var imageName: String = ""
 
     lateinit var logOut: Button
@@ -39,16 +39,19 @@ class ProfileFragment : Fragment() {
     // For FireBase
     lateinit var auth: FirebaseAuth
 
+    override fun onCreate(savedInstanceState : Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            imageUrl = it.getString("currentUserImgUrl")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         // For Database*
         auth = Firebase.auth
@@ -67,13 +70,6 @@ class ProfileFragment : Fragment() {
         imageUploadProgressBar.visibility = View.INVISIBLE
         userNameUpdateFloatingActionButton.visibility = View.INVISIBLE
 
-        userProfileUpdateFloatingActionButton.setOnClickListener {
-            Intent(Intent.ACTION_GET_CONTENT).also {
-                it.type = "image/*"
-                startActivityForResult(it, 0)
-            }
-        }
-
         val userReference = FirebaseDatabase.getInstance().getReference("Users")
             .child(auth.currentUser?.uid.toString())
         userReference.addValueEventListener(object : ValueEventListener {
@@ -81,31 +77,38 @@ class ProfileFragment : Fragment() {
 
                 //EditText
                 val userName = snapshot.child("usernameR").value.toString()
-                val photoUrl = snapshot.child("userProfileImgUrl").value.toString()
-                if(snapshot.child("userProfileImgUrl").exists()) {
-                    if (photoUrl.isNotEmpty()) {
+                val photoUrl = snapshot.child("userProfileImgUrl").value
+                if (snapshot.child("userProfileImgUrl").exists()) {
+                    if (photoUrl.toString().isNotEmpty()) {
                         Log.d("ProfileFragment", "ImageUrl : $photoUrl")
-                        context?.let { Glide.with(it).load(photoUrl).into(imageView) }
-                    }
-                    else{
+                        if(imageUrl == null){
+                            context?.let { Glide.with(it).load(photoUrl).into(imageView) }
+                        }
+                        else {
+                            context?.let { Glide.with(it).load(imageUrl).into(imageView) }
+                        }
+                    } else {
                         context?.let { Glide.with(it).load(R.drawable.image).into(imageView) }
                     }
-                }
-                else{
-                    context?.let {
-                        Glide.with(it).load(R.drawable.image).into(imageView)
-                    }
-                }
 
+                }
+                else {
+                    context?.let { Glide.with(it).load(R.drawable.image).into(imageView) }
+                }
                 userNameEditText.isEnabled = false
                 userNameEditText.setText(userName)
-
             }
 
             override fun onCancelled(error: DatabaseError) {
 
             }
         })
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         logOut.setOnClickListener {
             val lastUser = auth.currentUser?.uid
@@ -131,6 +134,14 @@ class ProfileFragment : Fragment() {
             FirebaseDatabase.getInstance().getReference("Users")
                 .child(auth.currentUser?.uid.toString()).child("usernameR").setValue(newUserName)
         }
+
+        userProfileUpdateFloatingActionButton.setOnClickListener {
+            Intent(Intent.ACTION_GET_CONTENT).also {
+                it.type = "image/*"
+                startActivityForResult(it, 0)
+            }
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -142,7 +153,6 @@ class ProfileFragment : Fragment() {
             uri = data?.data!! //this data refer to data of our intent
 
             uploadImage(uri)
-            imageView.setImageURI(uri)
         }
     }
 
@@ -162,8 +172,11 @@ class ProfileFragment : Fragment() {
                         Log.d("ProfileFragment", "ImageUrl generated: $imageUrl")
                         FirebaseDatabase.getInstance().getReference("Users")
                             .child(auth.currentUser?.uid.toString()).child("userProfileImgUrl").setValue(imageUrl)
+                        FirebaseDatabase.getInstance().getReference("Users")
+                            .child(auth.currentUser?.uid.toString()).child("userProfileImgName").setValue(imageName)
                     }
                     imageUploadProgressBar.visibility = View.INVISIBLE
+
                     Toast.makeText(context, "Your Image has been Updated", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener {
                     imageUploadProgressBar.visibility = View.INVISIBLE

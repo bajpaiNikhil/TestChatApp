@@ -50,16 +50,6 @@ class UserFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_user, container, false)
 
-        val userSettings = view.findViewById<BottomNavigationItemView>(R.id.UserProfile)
-        userSettings.setOnClickListener {
-            findNavController().navigate(R.id.action_userFragment_to_profileFragment)
-        }
-
-        val settings = view.findViewById<BottomNavigationItemView>(R.id.Settings)
-        settings.setOnClickListener {
-//            findNavController().navigate(R.id.action_requestFragment_to_profileFragment)
-        }
-
         val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
         requests.setOnClickListener {
             findNavController().navigate(R.id.action_userFragment_to_requestFragment)

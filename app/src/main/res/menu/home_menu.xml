@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/FriendsList"
         android:icon="@drawable/ic_action_friendslist"
         android:title="@string/friends_list"
-        android:titleCondensed="List" />
+        app:showAsAction="withText" />
     <item
         android:id="@+id/Request"
         android:icon="@drawable/ic_action_adduser"
-        android:title="@string/request" />
+        android:title="@string/request"
+        app:showAsAction="withText" />
     <item
         android:id="@+id/Add_Friends"
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/find_friends"
-        android:titleCondensed="find"/>
-    <item
-        android:id="@+id/UserProfile"
-        android:icon="@drawable/ic_action_profilepage"
-        android:title="@string/user_profile"
-        android:titleCondensed="Profile"/>
-    <item
-        android:id="@+id/Settings"
-        android:icon="@drawable/ic_action_settings"
-        android:title="@string/settings" />
+        android:titleCondensed="find"
+        app:showAsAction="withText" />
 </menu>

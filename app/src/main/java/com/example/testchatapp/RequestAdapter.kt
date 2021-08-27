@@ -8,16 +8,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import de.hdodenhof.circleimageview.CircleImageView
 
 class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adapter<RequestAdapter.requestHolder>() {
     class requestHolder(view: View ) : RecyclerView.ViewHolder(view) {
         val senderName  = view.findViewById<TextView>(R.id.senderNameTv)
+        val senderImage = view.findViewById<CircleImageView>(R.id.senderIv)
         val requestMessage = view.findViewById<TextView>(R.id.requestMessage)
         val addButton = view.findViewById<Button>(R.id.requestAddButton)
         val rejectButton = view.findViewById<Button>(R.id.requestRejectButton)
@@ -35,9 +37,23 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
         senderRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
+
                     val senderName = snapshot.child("usernameR").value
                     Log.d("requestAdapter" , "username : ${senderName.toString()}")
                     holder.senderName.text = senderName.toString()
+
+                    val senderImageUrl = snapshot.child("userProfileImgUrl").value
+                    if(snapshot.child("userProfileImgUrl").exists()) {
+                        Log.d("FriendAdapter", "userProfileImhUrl : $senderImageUrl")
+                        holder.senderImage?.let {
+                            Glide.with(it).load(senderImageUrl).into(holder.senderImage)
+                        }
+                    }
+                    else{
+                        holder.senderImage?.let {
+                            Glide.with(it).load(R.drawable.image).into(holder.senderImage)
+                        }
+                    }
 
                 }
 

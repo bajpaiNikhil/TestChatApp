@@ -6,12 +6,15 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -20,6 +23,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 class FriendFragment : Fragment() {
@@ -28,11 +32,14 @@ class FriendFragment : Fragment() {
     lateinit var friendList: ArrayList<FriendsList>
     var friendListIs = mutableListOf<String>()
     lateinit var connectionList: ArrayList<FriendsDetails>
+    lateinit var userProfileLinearLayout: LinearLayout
+    lateinit var userProfileImageView: CircleImageView
 
     lateinit var auth: FirebaseAuth
 
     var searchText = ""
     var flag = 0
+    lateinit var bundle: Bundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,14 +56,38 @@ class FriendFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_friend, container, false)
 
-        val userSettings = view.findViewById<BottomNavigationItemView>(R.id.UserProfile)
-        userSettings.setOnClickListener {
-            findNavController().navigate(R.id.action_friendFragment_to_profileFragment)
-        }
+        auth = Firebase.auth
+        userProfileImageView = view.findViewById(R.id.currentUserIv)
+        val userReference = FirebaseDatabase.getInstance().getReference("Users")
+            .child(auth.currentUser?.uid.toString())
+        userReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
-        val settings = view.findViewById<BottomNavigationItemView>(R.id.Settings)
-        settings.setOnClickListener {
-//            findNavController().navigate(R.id.action_requestFragment_to_profileFragment)
+                //EditText
+                val photoUrl = snapshot.child("userProfileImgUrl").value
+                if (snapshot.child("userProfileImgUrl").exists()) {
+                    if (snapshot.child("userProfileImgUrl").exists()) {
+                        Log.d("ProfileFragment", "ImageUrl : $photoUrl")
+                        bundle = bundleOf("currentUserImgUrl" to photoUrl)
+                        context?.let { Glide.with(it).load(photoUrl).into(userProfileImageView) }
+                    } else {
+                        context?.let { Glide.with(it).load(R.drawable.image).into(userProfileImageView) }
+                    }
+
+                }
+                else {
+                    context?.let { Glide.with(it).load(R.drawable.image).into(userProfileImageView) }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+        userProfileLinearLayout = view.findViewById(R.id.userProfileLl)
+        userProfileLinearLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_friendFragment_to_profileFragment, bundle)
         }
 
         val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
@@ -81,7 +112,6 @@ class FriendFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         friendList = arrayListOf()
         connectionList = arrayListOf()
-        auth = Firebase.auth
         recyclerView = view.findViewById(R.id.FriendRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         val friendSearchViewIs = view.findViewById<SearchView>(R.id.friendSearchView)

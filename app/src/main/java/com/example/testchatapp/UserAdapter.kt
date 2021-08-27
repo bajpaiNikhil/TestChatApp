@@ -10,14 +10,20 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import de.hdodenhof.circleimageview.CircleImageView
 
 class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<UserAdapter.UserHolder>() {
     lateinit var auth : FirebaseAuth
     var rId : String? = ""
     class UserHolder(view : View) : RecyclerView.ViewHolder(view) {
         val userNameIs = view.findViewById<TextView>(R.id.userName)
+        val userImage = view.findViewById<CircleImageView>(R.id.globalUsersImage)
         val userEmail = view.findViewById<TextView>(R.id.temp)
         val addButton = view.findViewById<ImageView>(R.id.addUserButton)
     }
@@ -31,6 +37,28 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
         val currentItem = userList[position]
         rId = currentItem.userId.toString()
         Log.d("UserFragment" , rId!!)
+        val userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentItem.userId.toString())
+        userRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userImageUrl = snapshot.child("userProfileImgUrl").value
+                if(snapshot.child("userProfileImgUrl").exists()) {
+                    Log.d("FriendAdapter", "userProfileImhUrl : $userImageUrl")
+                    holder.userImage?.let {
+                        Glide.with(it).load(userImageUrl).into(holder.userImage)
+                    }
+                }
+                else{
+                    holder.userImage?.let {
+                        Glide.with(it).load(R.drawable.image).into(holder.userImage)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
         holder.userNameIs.text = currentItem.usernameR
         holder.userEmail.text  = currentItem.emailR
 

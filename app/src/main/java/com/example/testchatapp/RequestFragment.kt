@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
@@ -38,7 +37,7 @@ class RequestFragment : Fragment() {
         }
     }
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi", "WrongConstant")
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
         savedInstanceState : Bundle?
@@ -46,19 +45,10 @@ class RequestFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_request, container, false)
 
-        val userSettings = view.findViewById<BottomNavigationItemView>(R.id.UserProfile)
-        userSettings.setOnClickListener {
-            findNavController().navigate(R.id.action_requestFragment_to_profileFragment)
-        }
-
-        val settings = view.findViewById<BottomNavigationItemView>(R.id.Settings)
-        settings.setOnClickListener {
-//            findNavController().navigate(R.id.action_requestFragment_to_profileFragment)
-        }
-
         val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
         requests.setIconTintList(ColorStateList.valueOf(Color.BLUE))
         requests.setTextColor(ColorStateList.valueOf(Color.BLUE))
+
 
 
         val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
