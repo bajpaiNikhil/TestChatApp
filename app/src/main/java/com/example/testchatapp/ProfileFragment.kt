@@ -1,6 +1,7 @@
 package com.example.testchatapp
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -12,7 +13,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.EmailAuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
@@ -54,6 +59,7 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         // For Database*
+
         auth = Firebase.auth
 
         logOut = view.findViewById(R.id.logOut)
@@ -100,7 +106,6 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-
             }
         })
 
@@ -115,6 +120,9 @@ class ProfileFragment : Fragment() {
             auth.signOut()
             FirebaseDatabase.getInstance().getReference("Users").child(lastUser.toString())
                 .child("status").setValue("InActive")
+//            val mSaving = this.childFragmentManager.findFragmentById(R.id.profileFragment)
+//            getFragmentManager()?.beginTransaction()?.hide(mSaving!!)?.commit()
+////            getFragmentManager()?.beginTransaction()?.remove(requireParentFragment())?.commitAllowingStateLoss()
             findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
 
         }
@@ -153,6 +161,126 @@ class ProfileFragment : Fragment() {
             uri = data?.data!! //this data refer to data of our intent
 
             uploadImage(uri)
+        }
+
+        passwordEditText.setOnClickListener {
+
+//            val forgetRef =  FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+//            forgetRef.addValueEventListener(object : ValueEventListener{
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    val question = snapshot.child("forgetPassQues").value
+//                    val answer   = snapshot.child("forgetPassAns").value
+//                    val questionDialog = AlertDialog.Builder(context)
+//                    questionDialog.setTitle("Give adequate response")
+//                    questionDialog.setMessage(question.toString())
+//
+//                    val questionLayout = LinearLayout(context)
+//                    questionLayout.orientation = LinearLayout.VERTICAL
+//
+//                    val questionET = EditText(context)
+//                    questionET.setSingleLine()
+//                    questionET.hint = "Answer"
+//                    questionLayout.addView(questionET)
+//                    questionLayout.setPadding(50, 40, 50, 10)
+//                    questionDialog.setView(questionLayout)
+//
+//                    questionDialog.setPositiveButton("Correct"){ questionDialogIs , _ ->
+//
+//                        val answerIs = answer.toString()
+//                        val questionRes = questionET.text.toString()
+//
+//                        if(questionRes == answerIs){
+//
+//                            questionDialogIs.cancel()
+//
+//                            Log.d("dialog" , "Reached till here")
+//
+//                            val alert = AlertDialog.Builder(context)
+//                            alert.setTitle("Change password")
+//                            alert.setMessage("Change Password")
+//                            val layout = LinearLayout(context)
+//                            layout.orientation = LinearLayout.VERTICAL
+//
+//
+//                            val passwordET = EditText(context)
+//                            passwordET.setSingleLine()
+//                            passwordET.hint = "Old password"
+//                            layout.addView(passwordET)
+//
+//
+//                            val newPasswordET = EditText(context)
+//                            newPasswordET.setSingleLine()
+//                            newPasswordET.hint = "new Password"
+//                            layout.addView(newPasswordET)
+//
+//
+//                            val confirmPasswordET = EditText(context)
+//                            confirmPasswordET.setSingleLine()
+//                            confirmPasswordET.hint = "confirm Password"
+//                            layout.addView(confirmPasswordET)
+//
+//                            layout.setPadding(50, 40, 50, 10)
+//
+//                            alert.setView(layout)
+//
+//                            alert.setPositiveButton("Proceed") { answerDialogIs, _ ->
+//                                answerDialogIs.dismiss()
+//                                questionDialogIs.cancel()
+//                                val password = passwordET.text.toString()
+//                                val newPassword = newPasswordET.text.toString()
+//                                val confirmPassword = confirmPasswordET.text.toString()
+//
+//                                Log.i("dialog",password )
+//                                Log.i("dialog",newPassword )
+//                                Log.i("dialog",confirmPassword )
+//
+//                                if(confirmPassword == newPassword){
+//                                    val userCurrent = auth.currentUser
+//                                    val credentials = EmailAuthProvider.getCredential(userCurrent?.email.toString() ,password)
+//                                    userCurrent?.reauthenticate(credentials)?.addOnCompleteListener { p0 ->
+//                                        if (p0.isSuccessful) {
+//                                            userCurrent.updatePassword(confirmPassword)
+//                                                .addOnCompleteListener { p01 ->
+//                                                    if (p01.isSuccessful) {
+//                                                        Toast.makeText(
+//                                                            context,
+//                                                            "password Changed",
+//                                                            Toast.LENGTH_SHORT
+//                                                        ).show()
+//                                                    } else {
+//                                                        Toast.makeText(
+//                                                            context,
+//                                                            "password Changed",
+//                                                            Toast.LENGTH_SHORT
+//                                                        ).show()
+//                                                    }
+//                                                }
+//                                        }
+//                                    }
+//
+//                                    Toast.makeText(context, "Saved Sucessfully", Toast.LENGTH_LONG).show()
+//
+//                                }
+//                            }
+//
+//                            alert.setNegativeButton("Cancel") { dialog, _ ->
+//                                dialog.dismiss()
+//                            }
+//                            alert.setCancelable(false)
+//                            alert.show()
+//                        }
+//                        questionDialogIs.dismiss()
+//                    }
+//                    questionDialog.setNegativeButton("cancel"){dialog,_ ->
+//                        dialog.cancel()
+//                    }
+//                    questionDialog.setCancelable(false)
+//                    questionDialog.show()
+//                }
+//                override fun onCancelled(error: DatabaseError){
+//                    TODO("Not yet implemented")
+//                }
+//            })
         }
     }
 
