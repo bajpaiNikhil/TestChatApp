@@ -6,6 +6,7 @@ import android.content.Context.*
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color.RED
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -39,6 +40,7 @@ import androidx.core.content.ContextCompat
 
 import androidx.core.content.ContextCompat.getSystemService
 import android.os.LocaleList
+import androidx.core.os.bundleOf
 import com.google.ads.interactivemedia.v3.api.ImaSdkFactory
 
 
@@ -57,8 +59,6 @@ class ChatFragment : Fragment() {
     lateinit var offlineImageView: ImageView
     lateinit var statusTextView: TextView
 
-    var fontSizeSelected : Float = 20f
-
     lateinit var menuPress : ImageView
 
     lateinit var chatList : ArrayList<chatDataClass>
@@ -67,7 +67,6 @@ class ChatFragment : Fragment() {
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
             userId = it.getString("userId")
             Log.d("chat" , userId!!)
         }
@@ -138,71 +137,46 @@ class ChatFragment : Fragment() {
     private fun showPopUpMenu() {
         val pMenu = PopupMenu(context , menuPress)
         pMenu.menu.add("Font")
-        pMenu.menu.add("Language")
+        pMenu.menu.add("Font Colour")
 
         pMenu.setOnMenuItemClickListener {
             when(it.title){
                 "Font"  -> {
                     Log.d("chatFrag" ,"${it.title} found ")
                     val builder = AlertDialog.Builder(context)
-                    builder.setTitle("Choose an animal")
+                    builder.setTitle("Choose the Font Size")
 
                     // add a list
-                    val animals = arrayOf("12", "14", "20", "22", "24")
-                    builder.setItems(animals) { dialog, which ->
+                    val fontSizeArray = arrayOf("Small", "Medium", "Large", "Extra Large", "Default")
+                    builder.setItems(fontSizeArray) { dialog, which ->
 
                         when (which) {
                             0 -> {
-                                messageTextView.textSize = 12f
-                                val fontSizeSelected = messageTextView.textSize
+                                val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontSize").setValue(14)
 
-                                Log.d("chatFrag" ,"$fontSizeSelected found ")
-                                val size = FontSizePicked()
-                                size.fontSize = 12f
-
-
-                                Log.d("chatFrag" ,"$which found ")
-                                Log.d("chatFrag" ,"${size.fontSize} found ")
-                                Toast.makeText(context,"item Clicked ${which}" , Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             1 -> {
-                                messageTextView.textSize = 14f
-                                fontSizeSelected = messageTextView.textSize
-                                Log.d("chatFrag" ,"$fontSizeSelected found ")
-                                val size = FontSizePicked()
-                                size.fontSize = 14f
-                                Log.d("chatFrag" ,"${size.fontSize} found ")
-                                Log.d("chatFrag" ,"$which found ")
-                                Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show()
+                                val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontSize").setValue(16)
+                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             2 -> {
-                                messageTextView.textSize = 20f
-                                fontSizeSelected = messageTextView.textSize
-                                Log.d("chatFrag" ,"$fontSizeSelected found ")
-                                val size = FontSizePicked()
-                                size.fontSize = 20f
-                                Log.d("chatFrag" ,"$which found ")
-                                Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show()
+                                val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontSize").setValue(20)
+                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             3 -> {
-                                messageTextView.textSize = 22f
-                                fontSizeSelected = messageTextView.textSize
-                                Log.d("chatFrag" ,"$fontSizeSelected found ")
-                                val size = FontSizePicked()
-                                size.fontSize = 22f
-                                Log.d("chatFrag" ,"${size.fontSize} found ")
-                                Log.d("chatFrag" ,"$which found ")
-                                Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show()
+                                val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontSize").setValue(24)
+                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             4 -> {
-                                messageTextView.textSize = 24f
-                                fontSizeSelected = messageTextView.textSize
-                                Log.d("chatFrag" ,"$fontSizeSelected found ")
-                                val size = FontSizePicked()
-                                size.fontSize = 24f
-                                Log.d("chatFrag" ,"${size.fontSize} found ")
+                                val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontSize").setValue(18)
                                 Log.d("chatFrag" ,"$which found ")
-                                Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
 
                         }
@@ -213,25 +187,35 @@ class ChatFragment : Fragment() {
                     dialog.show()
                     Toast.makeText(context , "Font . " , Toast.LENGTH_LONG).show()
                 }
-                "Language" -> {
+                "Font Colour" -> {
                     Log.d("chatFrag" , "${it.title} found")
                     val builder = AlertDialog.Builder(context)
-                    builder.setTitle("Choose an animal")
+                    builder.setTitle("Choose Font Colour")
 
                     // add a list
-                    val animals = arrayOf("Hindi", "Spanish", "Latin", "Portuguese", "German")
-                    builder.setItems(animals) { dialog, which ->
+                    val fontColorArray = arrayOf("Crimson", "Coral", "DimGrey", "Snow", "Default")
+                    builder.setItems(fontColorArray) { dialog, which ->
                         when (which) {
                             0 -> {
-
-                                //messageTextView.imeHintLocales = LocaleList(Locale("ar", "Arabic"))
-                                messageTextView.setImeHintLocales(LocaleList(Locale("ar", "Arabic")))
-                                InputMethodManager.SHOW_FORCED
-                                Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show() }
-                            1 -> { Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show() }
-                            2 -> { Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show() }
-                            3 -> { Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show() }
-                            4 -> { Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show() }
+                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontColor").setValue("#DC143C")
+                                Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
+                            1 -> {
+                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontColor").setValue("#FF7F50")
+                                Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
+                            2 -> {
+                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontColor").setValue("#696969")
+                                Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
+                            3 -> {
+                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontColor").setValue("#FFFAFA")
+                                Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
+                            4 -> {
+                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontColor").setValue("#36454F")
+                                Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
                         }
                     }
 
@@ -377,9 +361,4 @@ class ChatFragment : Fragment() {
 data class userToChar(
     val usernameR : String? = "",
     val status : String ? =""
-)
-
-
-data class FontSizePicked(
-    var fontSize : Float = 16f
 )

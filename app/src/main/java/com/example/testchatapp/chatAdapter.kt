@@ -1,5 +1,7 @@
 package com.example.testchatapp
 
+import android.graphics.Color
+import android.graphics.Color.RED
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +31,7 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
     var firebaseUser : FirebaseUser? = null
 
     class ChatHolder(view : View):RecyclerView.ViewHolder(view) {
-        val message = view.findViewById<TextView>(R.id.tvMessage)
+        var message = view.findViewById<TextView>(R.id.tvMessage)
         val userImageView = view.findViewById<CircleImageView>(R.id.userImage)
         val friendImageView = view.findViewById<CircleImageView>(R.id.friendImage)
     }
@@ -48,24 +50,46 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder : ChatHolder, position : Int) {
         val currentItem  = chatList[position]
 
-//        holder.message.textSize =  fontSize
-//        Log.d("chatFrag" ,"${fontSize} chatAdapter found ")
-//        val sizePicked = FontSizePicked()
-//        Log.d("chatFrag" ,"${sizePicked.fontSize} chatAdapter found ")
-//        holder.message.textSize = sizePicked.fontSize
-
 
         val userImageRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
         userImageRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 userImageUrl = snapshot.child("userProfileImgUrl").value.toString()
-                holder.userImageView?.let { Glide.with(it).load(userImageUrl).into(holder.userImageView) }
+                holder.userImageView?.let { Glide.with(it).load(userImageUrl).into(holder.userImageView)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
         })
+        val userFontSize = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("chatCharacteristics")
+        userFontSize.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    var sizeText = "18"
+                    var fontColor = "#36454F"
+                    if(snapshot.child("fontSize").exists()){
+                        sizeText = snapshot.child("fontSize").value.toString()
+                    }
+                    if(snapshot.child("fontColor").exists()){
+                        fontColor = snapshot.child("fontColor").value.toString()
+                    }
+
+                    holder.message.textSize = sizeText.toFloat()
+                    holder.message.setTextColor(Color.parseColor(fontColor))
+                    Log.d("chatAdapter" , "$sizeText HEhEHEHAHAHAA")
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
         val friendImageRef = FirebaseDatabase.getInstance().getReference("Users").child(currentItem.senderId.toString())
         friendImageRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {

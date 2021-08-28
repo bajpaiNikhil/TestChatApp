@@ -39,7 +39,7 @@ class FriendFragment : Fragment() {
 
     var searchText = ""
     var flag = 0
-    lateinit var bundle: Bundle
+    var bundle: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,10 +65,15 @@ class FriendFragment : Fragment() {
 
                 //EditText
                 val photoUrl = snapshot.child("userProfileImgUrl").value
+                Log.d("ff" , "we reached till ${photoUrl.toString().length}")
                 if (snapshot.child("userProfileImgUrl").exists()) {
                     if (snapshot.child("userProfileImgUrl").exists()) {
                         Log.d("ProfileFragment", "ImageUrl : $photoUrl")
+
+
                         bundle = bundleOf("currentUserImgUrl" to photoUrl)
+
+
                         context?.let { Glide.with(it).load(photoUrl).into(userProfileImageView) }
                     } else {
                         context?.let { Glide.with(it).load(R.drawable.image).into(userProfileImageView) }
@@ -87,7 +92,10 @@ class FriendFragment : Fragment() {
 
         userProfileLinearLayout = view.findViewById(R.id.userProfileLl)
         userProfileLinearLayout.setOnClickListener {
+
             findNavController().navigate(R.id.action_friendFragment_to_profileFragment, bundle)
+
+
         }
 
         val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
