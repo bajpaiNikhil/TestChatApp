@@ -50,7 +50,7 @@ class RegisterFragment : Fragment() {
         // city spinner
         cityRS = view.findViewById(R.id.cityRS)
         val cityList: MutableList<String?> = ArrayList()
-        cityList.add(0, "Select a city from the list")
+        cityList.add(0, "Select a city")
         cityList.add("Mumbai")
         cityList.add("Delhi")
         cityList.add("Kolkata")
@@ -74,7 +74,8 @@ class RegisterFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (parent?.getItemAtPosition(position) == "Select a city from the list") {
+                if (parent?.getItemAtPosition(position) == "Select a city") {
+                    // no code to be added here
                 }
                 else {
                     cityNameR = parent?.getItemAtPosition(position).toString()
@@ -90,7 +91,7 @@ class RegisterFragment : Fragment() {
         // forget password question's spinner
         forgetPassQuesR = view.findViewById(R.id.forgetPassQuesRS)
         val quesList: MutableList<String?> = ArrayList()
-        quesList.add(0, "Select a Ques from the list")
+        quesList.add(0, "Select a question")
         quesList.add("Favourite Dish?")
         quesList.add("Birth Place?")
         quesList.add("First Pet's Name?")
@@ -106,7 +107,8 @@ class RegisterFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (parent?.getItemAtPosition(position) == "Select a ques from the list") {
+                if (parent?.getItemAtPosition(position) == "Select a question") {
+                    // no code to be added here
                 }
                 else {
                     forgetPassQuesString = parent?.getItemAtPosition(position).toString()

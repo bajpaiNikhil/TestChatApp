@@ -1,7 +1,6 @@
 package com.example.testchatapp
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,11 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.EmailAuthCredential
-import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
@@ -33,6 +28,8 @@ class ProfileFragment : Fragment() {
     lateinit var userNameEditFloatingActionButton: FloatingActionButton
     lateinit var userNameUpdateFloatingActionButton: FloatingActionButton
     lateinit var imageUploadProgressBar: ProgressBar
+    lateinit var languageSpinner: Spinner
+    var appLanguageSelected: String =""
 
     //user image
     lateinit var uri: Uri
@@ -63,6 +60,41 @@ class ProfileFragment : Fragment() {
         auth = Firebase.auth
 
         logOut = view.findViewById(R.id.logOut)
+
+        languageSpinner = view.findViewById(R.id.languageSpinner)
+        val language: MutableList<String?> = ArrayList()
+        language.add(0, "Select a language")
+        language.add("Hindi")
+        language.add("French")
+        language.add("Default")
+
+        val languageAdapter: ArrayAdapter<String?>? =
+            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
+        languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        languageSpinner.adapter = languageAdapter
+        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (parent?.getItemAtPosition(position).toString() == "Select a language") {
+                    // no code to be added here
+                }
+                else {
+                    appLanguageSelected = parent?.getItemAtPosition(position).toString()
+                    FirebaseDatabase.getInstance().getReference("Users")
+                        .child(auth.currentUser?.uid.toString()).child("appLanguage")
+                        .setValue(appLanguageSelected)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
 
         // For Edit Text Display
         userNameEditText = view.findViewById(R.id.userNameEt)
@@ -118,9 +150,6 @@ class ProfileFragment : Fragment() {
             auth.signOut()
             FirebaseDatabase.getInstance().getReference("Users").child(lastUser.toString())
                 .child("status").setValue("InActive")
-//            val mSaving = this.childFragmentManager.findFragmentById(R.id.profileFragment)
-//            getFragmentManager()?.beginTransaction()?.hide(mSaving!!)?.commit()
-////            getFragmentManager()?.beginTransaction()?.remove(requireParentFragment())?.commitAllowingStateLoss()
             findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
 
         }

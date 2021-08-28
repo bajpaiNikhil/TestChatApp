@@ -129,4 +129,14 @@
         app:layout_constraintStart_toStartOf="@+id/profileIv"
         app:layout_constraintTop_toBottomOf="@+id/profileIv" />
 
+    <Spinner
+        android:id="@+id/languageSpinner"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/passTv"
+        app:layout_constraintStart_toStartOf="@+id/passTv"
+        app:layout_constraintTop_toBottomOf="@+id/passTv"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
