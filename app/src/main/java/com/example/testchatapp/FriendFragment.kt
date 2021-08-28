@@ -57,6 +57,7 @@ class FriendFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_friend, container, false)
 
         auth = Firebase.auth
+
         userProfileImageView = view.findViewById(R.id.currentUserIv)
         val userReference = FirebaseDatabase.getInstance().getReference("Users")
             .child(auth.currentUser?.uid.toString())
@@ -90,12 +91,16 @@ class FriendFragment : Fragment() {
             }
         })
 
+        recyclerView = view.findViewById(R.id.FriendRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        findFriends()
+
+        friendList = arrayListOf()
+        connectionList = arrayListOf()
+
         userProfileLinearLayout = view.findViewById(R.id.userProfileLl)
         userProfileLinearLayout.setOnClickListener {
-
             findNavController().navigate(R.id.action_friendFragment_to_profileFragment, bundle)
-
-
         }
 
         val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
@@ -118,13 +123,8 @@ class FriendFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        friendList = arrayListOf()
-        connectionList = arrayListOf()
-        recyclerView = view.findViewById(R.id.FriendRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
         val friendSearchViewIs = view.findViewById<SearchView>(R.id.friendSearchView)
 
-        findFriends()
         friendSearchViewIs.setOnQueryTextListener(object  : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -140,7 +140,6 @@ class FriendFragment : Fragment() {
                 }
                 return false
             }
-
         })
     }
 
@@ -159,13 +158,11 @@ class FriendFragment : Fragment() {
                     Log.d("FriendsFragment", "Friend list is ${friendListIs}")
                     Log.d("FriendsFragment", "Friends Id is ${friendList}")
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
         val friendRef = FirebaseDatabase.getInstance().getReference("Users")
         friendRef.addValueEventListener(object : ValueEventListener {
@@ -188,17 +185,14 @@ class FriendFragment : Fragment() {
                             bundle
                         )
                     }
-
                     recyclerView.adapter = FriendAdapter(connectionList, ::onItemSelected)
                     Log.d("FriendList", "conneciton list $connectionList")
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
     }
 }

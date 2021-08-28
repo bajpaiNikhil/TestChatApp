@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.view.isInvisible
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.EmailAuthProvider
@@ -42,7 +43,11 @@ class ChangePasswordFragment : Fragment() {
     lateinit var confirmPasswordET : EditText
     lateinit var submitPassword : Button
 
+    lateinit var quesAnsCardView: CardView
+    lateinit var changePassCardView: CardView
+
     var answer =""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,6 +60,10 @@ class ChangePasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //findviewbyid for first pass
+
+        quesAnsCardView = view.findViewById(R.id.quesAnsCv)
+        changePassCardView = view.findViewById(R.id.changePassCv)
+        changePassCardView.visibility = View.INVISIBLE
 
         questionTV = view.findViewById(R.id.questionTextView)
         answerTV = view.findViewById(R.id.answerTextView)
@@ -88,68 +97,69 @@ class ChangePasswordFragment : Fragment() {
                 answer = snapshot.child("forgetPassAns").value.toString()
 
                 questionET.text = question.toString()
-
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
 
         submit.setOnClickListener {
             if(answerET.text.toString() == answer){
-                questionTV.visibility = View.INVISIBLE
-                answerTV.visibility = View.INVISIBLE
-                headingTV.visibility = View.INVISIBLE
-                questionET.visibility = View.INVISIBLE
-                answerET.visibility = View.INVISIBLE
-                submit.visibility = View.INVISIBLE
+
+                quesAnsCardView.visibility = View.INVISIBLE
                 submit.isClickable = false
 
-                passHeadingTV.visibility = View.VISIBLE
-                passwordTV.visibility = View.VISIBLE
-                newPasswordTV.visibility = View.VISIBLE
-                confirmPasswordTV.visibility = View.VISIBLE
-                passwordET.visibility = View.VISIBLE
-                newPasswordET.visibility = View.VISIBLE
-                confirmPasswordET.visibility = View.VISIBLE
-                submitPassword.visibility = View.VISIBLE
+                changePassCardView.visibility = View.VISIBLE
                 submitPassword.isClickable = true
             }
         }
 
         submitPassword.setOnClickListener {
-            if(newPasswordET.text.toString() == confirmPasswordET.text.toString()){
-                val password = passwordET.text.toString()
-                val newPassword = newPasswordET.text.toString()
-                val confirmPassword = confirmPasswordET.text.toString()
+            if(passwordET.text.isNotEmpty() && newPasswordET.text.isNotEmpty() && confirmPasswordET.text.isNotEmpty()) {
+                if (newPasswordET.text.toString() == confirmPasswordET.text.toString()) {
+                    val password = passwordET.text.toString()
+                    val newPassword = newPasswordET.text.toString()
+                    val confirmPassword = confirmPasswordET.text.toString()
 
-                Log.i("dialog",password )
-                Log.i("dialog",newPassword )
-                Log.i("dialog",confirmPassword )
+                    Log.i("dialog", password)
+                    Log.i("dialog", newPassword)
+                    Log.i("dialog", confirmPassword)
 
-                if(confirmPassword == newPassword){
-                    val userCurrent = auth.currentUser
-                    val credentials = EmailAuthProvider.getCredential(userCurrent?.email.toString() ,password)
-                    userCurrent?.reauthenticate(credentials)?.addOnCompleteListener { p0 ->
-                        if (p0.isSuccessful) {
-                            userCurrent.updatePassword(confirmPassword)
-                                .addOnCompleteListener { p01 ->
+                    if (confirmPassword == newPassword) {
+                        val userCurrent = auth.currentUser
+                        val credentials =
+                            EmailAuthProvider.getCredential(userCurrent?.email.toString(), password)
+                        userCurrent?.reauthenticate(credentials)?.addOnCompleteListener { p0 ->
+                            if (p0.isSuccessful) {
+                                userCurrent.updatePassword(confirmPassword).addOnCompleteListener { p01 ->
                                     if (p01.isSuccessful) {
-                                        Toast.makeText(context, "password Changed", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            context,
+                                            "password Changed",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     } else {
-                                    Toast.makeText(context, "password Changed", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            context,
+                                            "password Changed",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                 }
+                            }
                         }
+                        Toast.makeText(context, "Saved Sucessfully", Toast.LENGTH_LONG).show()
                     }
-
-                    Toast.makeText(context, "Saved Sucessfully", Toast.LENGTH_LONG).show()
-
                 }
+                findNavController().navigate(R.id.action_changePasswordFragment_to_profileFragment)
             }
-            findNavController().navigate(R.id.action_changePasswordFragment_to_profileFragment)
-
+            else{
+                Toast.makeText(
+                    context,
+                    "Please make sure to enter all the fields",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 }

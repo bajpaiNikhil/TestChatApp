@@ -151,16 +151,12 @@ class ProfileFragment : Fragment() {
         passwordEditText.setOnClickListener{
             Log.d("dialog", "Reached till here")
             findNavController().navigate(R.id.action_profileFragment_to_changePasswordFragment2)
-
         }
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Toast.makeText(context, "Your Image is being Uploaded", Toast.LENGTH_LONG).show()
-        imageUploadProgressBar.visibility = View.VISIBLE
-
         if (resultCode == Activity.RESULT_OK && requestCode == 0) {
             uri = data?.data!! //this data refer to data of our intent
 
@@ -171,6 +167,7 @@ class ProfileFragment : Fragment() {
 
 
     private fun uploadImage(uri: Uri?) {
+        imageUploadProgressBar.visibility = View.VISIBLE
         imageName =
             uri?.lastPathSegment?.removePrefix("raw:/storage/emulated/0/Download/").toString()
         Log.d(
@@ -179,23 +176,21 @@ class ProfileFragment : Fragment() {
         )
         val storageReference = FirebaseStorage.getInstance().reference.child("image/$imageName")
         if (uri != null) {
-            storageReference.putFile(uri)
-                .addOnSuccessListener { it ->
-                    it.metadata?.reference?.downloadUrl?.addOnSuccessListener {
-                        imageUrl = it.toString()
-                        Log.d("ProfileFragment", "ImageUrl generated: $imageUrl")
-                        FirebaseDatabase.getInstance().getReference("Users")
-                            .child(auth.currentUser?.uid.toString()).child("userProfileImgUrl").setValue(imageUrl)
-                        FirebaseDatabase.getInstance().getReference("Users")
-                            .child(auth.currentUser?.uid.toString()).child("userProfileImgName").setValue(imageName)
-                    }
+            storageReference.putFile(uri).addOnSuccessListener { it ->
+                it.metadata?.reference?.downloadUrl?.addOnSuccessListener {
+                    imageUrl = it.toString()
+                    Log.d("ProfileFragment", "ImageUrl generated: $imageUrl")
+                    FirebaseDatabase.getInstance().getReference("Users")
+                        .child(auth.currentUser?.uid.toString()).child("userProfileImgUrl").setValue(imageUrl)
+                    FirebaseDatabase.getInstance().getReference("Users")
+                        .child(auth.currentUser?.uid.toString()).child("userProfileImgName").setValue(imageName)
                     imageUploadProgressBar.visibility = View.INVISIBLE
-
                     Toast.makeText(context, "Your Image has been Updated", Toast.LENGTH_LONG).show()
-                }.addOnFailureListener {
-                    imageUploadProgressBar.visibility = View.INVISIBLE
-                    Toast.makeText(context, "Image Upload failed", Toast.LENGTH_LONG).show()
                 }
+            }.addOnFailureListener {
+                imageUploadProgressBar.visibility = View.INVISIBLE
+                Toast.makeText(context, "Image Upload failed", Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
