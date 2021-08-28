@@ -19,6 +19,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapter<chatAdapter.ChatHolder>() {
 
+
     private val MESSAGE_TYPE_LEFT = 0
     private val MESSAGE_TYPE_RIGHT = 1
     lateinit var auth: FirebaseAuth
@@ -46,6 +47,14 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder : ChatHolder, position : Int) {
         val currentItem  = chatList[position]
+
+//        holder.message.textSize =  fontSize
+//        Log.d("chatFrag" ,"${fontSize} chatAdapter found ")
+//        val sizePicked = FontSizePicked()
+//        Log.d("chatFrag" ,"${sizePicked.fontSize} chatAdapter found ")
+//        holder.message.textSize = sizePicked.fontSize
+
+
         val userImageRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
         userImageRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -71,6 +80,9 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
 
         holder.message.text = currentItem.message
     }
+
+
+
 
     override fun getItemCount() : Int {
         return chatList.size

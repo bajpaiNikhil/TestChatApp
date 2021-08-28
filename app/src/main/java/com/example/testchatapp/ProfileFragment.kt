@@ -44,7 +44,7 @@ class ProfileFragment : Fragment() {
     // For FireBase
     lateinit var auth: FirebaseAuth
 
-    override fun onCreate(savedInstanceState : Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             imageUrl = it.getString("currentUserImgUrl")
@@ -87,18 +87,16 @@ class ProfileFragment : Fragment() {
                 if (snapshot.child("userProfileImgUrl").exists()) {
                     if (photoUrl.toString().isNotEmpty()) {
                         Log.d("ProfileFragment", "ImageUrl : $photoUrl")
-                        if(imageUrl == null){
+                        if (imageUrl == null) {
                             context?.let { Glide.with(it).load(photoUrl).into(imageView) }
-                        }
-                        else {
+                        } else {
                             context?.let { Glide.with(it).load(imageUrl).into(imageView) }
                         }
                     } else {
                         context?.let { Glide.with(it).load(R.drawable.image).into(imageView) }
                     }
 
-                }
-                else {
+                } else {
                     context?.let { Glide.with(it).load(R.drawable.image).into(imageView) }
                 }
                 userNameEditText.isEnabled = false
@@ -150,20 +148,9 @@ class ProfileFragment : Fragment() {
             }
         }
 
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Toast.makeText(context, "Your Image is being Uploaded", Toast.LENGTH_LONG).show()
-        imageUploadProgressBar.visibility = View.VISIBLE
-
-        if (resultCode == Activity.RESULT_OK && requestCode == 0) {
-            uri = data?.data!! //this data refer to data of our intent
-
-            uploadImage(uri)
-        }
-
-        passwordEditText.setOnClickListener {
+        passwordEditText.setOnClickListener{
+            Log.d("dialog", "Reached till here")
+            findNavController().navigate(R.id.action_profileFragment_to_changePasswordFragment2)
 
 //            val forgetRef =  FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
 //            forgetRef.addValueEventListener(object : ValueEventListener{
@@ -282,7 +269,22 @@ class ProfileFragment : Fragment() {
 //                }
 //            })
         }
+
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Toast.makeText(context, "Your Image is being Uploaded", Toast.LENGTH_LONG).show()
+        imageUploadProgressBar.visibility = View.VISIBLE
+
+        if (resultCode == Activity.RESULT_OK && requestCode == 0) {
+            uri = data?.data!! //this data refer to data of our intent
+
+            uploadImage(uri)
+        }
+    }
+
+
 
     private fun uploadImage(uri: Uri?) {
         imageName =

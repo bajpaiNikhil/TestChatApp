@@ -1,17 +1,21 @@
 package com.example.testchatapp
 
 import android.app.AlertDialog
+import android.content.Context
+import android.content.Context.*
 import android.content.DialogInterface
+import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.widget.AlertDialogLayout
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.navigation.fragment.findNavController
@@ -27,6 +31,15 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.nio.file.FileVisitResult
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import android.view.inputmethod.InputMethodSubtype
+import androidx.core.content.ContextCompat
+
+import androidx.core.content.ContextCompat.getSystemService
+import android.os.LocaleList
+import com.google.ads.interactivemedia.v3.api.ImaSdkFactory
 
 
 class ChatFragment : Fragment() {
@@ -43,6 +56,10 @@ class ChatFragment : Fragment() {
     lateinit var onlineImageView: ImageView
     lateinit var offlineImageView: ImageView
     lateinit var statusTextView: TextView
+
+    var fontSizeSelected : Float = 20f
+
+    lateinit var menuPress : ImageView
 
     lateinit var chatList : ArrayList<chatDataClass>
 
@@ -69,7 +86,7 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         db = Firebase.database
         auth = FirebaseAuth.getInstance()
-        tvName  = view.findViewById(R.id.tvUserName)
+        tvName = view.findViewById(R.id.tvUserName)
 
         chatList = arrayListOf()
 
@@ -79,6 +96,9 @@ class ChatFragment : Fragment() {
         onlineImageView = view.findViewById(R.id.onlineIv2)
         offlineImageView = view.findViewById(R.id.offlineIv2)
         statusTextView = view.findViewById(R.id.statusTv2)
+
+        menuPress = view.findViewById(R.id.menuShow)
+
         recyclerView = view.findViewById(R.id.chatRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -86,26 +106,148 @@ class ChatFragment : Fragment() {
         offlineImageView.visibility = View.INVISIBLE
         statusTextView.visibility = View.INVISIBLE
 
+        menuPress.setOnClickListener {
+            showPopUpMenu()
+        }
+
         findUserToChat()
 
         chatList.clear()
-        readMessage(auth.currentUser?.uid!! , userId!!)
+        readMessage(auth.currentUser?.uid!!, userId!!)
         buttonSendClick.setOnClickListener {
             val message = messageTextView.text.toString()
-            if(message.isEmpty()){
-                Toast.makeText(context , "type the message you goose" , Toast.LENGTH_SHORT).show()
-            }else{
-                sendMessage(auth.currentUser?.uid!! , userId!! , message)
+            if (message.isEmpty()) {
+                Toast.makeText(context, "type the message you goose", Toast.LENGTH_SHORT).show()
+            } else {
+                sendMessage(auth.currentUser?.uid!!, userId!!, message)
                 messageTextView.text = ""
             }
 
-            readMessage(auth.currentUser?.uid!! , userId!!)
+            readMessage(auth.currentUser?.uid!!, userId!!)
+
         }
 
         backImageView.setOnClickListener {
             findNavController().navigate(R.id.action_chatFragment_to_friendFragment)
         }
+        menuPress.setOnClickListener {
+            showPopUpMenu()
+        }
     }
+
+    private fun showPopUpMenu() {
+        val pMenu = PopupMenu(context , menuPress)
+        pMenu.menu.add("Font")
+        pMenu.menu.add("Language")
+
+        pMenu.setOnMenuItemClickListener {
+            when(it.title){
+                "Font"  -> {
+                    Log.d("chatFrag" ,"${it.title} found ")
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle("Choose an animal")
+
+                    // add a list
+                    val animals = arrayOf("12", "14", "20", "22", "24")
+                    builder.setItems(animals) { dialog, which ->
+
+                        when (which) {
+                            0 -> {
+                                messageTextView.textSize = 12f
+                                val fontSizeSelected = messageTextView.textSize
+
+                                Log.d("chatFrag" ,"$fontSizeSelected found ")
+                                val size = FontSizePicked()
+                                size.fontSize = 12f
+
+
+                                Log.d("chatFrag" ,"$which found ")
+                                Log.d("chatFrag" ,"${size.fontSize} found ")
+                                Toast.makeText(context,"item Clicked ${which}" , Toast.LENGTH_SHORT).show()
+                            }
+                            1 -> {
+                                messageTextView.textSize = 14f
+                                fontSizeSelected = messageTextView.textSize
+                                Log.d("chatFrag" ,"$fontSizeSelected found ")
+                                val size = FontSizePicked()
+                                size.fontSize = 14f
+                                Log.d("chatFrag" ,"${size.fontSize} found ")
+                                Log.d("chatFrag" ,"$which found ")
+                                Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show()
+                            }
+                            2 -> {
+                                messageTextView.textSize = 20f
+                                fontSizeSelected = messageTextView.textSize
+                                Log.d("chatFrag" ,"$fontSizeSelected found ")
+                                val size = FontSizePicked()
+                                size.fontSize = 20f
+                                Log.d("chatFrag" ,"$which found ")
+                                Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show()
+                            }
+                            3 -> {
+                                messageTextView.textSize = 22f
+                                fontSizeSelected = messageTextView.textSize
+                                Log.d("chatFrag" ,"$fontSizeSelected found ")
+                                val size = FontSizePicked()
+                                size.fontSize = 22f
+                                Log.d("chatFrag" ,"${size.fontSize} found ")
+                                Log.d("chatFrag" ,"$which found ")
+                                Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show()
+                            }
+                            4 -> {
+                                messageTextView.textSize = 24f
+                                fontSizeSelected = messageTextView.textSize
+                                Log.d("chatFrag" ,"$fontSizeSelected found ")
+                                val size = FontSizePicked()
+                                size.fontSize = 24f
+                                Log.d("chatFrag" ,"${size.fontSize} found ")
+                                Log.d("chatFrag" ,"$which found ")
+                                Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show()
+                            }
+
+                        }
+                    }
+
+                    // create and show the alert dialog
+                    val dialog = builder.create()
+                    dialog.show()
+                    Toast.makeText(context , "Font . " , Toast.LENGTH_LONG).show()
+                }
+                "Language" -> {
+                    Log.d("chatFrag" , "${it.title} found")
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle("Choose an animal")
+
+                    // add a list
+                    val animals = arrayOf("Hindi", "Spanish", "Latin", "Portuguese", "German")
+                    builder.setItems(animals) { dialog, which ->
+                        when (which) {
+                            0 -> {
+
+                                //messageTextView.imeHintLocales = LocaleList(Locale("ar", "Arabic"))
+                                messageTextView.setImeHintLocales(LocaleList(Locale("ar", "Arabic")))
+                                InputMethodManager.SHOW_FORCED
+                                Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show() }
+                            1 -> { Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show() }
+                            2 -> { Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show() }
+                            3 -> { Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show() }
+                            4 -> { Toast.makeText(context,"item Clicked $which" , Toast.LENGTH_SHORT).show() }
+                        }
+                    }
+
+                    // create and show the alert dialog
+                    val dialog = builder.create()
+                    dialog.show()
+                    Toast.makeText(context , "Language . " , Toast.LENGTH_LONG).show()
+                }
+                else     -> {}
+            }
+            true
+        }
+
+        pMenu.show()
+    }
+
 
     private fun findUserToChat() {
        val ref = FirebaseDatabase.getInstance().getReference("Users").child(userId!!)
@@ -154,11 +296,12 @@ class ChatFragment : Fragment() {
                     for(chatSnapshot in snapshot.children){
                         val chatUser = chatSnapshot.getValue(chatDataClass::class.java)
 
-                        if(chatUser!!.senderId.equals(senderId) && chatUser!!.receiverId.equals(receiverId) ||
-                            chatUser!!.senderId.equals(receiverId) && chatUser!!.receiverId.equals(senderId)   ){
+                        if(chatUser!!.senderId.equals(senderId) && chatUser.receiverId.equals(receiverId) ||
+                            chatUser.senderId.equals(receiverId) && chatUser.receiverId.equals(senderId)   ){
                             chatList.add(chatUser)
                         }
                     }
+
                     recyclerView.adapter = chatAdapter(chatList)
                     val touchHelper = ItemTouchHelper(messageDeleteCallBack())
                     touchHelper.attachToRecyclerView(recyclerView)
@@ -234,4 +377,9 @@ class ChatFragment : Fragment() {
 data class userToChar(
     val usernameR : String? = "",
     val status : String ? =""
+)
+
+
+data class FontSizePicked(
+    var fontSize : Float = 16f
 )
