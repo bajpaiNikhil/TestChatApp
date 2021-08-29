@@ -258,15 +258,57 @@ class ChatFragment : Fragment() {
                 val user = snapshot.getValue(userToChar::class.java)
                 tvName.text = user?.usernameR.toString()
                 val userStatus = snapshot.child("status").value
-                if(userStatus == "Active"){
+                val languageRef = FirebaseDatabase.getInstance().getReference("Users")
+                    .child(auth.currentUser?.uid.toString()).child("appLanguage")
+                if(userStatus == "Active") {
                     onlineImageView.visibility = View.VISIBLE
                     statusTextView.visibility = View.VISIBLE
-                    statusTextView.text = "Online"
+                    languageRef.addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if(snapshot.exists()){
+                                val language = snapshot.value.toString()
+                                if (language == "") {
+                                    statusTextView.text = "Online"
+                                } else if (language == "hi") {
+                                    statusTextView.text = "ऑनलाइन"
+                                } else if (language == "fr") {
+                                    statusTextView.text = "en ligne"
+                                    }
+                            }
+                            else{
+                                statusTextView.text = "Online"
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
                 }
                 else{
                     offlineImageView.visibility = View.VISIBLE
                     statusTextView.visibility = View.VISIBLE
-                    statusTextView.text = "User's Offline"
+                    languageRef.addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if(snapshot.exists()){
+                                val language = snapshot.value.toString()
+                                if (language == "") {
+                                    statusTextView.text = "Offline"
+                                } else if (language == "hi") {
+                                    statusTextView.text = "ऑफ़लाइन"
+                                } else if (language == "fr") {
+                                    statusTextView.text = "Hors-ligne"
+                                }
+                            }
+                            else{
+                                statusTextView.text = "Offline"
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
                 }
             }
 

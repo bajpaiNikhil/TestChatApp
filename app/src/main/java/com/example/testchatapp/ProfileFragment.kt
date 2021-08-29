@@ -2,9 +2,12 @@ package com.example.testchatapp
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
+import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,10 +36,9 @@ class ProfileFragment : Fragment() {
     lateinit var imageUploadProgressBar: ProgressBar
     lateinit var languageSpinner: Spinner
     var appLanguageSelected: String =""
-
-
-    lateinit var locale : Locale
-
+    private var currentLanguage = "en"
+    private var currentLang: String? = null
+    lateinit var locale: Locale
 
     //user image
     lateinit var uri: Uri
@@ -73,7 +75,7 @@ class ProfileFragment : Fragment() {
         language.add(0, "Select a language")
         language.add("Hindi")
         language.add("French")
-        language.add("Default")
+        language.add("English")
 
         val languageAdapter: ArrayAdapter<String?>? =
             context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
@@ -86,29 +88,63 @@ class ProfileFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (parent?.getItemAtPosition(position).toString() == "Select a language") {
-                    // no code to be added here
-                }
-                else {
-                    appLanguageSelected = parent?.getItemAtPosition(position).toString()
-                    Log.d("profileFragment" , "$appLanguageSelected")
-                    FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue(appLanguageSelected)
-                    if(appLanguageSelected == "French"){
-
-                        selectedLanguage("fr")
-
+//                if (parent?.getItemAtPosition(position).toString() == "Select a language") {
+//                    // no code to be added here
+//                }
+//                else {
+//                    appLanguageSelected = parent?.getItemAtPosition(position).toString()
+//                    Log.d("profileFragment" , "$appLanguageSelected")
+//                    FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue(appLanguageSelected)
+//                    val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage")
+//                    var dbLanguageValue = ""
+//                    appLanguageRef.addValueEventListener(object : ValueEventListener{
+//                        override fun onDataChange(snapshot: DataSnapshot) {
+//                            dbLanguageValue = snapshot.value.toString()
+//                        }
+//
+//                        override fun onCancelled(error: DatabaseError) {
+//                            TODO("Not yet implemented")
+//                        }
+//                    })
+//                    var change = ""
+//                    if(appLanguageSelected == "French" || dbLanguageValue == "French"){
+//                        change="fr"
+//                    } else if (appLanguageSelected =="Hindi" && dbLanguageValue == "Hindi" ) {
+//                        change = "hi"
+//                    }else if(appLanguageSelected =="Default" && dbLanguageValue == "Default"){
+//                        change =""
+//                    } else{
+//                        change =""
+//                    }
+////                        dLocale = Locale(change) //set any locale you want here
+//
+//                }
+                when (position) {
+                    0 -> {
                     }
-
+                    1 -> {
+                        setLocale("hi")
+                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                    }
+                    2 -> {
+                        setLocale("fr")
+                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                    }
+                    3 -> {
+                        setLocale("")
+                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                    }
                 }
-
             }
+
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
         }
 
-        // For Edit Text Display
+
+    // For Edit Text Display
         userNameEditText = view.findViewById(R.id.userNameEt)
         passwordEditText = view.findViewById(R.id.passTv)
         imageView = view.findViewById(R.id.profileIv)
@@ -154,19 +190,24 @@ class ProfileFragment : Fragment() {
         return view
     }
 
-    private fun selectedLanguage(languageCode: String) {
-//        locale = Locale(languageCode)
-//        val res = resources
-//        val dm  = res.displayMetrics
-//        var conf = res.configuration
-//        conf.locales = locale
-//        res.updateConfiguration(conf , dm)
-//        val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
-//        if (Build.VERSION.SDK_INT >= 26) {
-//            ft.setReorderingAllowed(false)
-//        }
-//        ft.detach(this).attach(this).commit()
-
+    private fun setLocale(localeName: String) {
+        if (localeName != currentLanguage) {
+            locale = Locale(localeName)
+            val res = resources
+            val dm = res.displayMetrics
+            val conf = res.configuration
+            conf.locale = locale
+            res.updateConfiguration(conf, dm)
+            val refresh = Intent(
+                context,
+                MainActivity::class.java
+            )
+            refresh.putExtra(currentLang, localeName)
+            startActivity(refresh)
+        } else {
+            Toast.makeText(
+                context, "Language, , already, , selected)!", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

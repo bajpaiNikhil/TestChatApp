@@ -44,7 +44,6 @@ class FriendFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
     }
 
@@ -70,11 +69,7 @@ class FriendFragment : Fragment() {
                 if (snapshot.child("userProfileImgUrl").exists()) {
                     if (snapshot.child("userProfileImgUrl").exists()) {
                         Log.d("ProfileFragment", "ImageUrl : $photoUrl")
-
-
                         bundle = bundleOf("currentUserImgUrl" to photoUrl)
-
-
                         context?.let { Glide.with(it).load(photoUrl).into(userProfileImageView) }
                     } else {
                         context?.let { Glide.with(it).load(R.drawable.image).into(userProfileImageView) }
