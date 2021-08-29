@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:background="@drawable/item_right_side_background"
+            android:fontFamily="serif"
             android:padding="5dp"
             android:textAlignment="textEnd"
             android:textColor="@color/colorAccent"

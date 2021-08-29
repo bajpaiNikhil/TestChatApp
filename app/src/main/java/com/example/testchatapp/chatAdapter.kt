@@ -2,6 +2,7 @@ package com.example.testchatapp
 
 import android.graphics.Color
 import android.graphics.Color.RED
+import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -56,6 +57,7 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
             override fun onDataChange(snapshot: DataSnapshot) {
                 userImageUrl = snapshot.child("userProfileImgUrl").value.toString()
                 holder.userImageView?.let { Glide.with(it).load(userImageUrl).into(holder.userImageView)
+
                 }
             }
 
@@ -69,15 +71,20 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
                 if(snapshot.exists()){
                     var sizeText = "18"
                     var fontColor = "#36454F"
+                    var fontStyle = "serif"
                     if(snapshot.child("fontSize").exists()){
                         sizeText = snapshot.child("fontSize").value.toString()
                     }
                     if(snapshot.child("fontColor").exists()){
                         fontColor = snapshot.child("fontColor").value.toString()
                     }
+                    if(snapshot.child("fontStyle").exists()){
+                        fontStyle = snapshot.child("fontStyle").value.toString()
+                    }
 
                     holder.message.textSize = sizeText.toFloat()
                     holder.message.setTextColor(Color.parseColor(fontColor))
+                    holder.message.typeface = Typeface.create(fontStyle , Typeface.NORMAL)
                     Log.d("chatAdapter" , "$sizeText HEhEHEHAHAHAA")
                 }
 

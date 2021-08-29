@@ -11,7 +11,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.core.view.isInvisible
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -24,14 +23,12 @@ class ChangePasswordFragment : Fragment() {
 
     lateinit var auth : FirebaseAuth
 
-
     lateinit var questionTV : TextView
     lateinit var answerTV : TextView
     lateinit var headingTV : TextView
     lateinit var answerET : EditText
     lateinit var questionET : TextView
     lateinit var submit : Button
-
 
     lateinit var passHeadingTV : TextView
     lateinit var passwordTV : TextView

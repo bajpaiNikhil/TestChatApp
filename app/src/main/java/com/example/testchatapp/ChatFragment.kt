@@ -138,6 +138,7 @@ class ChatFragment : Fragment() {
         val pMenu = PopupMenu(context , menuPress)
         pMenu.menu.add("Font")
         pMenu.menu.add("Font Colour")
+        pMenu.menu.add("Font Style")
 
         pMenu.setOnMenuItemClickListener {
             when(it.title){
@@ -216,6 +217,43 @@ class ChatFragment : Fragment() {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontColor").setValue("#36454F")
                                 Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
+                        }
+                    }
+
+                    // create and show the alert dialog
+                    val dialog = builder.create()
+                    dialog.show()
+                    Toast.makeText(context , "Language . " , Toast.LENGTH_LONG).show()
+                }
+                "Font Style" -> {
+                    Log.d("chatFrag" , "${it.title} found")
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle("Choose Font Colour")
+
+                    // add a list
+                    val fontStyleArray = arrayOf("cursive", "casual", "serif-monospace", "sans-serif-smallcaps", "serif")
+                    builder.setItems(fontStyleArray) { dialog, which ->
+                        when (which) {
+                            0 -> {
+                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontStyle").setValue("cursive")
+                                Toast.makeText(context,"item Clicked ${fontStyleArray[which]}" , Toast.LENGTH_SHORT).show() }
+                            1 -> {
+                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontStyle").setValue("casual")
+                                Toast.makeText(context,"item Clicked ${fontStyleArray[which]}" , Toast.LENGTH_SHORT).show() }
+                            2 -> {
+                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontStyle").setValue("serif-monospace")
+                                Toast.makeText(context,"item Clicked ${fontStyleArray[which]}" , Toast.LENGTH_SHORT).show() }
+                            3 -> {
+                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontStyle").setValue("sans-serif-smallcaps")
+                                Toast.makeText(context,"item Clicked ${fontStyleArray[which]}" , Toast.LENGTH_SHORT).show() }
+                            4 -> {
+                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+                                    .child("chatCharacteristics").child("fontStyle").setValue("serif")
+                                Toast.makeText(context,"item Clicked ${fontStyleArray[which]}" , Toast.LENGTH_SHORT).show() }
                         }
                     }
 
