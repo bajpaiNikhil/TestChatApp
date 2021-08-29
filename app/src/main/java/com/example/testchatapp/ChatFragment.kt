@@ -1,29 +1,19 @@
 package com.example.testchatapp
 
 import android.app.AlertDialog
-import android.content.Context
-import android.content.Context.*
 import android.content.DialogInterface
-import android.content.Intent
-import android.content.res.Configuration
-import android.graphics.Color.RED
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.appcompat.widget.AlertDialogLayout
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testchatapp.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -31,18 +21,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.nio.file.FileVisitResult
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import android.view.inputmethod.InputMethodSubtype
-import androidx.core.content.ContextCompat
-
-import androidx.core.content.ContextCompat.getSystemService
-import android.os.LocaleList
-import androidx.core.os.bundleOf
-import com.google.ads.interactivemedia.v3.api.ImaSdkFactory
-
 
 class ChatFragment : Fragment() {
 
@@ -136,7 +116,7 @@ class ChatFragment : Fragment() {
 
     private fun showPopUpMenu() {
         val pMenu = PopupMenu(context , menuPress)
-        pMenu.menu.add("Font")
+        pMenu.menu.add("Font Size")
         pMenu.menu.add("Font Colour")
         pMenu.menu.add("Font Style")
 
