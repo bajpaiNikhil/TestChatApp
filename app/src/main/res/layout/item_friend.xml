@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Status"
+            android:text="@string/status"
             app:layout_constraintBottom_toBottomOf="@+id/onlineIv"
             app:layout_constraintStart_toEndOf="@+id/offlineIv"
             app:layout_constraintTop_toTopOf="@+id/onlineIv" />

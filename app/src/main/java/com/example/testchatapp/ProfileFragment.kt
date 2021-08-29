@@ -18,6 +18,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class ProfileFragment : Fragment() {
     // For Edit Text Display
@@ -30,6 +33,10 @@ class ProfileFragment : Fragment() {
     lateinit var imageUploadProgressBar: ProgressBar
     lateinit var languageSpinner: Spinner
     var appLanguageSelected: String =""
+
+
+    lateinit var locale : Locale
+
 
     //user image
     lateinit var uri: Uri
@@ -84,17 +91,22 @@ class ProfileFragment : Fragment() {
                 }
                 else {
                     appLanguageSelected = parent?.getItemAtPosition(position).toString()
-                    FirebaseDatabase.getInstance().getReference("Users")
-                        .child(auth.currentUser?.uid.toString()).child("appLanguage")
-                        .setValue(appLanguageSelected)
+                    Log.d("profileFragment" , "$appLanguageSelected")
+                    FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue(appLanguageSelected)
+                    if(appLanguageSelected == "French"){
+
+                        selectedLanguage("fr")
+
+                    }
+
                 }
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
         }
-
 
         // For Edit Text Display
         userNameEditText = view.findViewById(R.id.userNameEt)
@@ -141,6 +153,22 @@ class ProfileFragment : Fragment() {
 
         return view
     }
+
+    private fun selectedLanguage(languageCode: String) {
+//        locale = Locale(languageCode)
+//        val res = resources
+//        val dm  = res.displayMetrics
+//        var conf = res.configuration
+//        conf.locales = locale
+//        res.updateConfiguration(conf , dm)
+//        val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
+//        if (Build.VERSION.SDK_INT >= 26) {
+//            ft.setReorderingAllowed(false)
+//        }
+//        ft.detach(this).attach(this).commit()
+
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
