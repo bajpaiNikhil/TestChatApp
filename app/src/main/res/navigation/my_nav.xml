@@ -106,6 +106,9 @@
         <action
             android:id="@+id/action_requestFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_requestFragment_to_friendProfileFragment"
+            app:destination="@id/friendProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"

@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
@@ -32,6 +34,11 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder : requestHolder, position : Int) {
         val currentItem = reqList[position]
+
+        holder.senderImage.setOnClickListener {
+            val bundle = bundleOf("FriendId" to currentItem.senderId.toString())
+            holder.itemView.findNavController().navigate(R.id.action_requestFragment_to_friendProfileFragment , bundle)
+        }
 
         val senderRef = FirebaseDatabase.getInstance().getReference("Users").child(currentItem.senderId.toString())
         senderRef.addValueEventListener(object : ValueEventListener{
