@@ -47,4 +47,5 @@
     <string name="click_here_to_change_password">पासवर्ड बदलने के लिए यहां क्लिक करें</string>
     <string name="add">जोड़ें</string>
     <string name="reject">अस्वीकार</string>
+    <string name="exit">বাহির</string>
 </resources>

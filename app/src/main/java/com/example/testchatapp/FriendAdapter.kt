@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
+
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -38,6 +42,11 @@ class FriendAdapter(val friendList : ArrayList<FriendsDetails>, val listener : (
         val currentItem = friendList[position]
         holder.onlineImage.visibility = View.INVISIBLE
         holder.offlineImage.visibility = View.INVISIBLE
+
+        holder.userImage.setOnClickListener {
+            val bundle = bundleOf("FriendId" to currentItem.userId.toString())
+            holder.itemView.findNavController().navigate(R.id.action_friendFragment_to_friendProfileFragment , bundle)
+        }
 
         val userImageRef = FirebaseDatabase.getInstance().getReference("Users").child(currentItem.userId.toString())
         userImageRef.addValueEventListener(object : ValueEventListener {

@@ -122,7 +122,7 @@ class ChatFragment : Fragment() {
 
         pMenu.setOnMenuItemClickListener {
             when(it.title){
-                "Font"  -> {
+                "Font Size"  -> {
                     Log.d("chatFrag" ,"${it.title} found ")
                     val builder = AlertDialog.Builder(context)
                     builder.setTitle("Choose the Font Size")

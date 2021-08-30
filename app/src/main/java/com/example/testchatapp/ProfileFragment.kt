@@ -88,37 +88,7 @@ class ProfileFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-//                if (parent?.getItemAtPosition(position).toString() == "Select a language") {
-//                    // no code to be added here
-//                }
-//                else {
-//                    appLanguageSelected = parent?.getItemAtPosition(position).toString()
-//                    Log.d("profileFragment" , "$appLanguageSelected")
-//                    FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue(appLanguageSelected)
-//                    val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage")
-//                    var dbLanguageValue = ""
-//                    appLanguageRef.addValueEventListener(object : ValueEventListener{
-//                        override fun onDataChange(snapshot: DataSnapshot) {
-//                            dbLanguageValue = snapshot.value.toString()
-//                        }
-//
-//                        override fun onCancelled(error: DatabaseError) {
-//                            TODO("Not yet implemented")
-//                        }
-//                    })
-//                    var change = ""
-//                    if(appLanguageSelected == "French" || dbLanguageValue == "French"){
-//                        change="fr"
-//                    } else if (appLanguageSelected =="Hindi" && dbLanguageValue == "Hindi" ) {
-//                        change = "hi"
-//                    }else if(appLanguageSelected =="Default" && dbLanguageValue == "Default"){
-//                        change =""
-//                    } else{
-//                        change =""
-//                    }
-////                        dLocale = Locale(change) //set any locale you want here
-//
-//                }
+
                 when (position) {
                     0 -> {
                     }
@@ -160,7 +130,6 @@ class ProfileFragment : Fragment() {
             .child(auth.currentUser?.uid.toString())
         userReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 //EditText
                 val userName = snapshot.child("usernameR").value.toString()
                 val photoUrl = snapshot.child("userProfileImgUrl").value
@@ -191,19 +160,26 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setLocale(localeName: String) {
+        Log.d("loginFrag" , localeName)
+
         if (localeName != currentLanguage) {
+            Log.d("loginFrag" , currentLanguage)
             locale = Locale(localeName)
             val res = resources
             val dm = res.displayMetrics
             val conf = res.configuration
             conf.locale = locale
             res.updateConfiguration(conf, dm)
+
             val refresh = Intent(
                 context,
                 MainActivity::class.java
             )
+
+            Log.d("loginFrag" , currentLanguage)
             refresh.putExtra(currentLang, localeName)
             startActivity(refresh)
+
         } else {
             Toast.makeText(
                 context, "Language, , already, , selected)!", Toast.LENGTH_SHORT).show();

@@ -110,4 +110,22 @@ class LoginFragment : Fragment() {
         }
     }
 
-}
+//    private fun setLocale(localeName: String) {
+//        if (localeName != currentLanguage) {
+//            locale = Locale(localeName)
+//            val res = resources
+//            val dm = res.displayMetrics
+//            val conf = res.configuration
+//            conf.locale = locale
+//            res.updateConfiguration(conf, dm)
+//            val refresh = Intent(
+//                context,
+//                MainActivity::class.java
+//            )
+//            refresh.putExtra(currentLang, localeName)
+//            startActivity(refresh)
+//        } else {
+////            Toast.makeText(
+////                context, "Language, , already, , selected)!", Toast.LENGTH_SHORT).show()
+        }
+
