@@ -102,7 +102,7 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
         })
 
         holder.addButton.setOnClickListener {
-            Toast.makeText(holder.itemView.context , "Add button is pressed" , Toast.LENGTH_SHORT).show()
+//            Toast.makeText(holder.itemView.context , "Add button is pressed" , Toast.LENGTH_SHORT).show()
             Log.d("requestAdapter" , "Add button is clicked")
 
             val ref = FirebaseDatabase.getInstance().getReference("Request")
@@ -144,7 +144,7 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
 
         }
         holder.rejectButton.setOnClickListener {
-            Toast.makeText(holder.itemView.context , "Reject button is pressed" , Toast.LENGTH_SHORT).show()
+//            Toast.makeText(holder.itemView.context , "Reject button is pressed" , Toast.LENGTH_SHORT).show()
 
             Log.d("requestAdapter" , "Reject button is clicked")
             val ref = FirebaseDatabase.getInstance().getReference("Request")

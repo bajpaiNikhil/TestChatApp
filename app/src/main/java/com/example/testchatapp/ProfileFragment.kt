@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -170,10 +171,7 @@ class ProfileFragment : Fragment() {
             conf.locale = locale
             res.updateConfiguration(conf, dm)
 
-            val refresh = Intent(
-                context,
-                MainActivity::class.java
-            )
+            val refresh = Intent(context , MainActivity::class.java )
 
             Log.d("loginFrag" , currentLanguage)
             refresh.putExtra(currentLang, localeName)
