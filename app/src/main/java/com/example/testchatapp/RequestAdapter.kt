@@ -12,13 +12,17 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
 class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adapter<RequestAdapter.requestHolder>() {
+    lateinit var auth: FirebaseAuth
     class requestHolder(view: View ) : RecyclerView.ViewHolder(view) {
         val senderName  = view.findViewById<TextView>(R.id.senderNameTv)
         val senderImage = view.findViewById<CircleImageView>(R.id.senderIv)
@@ -29,6 +33,7 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
 
     override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : requestHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_request, parent , false)
+        auth = Firebase.auth
         return requestHolder(view)
     }
 
@@ -72,7 +77,30 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
 
         })
 
-        holder.requestMessage.text = currentItem.message.toString()
+        val languageRef = FirebaseDatabase.getInstance().getReference("Users")
+            .child(auth.currentUser?.uid.toString()).child("appLanguage")
+        languageRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    val language = snapshot.value.toString()
+                    if (language == "") {
+                        holder.requestMessage.text = currentItem.message.toString()
+                    } else if (language == "hi") {
+                        holder.requestMessage.text = "आपको फ्रेंड रिक्वेस्ट भेजी है!!"
+                    } else if (language == "fr") {
+                        holder.requestMessage.text = "vous a envoyé une demande d'ami!!"
+                    }
+                }
+                else{
+                    holder.requestMessage.text = currentItem.message.toString()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
         holder.addButton.setOnClickListener {
             Toast.makeText(holder.itemView.context , "Add button is pressed" , Toast.LENGTH_SHORT).show()
             Log.d("requestAdapter" , "Add button is clicked")
