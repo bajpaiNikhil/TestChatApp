@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FriendFragment : Fragment() {
@@ -40,11 +42,46 @@ class FriendFragment : Fragment() {
     var searchText = ""
     var flag = 0
     var bundle: Bundle? = null
+    var languageKey =""
+    lateinit var locale: Locale
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            languageKey = it.getString("languagekey").toString()
         }
+
+        auth = Firebase.auth
+
+        val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+        appLanguageRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.child("appLanguage").exists()) {
+                    if(languageKey.isEmpty()) {
+                        languageKey = snapshot.child("appLanguage").value.toString()
+                        Log.d("FriendFragment", "language key : $languageKey")
+                        locale = Locale(languageKey)
+                        val res = resources
+                        val dm = res.displayMetrics
+                        val conf = res.configuration
+                        conf.locale = locale
+                        res.updateConfiguration(conf, dm)
+                    }
+                    else{
+                        locale = Locale(languageKey)
+                        val res = resources
+                        val dm = res.displayMetrics
+                        val conf = res.configuration
+                        conf.locale = locale
+                        res.updateConfiguration(conf, dm)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     @SuppressLint("RestrictedApi")
@@ -53,9 +90,8 @@ class FriendFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_friend, container, false)
 
-        auth = Firebase.auth
+        val view = inflater.inflate(R.layout.fragment_friend, container, false)
 
         userProfileImageView = view.findViewById(R.id.currentUserIv)
         val userReference = FirebaseDatabase.getInstance().getReference("Users")
