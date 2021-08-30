@@ -66,10 +66,10 @@ class LoginFragment : Fragment() {
                         val conf = res.configuration
                         conf.locale = locale
                         res.updateConfiguration(conf, dm)
-                        findNavController().navigate(R.id.action_loginFragment_to_friendFragment, bundle)
+                        findNavController().navigate(R.id.friendFragment, bundle)
                     }
                     else{
-                        findNavController().navigate(R.id.action_loginFragment_to_friendFragment)
+                        findNavController().navigate(R.id.friendFragment)
                     }
                 }
 

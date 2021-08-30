@@ -35,7 +35,6 @@ class ProfileFragment : Fragment() {
     lateinit var userNameUpdateFloatingActionButton: FloatingActionButton
     lateinit var imageUploadProgressBar: ProgressBar
     lateinit var languageSpinner: Spinner
-    var appLanguageSelected: String =""
     private var currentLanguage = "en"
     private var currentLang: String? = null
     lateinit var locale: Locale
