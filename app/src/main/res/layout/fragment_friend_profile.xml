@@ -8,10 +8,12 @@
     tools:context=".FriendProfileFragment" >
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="242dp"
+        android:layout_height="240dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
         app:cardCornerRadius="40dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,6 +32,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/image"
                 app:circularflow_defaultRadius="40dp"
                 app:circularflow_radiusInDP="40dp"
@@ -43,8 +46,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="410dp"
-        android:layout_height="215dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         app:cardCornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,14 +64,16 @@
                 android:id="@+id/fPhNumberTV"
                 android:layout_width="249dp"
                 android:layout_height="38dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="60dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/alfa_slab_one"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView16"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fEmailTV" />
+                app:layout_constraintStart_toEndOf="@+id/textView16"
+                app:layout_constraintTop_toTopOf="@+id/textView16" />
 
             <TextView
                 android:id="@+id/textView16"
@@ -73,9 +81,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/alfa_slab_one"
                 android:text="Ph. No :"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -83,14 +93,16 @@
                 android:id="@+id/fEmailTV"
                 android:layout_width="249dp"
                 android:layout_height="38dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="60dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/alfa_slab_one"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView12"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fNameTV" />
+                app:layout_constraintStart_toEndOf="@+id/textView12"
+                app:layout_constraintTop_toTopOf="@+id/textView12" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -110,14 +122,16 @@
                 android:id="@+id/fNameTV"
                 android:layout_width="249dp"
                 android:layout_height="38dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="60dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/alfa_slab_one"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView6"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="@+id/textView6" />
 
             <TextView
                 android:id="@+id/textView12"
