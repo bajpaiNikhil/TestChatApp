@@ -70,48 +70,197 @@ class ProfileFragment : Fragment() {
 
         logOut = view.findViewById(R.id.logOut)
 
+        val languageRef = FirebaseDatabase.getInstance().getReference("Users")
+            .child(auth.currentUser?.uid.toString()).child("appLanguage")
+
         languageSpinner = view.findViewById(R.id.languageSpinner)
-        val language: MutableList<String?> = ArrayList()
-        language.add(0, "Select a language")
-        language.add("Hindi")
-        language.add("French")
-        language.add("English")
 
-        val languageAdapter: ArrayAdapter<String?>? =
-            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
-        languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        languageSpinner.adapter = languageAdapter
-        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
+//        val language: MutableList<String?> = ArrayList()
 
-                when (position) {
-                    0 -> {
+        languageRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    val languageKey = snapshot.value.toString()
+                    if (languageKey == "") {
+                        val language: MutableList<String?> = ArrayList()
+                        language.add(0, "Select a language")
+                        language.add("Hindi")
+                        language.add("French")
+                        language.add("English")
+
+                        val languageAdapter: ArrayAdapter<String?>? =
+                            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
+                        languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        languageSpinner.adapter = languageAdapter
+                        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long
+                            ) {
+
+                                when (position) {
+                                    0 -> {
+                                    }
+                                    1 -> {
+                                        setLocale("hi")
+                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                    }
+                                    2 -> {
+                                        setLocale("fr")
+                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                    }
+                                    3 -> {
+                                        setLocale("")
+                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                    }
+                                }
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                                TODO("Not yet implemented")
+                            }
+
+                        }
+                    } else if (languageKey == "hi") {
+                        val language: MutableList<String?> = ArrayList()
+                        language.add(0, "एक भाषा का चयन करें")
+                        language.add("हिंदी")
+                        language.add("फ़्रेंच")
+                        language.add("अंग्रेज़ी")
+
+                        val languageAdapter: ArrayAdapter<String?>? =
+                            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
+                        languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        languageSpinner.adapter = languageAdapter
+                        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long
+                            ) {
+
+                                when (position) {
+                                    0 -> {
+                                    }
+                                    1 -> {
+                                        setLocale("hi")
+                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                    }
+                                    2 -> {
+                                        setLocale("fr")
+                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                    }
+                                    3 -> {
+                                        setLocale("")
+                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                    }
+                                }
+                            }
+
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                                TODO("Not yet implemented")
+                            }
+
+                        }
+                    } else if (languageKey == "fr") {
+                        val language: MutableList<String?> = ArrayList()
+                        language.add(0, "sélectionner une langue")
+                        language.add("Hindi")
+                        language.add("français")
+                        language.add("Anglais")
+
+                        val languageAdapter: ArrayAdapter<String?>? =
+                            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
+                        languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        languageSpinner.adapter = languageAdapter
+                        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long
+                            ) {
+
+                                when (position) {
+                                    0 -> {
+                                    }
+                                    1 -> {
+                                        setLocale("hi")
+                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                    }
+                                    2 -> {
+                                        setLocale("fr")
+                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                    }
+                                    3 -> {
+                                        setLocale("")
+                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                    }
+                                }
+                            }
+
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                                TODO("Not yet implemented")
+                            }
+                        }
                     }
-                    1 -> {
-                        setLocale("hi")
-                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
-                    }
-                    2 -> {
-                        setLocale("fr")
-                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
-                    }
-                    3 -> {
-                        setLocale("")
-                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                }
+                else{
+                    val language: MutableList<String?> = ArrayList()
+                    language.add(0, "Select a language")
+                    language.add("Hindi")
+                    language.add("French")
+                    language.add("English")
+
+                    val languageAdapter: ArrayAdapter<String?>? =
+                        context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
+                    languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    languageSpinner.adapter = languageAdapter
+                    languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+
+                            when (position) {
+                                0 -> {
+                                }
+                                1 -> {
+                                    setLocale("hi")
+                                    FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                }
+                                2 -> {
+                                    setLocale("fr")
+                                    FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                }
+                                3 -> {
+                                    setLocale("")
+                                    FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                }
+                            }
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                            TODO("Not yet implemented")
+                        }
+
                     }
                 }
             }
 
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+            override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-        }
+        })
+
+
 
 
     // For Edit Text Display
