@@ -68,16 +68,23 @@ class LoginFragment : Fragment() {
         loginButton.setOnClickListener {
             val eMail = emailL.text.toString()
             val passWord = passL.text.toString()
-            Log.d("login" , userName)
-            auth.signInWithEmailAndPassword(eMail,passWord)
-                .addOnCompleteListener{
-                    if(it.isSuccessful){
-                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("status").setValue("Active")
-                        findNavController().navigate(R.id.action_loginFragment_to_friendFragment)
-                    }else{
-                        Toast.makeText(context, "Something wrong...", Toast.LENGTH_LONG).show()
+            if(eMail.isEmpty() || passWord.isEmpty()) {
+                Toast.makeText(context, "please enter all fields", Toast.LENGTH_LONG).show()
+            }
+            else{
+                Log.d("login", userName)
+                auth.signInWithEmailAndPassword(eMail, passWord)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                .child(auth.currentUser?.uid.toString()).child("status")
+                                .setValue("Active")
+                            findNavController().navigate(R.id.action_loginFragment_to_friendFragment)
+                        } else {
+                            Toast.makeText(context, "Something wrong...", Toast.LENGTH_LONG).show()
+                        }
                     }
-                }
+            }
         }
     }
 }

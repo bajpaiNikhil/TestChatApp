@@ -12,6 +12,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
+
 class RegisterFragment : Fragment() {
     lateinit var emailR: EditText
     lateinit var passwordR: EditText
@@ -27,6 +30,8 @@ class RegisterFragment : Fragment() {
     lateinit var registerButton : Button
     lateinit var loginTextView: TextView
 
+    private var currentLanguage = "en"
+    lateinit var locale: Locale
 
     lateinit var auth : FirebaseAuth
     lateinit var db : FirebaseDatabase
@@ -36,6 +41,13 @@ class RegisterFragment : Fragment() {
         savedInstanceState : Bundle?
     ) : View? {
         // Inflate the layout for this fragment
+        locale = Locale(currentLanguage)
+        val res = resources
+        val dm = res.displayMetrics
+        val conf = res.configuration
+        conf.locale = locale
+        res.updateConfiguration(conf, dm)
+
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {

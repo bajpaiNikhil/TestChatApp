@@ -50,7 +50,12 @@ class FriendFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         auth = Firebase.auth
 
         val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users")
@@ -73,32 +78,19 @@ class FriendFragment : Fragment() {
                 TODO("Not yet implemented")
             }
         })
-
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-
         // Inflate the layout for this fragment
-
-        val view = inflater.inflate(R.layout.fragment_friend, container, false)
-        userProfileImageView = view.findViewById(R.id.currentUserIv)
-        userProfileLinearLayout = view.findViewById(R.id.userProfileLl)
-        recyclerView = view.findViewById(R.id.FriendRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        profileTv = view.findViewById(R.id.profileTextView)
-
-
-        return view
+        return inflater.inflate(R.layout.fragment_friend, container, false)
     }
 
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        userProfileImageView = view.findViewById(R.id.currentUserIv)
+        userProfileLinearLayout = view.findViewById(R.id.userProfileLl)
+        recyclerView = view.findViewById(R.id.FriendRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        profileTv = view.findViewById(R.id.profileTextView)
 
         val friendSearchViewIs = view.findViewById<SearchView>(R.id.friendSearchView)
 
@@ -231,6 +223,32 @@ class FriendFragment : Fragment() {
                         friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
                         friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
                     }
+                }
+                else{
+                    userProfileLinearLayout.setOnClickListener {
+                        findNavController().navigate(
+                            R.id.action_friendFragment_to_profileFragment,
+                            bundle
+                        )
+                    }
+
+                    val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
+                    requests.setOnClickListener {
+                        findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
+                    }
+
+                    val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
+                    addNewFriends.setOnClickListener {
+                        val bundle = bundleOf("friendListIs" to friendListIs)
+                        findNavController().navigate(
+                                R.id.action_friendFragment_to_userFragment3,
+                                bundle
+                            )
+                    }
+
+                    val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
+                    friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
+                    friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
                 }
             }
 
