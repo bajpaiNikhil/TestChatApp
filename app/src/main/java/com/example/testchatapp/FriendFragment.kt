@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
@@ -39,41 +40,32 @@ class FriendFragment : Fragment() {
     lateinit var auth: FirebaseAuth
 
     var searchText = ""
+    var currentLanguage = ""
     var flag = 0
     var bundle: Bundle? = null
-    var languageKey =""
+    lateinit var profileTv: TextView
     lateinit var locale: Locale
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            languageKey = it.getString("languagekey").toString()
         }
 
         auth = Firebase.auth
 
-        val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-        appLanguageRef.addValueEventListener(object : ValueEventListener{
+        val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users")
+            .child(auth.currentUser?.uid.toString())
+        appLanguageRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.child("appLanguage").exists()) {
-                    if(languageKey.isEmpty()) {
-                        languageKey = snapshot.child("appLanguage").value.toString()
-                        Log.d("FriendFragment", "language key : $languageKey")
-                        locale = Locale(languageKey)
-                        val res = resources
-                        val dm = res.displayMetrics
-                        val conf = res.configuration
-                        conf.locale = locale
-                        res.updateConfiguration(conf, dm)
-                    }
-                    else{
-                        locale = Locale(languageKey)
-                        val res = resources
-                        val dm = res.displayMetrics
-                        val conf = res.configuration
-                        conf.locale = locale
-                        res.updateConfiguration(conf, dm)
-                    }
+                if (snapshot.child("appLanguage").exists()) {
+                    currentLanguage = snapshot.child("appLanguage").value.toString()
+                    Log.d("fff", "language key : $currentLanguage")
+                    locale = Locale(currentLanguage)
+                    val res = resources
+                    val dm = res.displayMetrics
+                    val conf = res.configuration
+                    conf.locale = locale
+                    res.updateConfiguration(conf, dm)
                 }
             }
 
@@ -81,18 +73,53 @@ class FriendFragment : Fragment() {
                 TODO("Not yet implemented")
             }
         })
+
+
     }
 
-    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_friend, container, false)
-
         userProfileImageView = view.findViewById(R.id.currentUserIv)
+        userProfileLinearLayout = view.findViewById(R.id.userProfileLl)
+        recyclerView = view.findViewById(R.id.FriendRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        profileTv = view.findViewById(R.id.profileTextView)
+
+
+        return view
+    }
+
+    @SuppressLint("RestrictedApi")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val friendSearchViewIs = view.findViewById<SearchView>(R.id.friendSearchView)
+
+        friendSearchViewIs.setOnQueryTextListener(object  : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchText = newText!!
+                if(flag == 1){
+                    findFriends()
+                }else if(searchText.length>=2){
+                    flag = 1
+                    findFriends()
+                }
+                return false
+            }
+        })
+
+
         val userReference = FirebaseDatabase.getInstance().getReference("Users")
             .child(auth.currentUser?.uid.toString())
         userReference.addValueEventListener(object : ValueEventListener {
@@ -121,56 +148,97 @@ class FriendFragment : Fragment() {
             }
         })
 
-        recyclerView = view.findViewById(R.id.FriendRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+
         findFriends()
 
         friendList = arrayListOf()
         connectionList = arrayListOf()
 
-        userProfileLinearLayout = view.findViewById(R.id.userProfileLl)
-        userProfileLinearLayout.setOnClickListener {
-            findNavController().navigate(R.id.action_friendFragment_to_profileFragment, bundle)
-        }
+        val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users")
+            .child(auth.currentUser?.uid.toString())
+        appLanguageRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child("appLanguage").exists()) {
+                    currentLanguage = snapshot.child("appLanguage").value.toString()
+                    Log.d("fff", "language key : $currentLanguage")
 
-        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
-        requests.setOnClickListener {
-            findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
-        }
+                    if(currentLanguage == ""){
+                        userProfileLinearLayout.setOnClickListener {
+                            findNavController().navigate(R.id.action_friendFragment_to_profileFragment, bundle)
+                        }
 
-        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
-        addNewFriends.setOnClickListener {
-            val bundle = bundleOf("friendListIs" to friendListIs)
-            findNavController().navigate(R.id.action_friendFragment_to_userFragment3, bundle)
-        }
+                        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
+                        requests.setOnClickListener {
+                            findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
+                        }
 
-        val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
-        friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
-        friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
+                        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
+                        addNewFriends.setOnClickListener {
+                            val bundle = bundleOf("friendListIs" to friendListIs)
+                            findNavController().navigate(R.id.action_friendFragment_to_userFragment3, bundle)
+                        }
 
-        return view
-    }
+                        val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
+                        friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
+                        friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
+                    }
+                    else if(currentLanguage == "hi"){
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val friendSearchViewIs = view.findViewById<SearchView>(R.id.friendSearchView)
+                        profileTv.text = "प्रोफ़ाइल"
+                        userProfileLinearLayout.setOnClickListener {
+                            findNavController().navigate(R.id.action_friendFragment_to_profileFragment, bundle)
+                        }
 
-        friendSearchViewIs.setOnQueryTextListener(object  : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+                        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
+                        requests.setTitle("प्रार्थना")
+                        requests.setOnClickListener {
+                            findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
+                        }
+
+                        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
+                        addNewFriends.setTitle("मित्रों को खोजें")
+                        addNewFriends.setOnClickListener {
+                            val bundle = bundleOf("friendListIs" to friendListIs)
+                            findNavController().navigate(R.id.action_friendFragment_to_userFragment3, bundle)
+                        }
+
+                        val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
+                        friendsList.setTitle("मित्रों की सूची")
+                        friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
+                        friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
+                    }
+                    else if(currentLanguage == "fr"){
+                        profileTv.text = "Profil"
+                        userProfileLinearLayout.setOnClickListener {
+                            findNavController().navigate(R.id.action_friendFragment_to_profileFragment, bundle)
+                        }
+
+                        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
+                        requests.setTitle("demander")
+                        requests.setOnClickListener {
+                            findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
+                        }
+
+                        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
+                        addNewFriends.setTitle("Retrouver des amis")
+                        addNewFriends.setOnClickListener {
+                            val bundle = bundleOf("friendListIs" to friendListIs)
+                            findNavController().navigate(R.id.action_friendFragment_to_userFragment3, bundle)
+                        }
+
+                        val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
+                        friendsList.setTitle("Liste d'amis")
+                        friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
+                        friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
+                    }
+                }
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                searchText = newText!!
-                if(flag == 1){
-                    findFriends()
-                }else if(searchText.length>=2){
-                    flag = 1
-                    findFriends()
-                }
-                return false
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
         })
+
     }
 
     private fun findFriends() {

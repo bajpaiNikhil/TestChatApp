@@ -36,8 +36,8 @@ class ProfileFragment : Fragment() {
     lateinit var userNameUpdateFloatingActionButton: FloatingActionButton
     lateinit var imageUploadProgressBar: ProgressBar
     lateinit var languageSpinner: Spinner
-    private var currentLanguage = "en"
-    private var currentLang: String? = null
+    lateinit var passwordChangeTextView: TextView
+    var languageKey =""
     lateinit var locale: Locale
 
     //user image
@@ -55,18 +55,19 @@ class ProfileFragment : Fragment() {
         arguments?.let {
             imageUrl = it.getString("currentUserImgUrl")
         }
+        auth = Firebase.auth
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         // For Database*
-
-        auth = Firebase.auth
 
         logOut = view.findViewById(R.id.logOut)
 
@@ -74,6 +75,7 @@ class ProfileFragment : Fragment() {
             .child(auth.currentUser?.uid.toString()).child("appLanguage")
 
         languageSpinner = view.findViewById(R.id.languageSpinner)
+        passwordChangeTextView = view.findViewById(R.id.passTv)
 
 //        val language: MutableList<String?> = ArrayList()
 
@@ -104,16 +106,19 @@ class ProfileFragment : Fragment() {
                                     0 -> {
                                     }
                                     1 -> {
-                                        setLocale("hi")
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                        logOut.text = "लॉग आउट"
+                                        passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
                                     }
                                     2 -> {
-                                        setLocale("fr")
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                        logOut.text ="Se déconnecter"
+                                        passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
                                     }
                                     3 -> {
-                                        setLocale("")
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                        logOut.text ="Logout"
+                                        passwordChangeTextView.text ="Click here to change Password"
                                     }
                                 }
                             }
@@ -146,16 +151,19 @@ class ProfileFragment : Fragment() {
                                     0 -> {
                                     }
                                     1 -> {
-                                        setLocale("hi")
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                        logOut.text = "लॉग आउट"
+                                        passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
                                     }
                                     2 -> {
-                                        setLocale("fr")
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                        logOut.text ="Se déconnecter"
+                                        passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
                                     }
                                     3 -> {
-                                        setLocale("")
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                        logOut.text ="Logout"
+                                        passwordChangeTextView.text ="Click here to change Password"
                                     }
                                 }
                             }
@@ -189,16 +197,19 @@ class ProfileFragment : Fragment() {
                                     0 -> {
                                     }
                                     1 -> {
-                                        setLocale("hi")
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                        logOut.text = "लॉग आउट"
+                                        passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
                                     }
                                     2 -> {
-                                        setLocale("fr")
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                        logOut.text ="Se déconnecter"
+                                        passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
                                     }
                                     3 -> {
-                                        setLocale("")
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                        logOut.text ="Logout"
+                                        passwordChangeTextView.text ="Click here to change Password"
                                     }
                                 }
                             }
@@ -233,16 +244,19 @@ class ProfileFragment : Fragment() {
                                 0 -> {
                                 }
                                 1 -> {
-                                    setLocale("hi")
                                     FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                    logOut.text = "लॉग आउट"
+                                    passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
                                 }
                                 2 -> {
-                                    setLocale("fr")
                                     FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                    logOut.text ="Se déconnecter"
+                                    passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
                                 }
                                 3 -> {
-                                    setLocale("")
                                     FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                    logOut.text ="Logout"
+                                    passwordChangeTextView.text ="Click here to change Password"
                                 }
                             }
                         }
@@ -308,33 +322,39 @@ class ProfileFragment : Fragment() {
         return view
     }
 
-    private fun setLocale(localeName: String) {
-        Log.d("loginFrag" , localeName)
-
-        if (localeName != currentLanguage) {
-            Log.d("loginFrag" , currentLanguage)
-            locale = Locale(localeName)
-            val res = resources
-            val dm = res.displayMetrics
-            val conf = res.configuration
-            conf.locale = locale
-            res.updateConfiguration(conf, dm)
-
-            val refresh = Intent(context , MainActivity::class.java )
-
-            Log.d("loginFrag" , currentLanguage)
-            refresh.putExtra(currentLang, localeName)
-            startActivity(refresh)
-
-        } else {
-            Toast.makeText(
-                context, "Language, , already, , selected)!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
+        appLanguageRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.child("appLanguage").exists()) {
+                    if(languageKey.isEmpty()) {
+                        languageKey = snapshot.child("appLanguage").value.toString()
+                        Log.d("FriendFragment", "language key : $languageKey")
+                        locale = Locale(languageKey)
+                        val res = resources
+                        val dm = res.displayMetrics
+                        val conf = res.configuration
+                        conf.locale = locale
+                        res.updateConfiguration(conf, dm)
+                    }
+                }
+                else{
+                    locale = Locale(languageKey)
+                    val res = resources
+                    val dm = res.displayMetrics
+                    val conf = res.configuration
+                    conf.locale = locale
+                    res.updateConfiguration(conf, dm)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
 
         logOut.setOnClickListener {
             val lastUser = auth.currentUser?.uid
@@ -342,7 +362,6 @@ class ProfileFragment : Fragment() {
             FirebaseDatabase.getInstance().getReference("Users").child(lastUser.toString())
                 .child("status").setValue("InActive")
             findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
-
         }
 
         userNameEditFloatingActionButton.setOnClickListener {

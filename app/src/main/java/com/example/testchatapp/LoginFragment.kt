@@ -1,6 +1,4 @@
 package com.example.testchatapp
-import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -29,66 +26,40 @@ class LoginFragment : Fragment() {
     lateinit var loginButton : Button
     lateinit var registerTextView: TextView
     private var currentLanguage = "en"
+
     lateinit var locale: Locale
-    var bundle : Bundle ?= null
     lateinit var loginLayout: RelativeLayout
     lateinit var profile : ImageView
 
     override fun onCreateView(
-        inflater : LayoutInflater, container : ViewGroup?,
-        savedInstanceState : Bundle?
-    ) : View? {
-        val view  = inflater.inflate(R.layout.fragment_login, container, false)
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        locale = Locale(currentLanguage)
+        val res = resources
+        val dm = res.displayMetrics
+        val conf = res.configuration
+        conf.locale = locale
+        res.updateConfiguration(conf, dm)
 
         auth = Firebase.auth
-        profile = view.findViewById(R.id.profile)
-        loginLayout = view.findViewById(R.id.loginLayout)
-        val currentUser = auth.currentUser
-        Log.d("login" , currentUser.toString())
 
-        if(currentUser != null){
-            loginLayout.visibility = View.INVISIBLE
-
-            Log.d("login" , "Value is $currentUser")
-            FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("status").setValue("Active")
-
-            val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-            appLanguageRef.addValueEventListener(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if(snapshot.child("appLanguage").exists()) {
-                        currentLanguage = snapshot.child("appLanguage").value.toString()
-                        Log.d("login","language key : $currentLanguage")
-                        bundle = bundleOf("languagekey" to currentLanguage)
-                        Log.d("login"," bundle language key : $currentLanguage")
-                        locale = Locale(currentLanguage)
-                        val res = resources
-                        val dm = res.displayMetrics
-                        val conf = res.configuration
-                        conf.locale = locale
-                        res.updateConfiguration(conf, dm)
-                        findNavController().navigate(R.id.friendFragment, bundle)
-                    }
-                    else{
-                        findNavController().navigate(R.id.friendFragment)
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
-        }
-
-        return view
+        return inflater.inflate(R.layout.fragment_login, container, false)
     }
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
+
         emailL = view.findViewById(R.id.email)
         passL = view.findViewById(R.id.password)
         loginButton = view.findViewById(R.id.loginB)
         registerTextView = view.findViewById(R.id.registerTv)
 
+        profile = view.findViewById(R.id.profile)
+        loginLayout = view.findViewById(R.id.loginLayout)
+
+        if(auth.currentUser != null){
+            findNavController().navigate(R.id.action_loginFragment_to_friendFragment)
+        }
 
         registerTextView.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
@@ -109,23 +80,5 @@ class LoginFragment : Fragment() {
                 }
         }
     }
-
-//    private fun setLocale(localeName: String) {
-//        if (localeName != currentLanguage) {
-//            locale = Locale(localeName)
-//            val res = resources
-//            val dm = res.displayMetrics
-//            val conf = res.configuration
-//            conf.locale = locale
-//            res.updateConfiguration(conf, dm)
-//            val refresh = Intent(
-//                context,
-//                MainActivity::class.java
-//            )
-//            refresh.putExtra(currentLang, localeName)
-//            startActivity(refresh)
-//        } else {
-////            Toast.makeText(
-////                context, "Language, , already, , selected)!", Toast.LENGTH_SHORT).show()
-        }
+}
 
