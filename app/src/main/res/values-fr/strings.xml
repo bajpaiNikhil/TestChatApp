@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">"nom de l'application "</string>
+<!--    <string name="app_name">"nom de l'application "</string>-->
     <string name="prompt_email">e-mail</string>
     <string name="prompt_password">"mot de passe  "</string>
     <string name="login">connexion</string>
