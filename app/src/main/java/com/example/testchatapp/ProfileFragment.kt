@@ -37,8 +37,6 @@ class ProfileFragment : Fragment() {
     lateinit var imageUploadProgressBar: ProgressBar
     lateinit var languageSpinner: Spinner
     lateinit var passwordChangeTextView: TextView
-    var languageKey =""
-    lateinit var locale: Locale
 
     //user image
     lateinit var uri: Uri
@@ -325,36 +323,6 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-        appLanguageRef.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.child("appLanguage").exists()) {
-                    if(languageKey.isEmpty()) {
-                        languageKey = snapshot.child("appLanguage").value.toString()
-                        Log.d("FriendFragment", "language key : $languageKey")
-                        locale = Locale(languageKey)
-                        val res = resources
-                        val dm = res.displayMetrics
-                        val conf = res.configuration
-                        conf.locale = locale
-                        res.updateConfiguration(conf, dm)
-                    }
-                }
-                else{
-                    locale = Locale(languageKey)
-                    val res = resources
-                    val dm = res.displayMetrics
-                    val conf = res.configuration
-                    conf.locale = locale
-                    res.updateConfiguration(conf, dm)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
 
         logOut.setOnClickListener {
             val lastUser = auth.currentUser?.uid
