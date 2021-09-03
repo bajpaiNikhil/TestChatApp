@@ -61,8 +61,10 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
                         Log.d("FriendAdapter", "userProfileImhUrl : $senderImageUrl")
                         holder.senderImage?.let {
                             Glide.with(it).load(senderImageUrl).into(holder.senderImage)
+
                         }
                     }
+
                     else{
                         holder.senderImage?.let {
                             Glide.with(it).load(R.drawable.image).into(holder.senderImage)
@@ -114,17 +116,46 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
                         for(addSnapshot in snapshot.children){
                             val connectionSnapshot = addSnapshot.getValue(chatDataClass::class.java)
 
-                            //Add to friend to receiver
-                            val hashMapUserOne : HashMap<String , String> = HashMap()
-                            hashMapUserOne["FriendId"] = connectionSnapshot?.senderId.toString()
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                .child(connectionSnapshot?.receiverId.toString()).child("Friends").push().setValue(hashMapUserOne)
+                            if((connectionSnapshot?.senderId == currentItem.senderId) && (connectionSnapshot?.receiverId == currentItem.receiverId)){
 
-                            //Add to friend to sender
-                            val hashMapUserTwo : HashMap<String , String> = HashMap()
-                            hashMapUserTwo["FriendId"] = connectionSnapshot?.receiverId.toString()
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                .child(connectionSnapshot?.senderId.toString()).child("Friends").push().setValue(hashMapUserTwo)
+                                val requestDeleteRef = FirebaseDatabase.getInstance().getReference("Request").child(addSnapshot.key.toString())
+                                requestDeleteRef.addValueEventListener(object : ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        if(snapshot.child("receiverId").value != currentItem.receiverId.toString()){
+                                            //Add to friend to receiver
+                                            val hashMapUserOne : HashMap<String , String> = HashMap()
+                                            hashMapUserOne["FriendId"] = connectionSnapshot?.senderId.toString()
+                                            FirebaseDatabase.getInstance().getReference("Users")
+                                                .child(connectionSnapshot?.receiverId.toString()).child("Friends").push().setValue(hashMapUserOne)
+
+                                            //Add to friend to sender
+                                            val hashMapUserTwo : HashMap<String , String> = HashMap()
+                                            hashMapUserTwo["FriendId"] = connectionSnapshot?.receiverId.toString()
+                                            FirebaseDatabase.getInstance().getReference("Users")
+                                                .child(connectionSnapshot?.senderId.toString()).child("Friends").push().setValue(hashMapUserTwo)
+                                        }
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+
+                                })
+
+
+                            }
+
+//                            //Add to friend to receiver
+//                            val hashMapUserOne : HashMap<String , String> = HashMap()
+//                            hashMapUserOne["FriendId"] = connectionSnapshot?.senderId.toString()
+//                            FirebaseDatabase.getInstance().getReference("Users")
+//                                .child(connectionSnapshot?.receiverId.toString()).child("Friends").push().setValue(hashMapUserOne)
+//
+//                            //Add to friend to sender
+//                            val hashMapUserTwo : HashMap<String , String> = HashMap()
+//                            hashMapUserTwo["FriendId"] = connectionSnapshot?.receiverId.toString()
+//                            FirebaseDatabase.getInstance().getReference("Users")
+//                                .child(connectionSnapshot?.senderId.toString()).child("Friends").push().setValue(hashMapUserTwo)
 
                             //Delete request in db
                             if(connectionSnapshot?.senderId == currentItem.senderId &&
@@ -132,8 +163,8 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
                                 Log.d("requestAdapter" , "push id ${addSnapshot.key}")
                                 val requestDeleteRef = FirebaseDatabase.getInstance().getReference("Request").child(addSnapshot.key.toString())
                                 requestDeleteRef.removeValue()
-                            }
 
+                            }
                         }
                     }
                 }
@@ -143,6 +174,8 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
                 }
 
             })
+
+
 
         }
 

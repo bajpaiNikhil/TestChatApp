@@ -198,7 +198,6 @@ class RegisterFragment : Fragment() {
         val UserObj = UserDetail(auth.currentUser?.uid.toString(), email,userName,phoneNumber , "InActive", designation,city,forgetPassQues,forgetPassAns)
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.child(auth.currentUser?.uid.toString()).setValue(UserObj)
-
     }
 }
 class UserDetail() {

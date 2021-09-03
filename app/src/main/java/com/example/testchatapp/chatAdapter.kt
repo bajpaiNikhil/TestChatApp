@@ -55,10 +55,14 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
         val userImageRef = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
         userImageRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                userImageUrl = snapshot.child("userProfileImgUrl").value.toString()
-                holder.userImageView?.let { Glide.with(it).load(userImageUrl).into(holder.userImageView)
 
+                if(snapshot.child("userProfileImgUrl").exists()){
+                    userImageUrl = snapshot.child("userProfileImgUrl").value.toString()
+                    holder.userImageView?.let { Glide.with(it).load(userImageUrl).into(holder.userImageView)}
+                }else{
+                    holder.userImageView?.let { Glide.with(it).load(R.drawable.image).into(holder.userImageView)}
                 }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -100,8 +104,14 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
         val friendImageRef = FirebaseDatabase.getInstance().getReference("Users").child(currentItem.senderId.toString())
         friendImageRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                senderImageUrl = snapshot.child("userProfileImgUrl").value.toString()
-                holder.friendImageView?.let { Glide.with(it).load(senderImageUrl).into(holder.friendImageView) }
+
+                if(snapshot.child("userProfileImgUrl").exists()){
+                    senderImageUrl = snapshot.child("userProfileImgUrl").value.toString()
+                    holder.friendImageView?.let { Glide.with(it).load(senderImageUrl).into(holder.friendImageView) }
+                }else{
+                    holder.userImageView?.let { Glide.with(it).load(R.drawable.image).into(holder.userImageView)}
+                }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
