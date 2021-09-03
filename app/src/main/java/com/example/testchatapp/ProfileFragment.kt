@@ -37,6 +37,7 @@ class ProfileFragment : Fragment() {
     lateinit var imageUploadProgressBar: ProgressBar
     lateinit var languageSpinner: Spinner
     lateinit var passwordChangeTextView: TextView
+    lateinit var profileText : TextView
 
     //user image
     lateinit var uri: Uri
@@ -74,6 +75,7 @@ class ProfileFragment : Fragment() {
 
         languageSpinner = view.findViewById(R.id.languageSpinner)
         passwordChangeTextView = view.findViewById(R.id.passTv)
+        profileText = view.findViewById(R.id.profileText)
 
 //        val language: MutableList<String?> = ArrayList()
 
@@ -105,16 +107,19 @@ class ProfileFragment : Fragment() {
                                     }
                                     1 -> {
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                        profileText.text ="प्रोफ़ाइल"
                                         logOut.text = "लॉग आउट"
                                         passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
                                     }
                                     2 -> {
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                        profileText.text ="Profil"
                                         logOut.text ="Se déconnecter"
                                         passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
                                     }
                                     3 -> {
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                        profileText.text ="Profile"
                                         logOut.text ="Logout"
                                         passwordChangeTextView.text ="Click here to change Password"
                                     }
@@ -150,16 +155,19 @@ class ProfileFragment : Fragment() {
                                     }
                                     1 -> {
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                        profileText.text ="प्रोफ़ाइल"
                                         logOut.text = "लॉग आउट"
                                         passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
                                     }
                                     2 -> {
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                        profileText.text ="Profil"
                                         logOut.text ="Se déconnecter"
                                         passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
                                     }
                                     3 -> {
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                        profileText.text ="Profile"
                                         logOut.text ="Logout"
                                         passwordChangeTextView.text ="Click here to change Password"
                                     }
@@ -196,16 +204,19 @@ class ProfileFragment : Fragment() {
                                     }
                                     1 -> {
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                        profileText.text ="प्रोफ़ाइल"
                                         logOut.text = "लॉग आउट"
                                         passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
                                     }
                                     2 -> {
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                        profileText.text ="Profil"
                                         logOut.text ="Se déconnecter"
                                         passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
                                     }
                                     3 -> {
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                        profileText.text ="Profile"
                                         logOut.text ="Logout"
                                         passwordChangeTextView.text ="Click here to change Password"
                                     }
@@ -243,16 +254,19 @@ class ProfileFragment : Fragment() {
                                 }
                                 1 -> {
                                     FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+                                    profileText.text ="प्रोफ़ाइल"
                                     logOut.text = "लॉग आउट"
                                     passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
                                 }
                                 2 -> {
                                     FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+                                    profileText.text ="Profil"
                                     logOut.text ="Se déconnecter"
                                     passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
                                 }
                                 3 -> {
                                     FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+                                    profileText.text ="Profile"
                                     logOut.text ="Logout"
                                     passwordChangeTextView.text ="Click here to change Password"
                                 }

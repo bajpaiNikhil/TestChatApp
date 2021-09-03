@@ -23,17 +23,19 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adapter<RequestAdapter.requestHolder>() {
     lateinit var auth: FirebaseAuth
+    lateinit var addRequestButton: Button
+
     class requestHolder(view: View ) : RecyclerView.ViewHolder(view) {
         val senderName  = view.findViewById<TextView>(R.id.senderNameTv)
         val senderImage = view.findViewById<CircleImageView>(R.id.senderIv)
         val requestMessage = view.findViewById<TextView>(R.id.requestMessage)
-        val addButton = view.findViewById<Button>(R.id.requestAddButton)
         val rejectButton = view.findViewById<Button>(R.id.requestRejectButton)
     }
 
     override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : requestHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_request, parent , false)
         auth = Firebase.auth
+        addRequestButton = view.findViewById(R.id.requestAddButton)
         return requestHolder(view)
     }
 
@@ -101,7 +103,7 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
             }
         })
 
-        holder.addButton.setOnClickListener {
+        addRequestButton.setOnClickListener {
 //            Toast.makeText(holder.itemView.context , "Add button is pressed" , Toast.LENGTH_SHORT).show()
             Log.d("requestAdapter" , "Add button is clicked")
 
@@ -115,13 +117,13 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
                             //Add to friend to receiver
                             val hashMapUserOne : HashMap<String , String> = HashMap()
                             hashMapUserOne["FriendId"] = connectionSnapshot?.senderId.toString()
-                            val connectionRefOne = FirebaseDatabase.getInstance().getReference("Users")
+                            FirebaseDatabase.getInstance().getReference("Users")
                                 .child(connectionSnapshot?.receiverId.toString()).child("Friends").push().setValue(hashMapUserOne)
 
                             //Add to friend to sender
                             val hashMapUserTwo : HashMap<String , String> = HashMap()
                             hashMapUserTwo["FriendId"] = connectionSnapshot?.receiverId.toString()
-                            val connectionRefTwo = FirebaseDatabase.getInstance().getReference("Users")
+                            FirebaseDatabase.getInstance().getReference("Users")
                                 .child(connectionSnapshot?.senderId.toString()).child("Friends").push().setValue(hashMapUserTwo)
 
                             //Delete request in db
@@ -143,6 +145,7 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
             })
 
         }
+
         holder.rejectButton.setOnClickListener {
 //            Toast.makeText(holder.itemView.context , "Reject button is pressed" , Toast.LENGTH_SHORT).show()
 
