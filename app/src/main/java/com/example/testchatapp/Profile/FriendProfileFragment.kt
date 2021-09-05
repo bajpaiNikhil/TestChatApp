@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.Profile
 
 import android.os.Bundle
 import android.util.Log
@@ -9,18 +9,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.testchatapp.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import org.w3c.dom.Text
 
 class FriendProfileFragment : Fragment() {
-    lateinit var userId : String
-    lateinit var friendImage : ImageView
-    lateinit var friendEmail : TextView
-    lateinit var friendUserName : TextView
-    lateinit var friendPhonenumber  : TextView
+    private lateinit var userId : String
+    private lateinit var friendImage : ImageView
+    private lateinit var friendEmail : TextView
+    private lateinit var friendUserName : TextView
+    private lateinit var friendPhonenumber  : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

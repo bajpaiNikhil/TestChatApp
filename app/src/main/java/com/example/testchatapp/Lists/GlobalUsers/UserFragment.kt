@@ -6,12 +6,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testchatapp.Lists.GlobalUsers.UserAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -23,16 +23,16 @@ import com.google.firebase.ktx.Firebase
 
 class UserFragment : Fragment() {
 
-    lateinit var auth :  FirebaseAuth
-    lateinit var db   : FirebaseDatabase
-    lateinit var recyclerView : RecyclerView
-    lateinit var userArrayList : ArrayList<UserDetails>
-    var friendListIs = mutableListOf<String>()
+    private lateinit var auth :  FirebaseAuth
+    private lateinit var db   : FirebaseDatabase
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var userArrayList : ArrayList<UserDetails>
+    private var friendListIs = mutableListOf<String>()
 
-    var userConnection = mutableListOf<String>()
+    private var userConnection = mutableListOf<String>()
 
-    var searchText = ""
-    var flag = 0
+    private var searchText = ""
+    private var flag = 0
 
 
     override fun onCreate(savedInstanceState : Bundle?) {

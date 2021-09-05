@@ -1,53 +1,51 @@
-package com.example.testchatapp
+package com.example.testchatapp.Profile
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
-import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.testchatapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import java.util.*
 import kotlin.collections.ArrayList
 
 
 class ProfileFragment : Fragment() {
+
     // For Edit Text Display
-    lateinit var userNameEditText: EditText
+
+    private lateinit var userNameEditText: EditText
     private lateinit var passwordEditText: TextView
-    lateinit var imageView: ImageView
-    lateinit var userProfileUpdateFloatingActionButton: FloatingActionButton
-    lateinit var userNameEditFloatingActionButton: FloatingActionButton
-    lateinit var userNameUpdateFloatingActionButton: FloatingActionButton
-    lateinit var imageUploadProgressBar: ProgressBar
-    lateinit var languageSpinner: Spinner
-    lateinit var passwordChangeTextView: TextView
-    lateinit var profileText : TextView
+    private lateinit var imageView: ImageView
+    private lateinit var userProfileUpdateFloatingActionButton: FloatingActionButton
+    private lateinit var userNameEditFloatingActionButton: FloatingActionButton
+    private lateinit var userNameUpdateFloatingActionButton: FloatingActionButton
+    private lateinit var imageUploadProgressBar: ProgressBar
+    private lateinit var languageSpinner: Spinner
+    private lateinit var passwordChangeTextView: TextView
+    private lateinit var profileText : TextView
 
     //user image
-    lateinit var uri: Uri
-    var imageUrl: String? = null
-    var imageName: String = ""
+    private lateinit var uri: Uri
+    private var imageUrl: String? = null
+    private var imageName: String = ""
 
-    lateinit var logOut: Button
+    private lateinit var logOut: Button
 
     // For FireBase
-    lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

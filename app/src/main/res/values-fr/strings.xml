@@ -47,4 +47,5 @@
     <string name="add">ajouter</string>
     <string name="reject">rejeter</string>
     <string name="textview_name">Affichage</string>
+    <string name="Registration_Complete">Registration Complete</string>
 </resources>

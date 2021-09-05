@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.Profile
 
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.navigation.fragment.findNavController
+import com.example.testchatapp.R
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -21,29 +22,29 @@ import com.google.firebase.database.ValueEventListener
 
 class ChangePasswordFragment : Fragment() {
 
-    lateinit var auth : FirebaseAuth
+    private lateinit var auth : FirebaseAuth
 
-    lateinit var questionTV : TextView
-    lateinit var answerTV : TextView
-    lateinit var headingTV : TextView
-    lateinit var answerET : EditText
-    lateinit var questionET : TextView
-    lateinit var submit : Button
+    private lateinit var questionTV : TextView
+    private lateinit var answerTV : TextView
+    private lateinit var headingTV : TextView
+    private lateinit var answerET : EditText
+    private lateinit var questionET : TextView
+    private lateinit var submit : Button
 
-    lateinit var passHeadingTV : TextView
-    lateinit var passwordTV : TextView
-    lateinit var newPasswordTV : TextView
-    lateinit var confirmPasswordTV : TextView
+    private lateinit var passHeadingTV : TextView
+    private lateinit var passwordTV : TextView
+    private lateinit var newPasswordTV : TextView
+    private lateinit var confirmPasswordTV : TextView
 
-    lateinit var passwordET : EditText
-    lateinit var newPasswordET : EditText
-    lateinit var confirmPasswordET : EditText
-    lateinit var submitPassword : Button
+    private lateinit var passwordET : EditText
+    private lateinit var newPasswordET : EditText
+    private lateinit var confirmPasswordET : EditText
+    private lateinit var submitPassword : Button
 
-    lateinit var quesAnsCardView: CardView
-    lateinit var changePassCardView: CardView
+    private lateinit var quesAnsCardView: CardView
+    private lateinit var changePassCardView: CardView
 
-    var answer =""
+    private var answer =""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

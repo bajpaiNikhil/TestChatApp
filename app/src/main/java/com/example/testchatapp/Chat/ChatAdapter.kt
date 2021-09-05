@@ -1,7 +1,6 @@
-package com.example.testchatapp
+package com.example.testchatapp.Chat
 
 import android.graphics.Color
-import android.graphics.Color.RED
 import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapter<chatAdapter.ChatHolder>() {
+class chatAdapter(private val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapter<chatAdapter.ChatHolder>() {
 
 
     private val MESSAGE_TYPE_LEFT = 0
@@ -40,10 +40,10 @@ class chatAdapter(val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapte
     override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : ChatHolder {
         auth = Firebase.auth
             if(viewType == MESSAGE_TYPE_RIGHT){
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_right , parent ,false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_right, parent ,false)
             return ChatHolder(view)
         }else{
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_left , parent ,false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_left, parent ,false)
             return ChatHolder(view)
         }
     }

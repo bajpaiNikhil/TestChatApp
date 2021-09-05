@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.Lists.Request
 
 
 import android.util.Log
@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.testchatapp.Chat.chatDataClass
+import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -21,7 +22,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adapter<RequestAdapter.requestHolder>() {
+class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerView.Adapter<RequestAdapter.requestHolder>() {
     lateinit var auth: FirebaseAuth
     lateinit var addRequestButton: Button
 
@@ -44,7 +45,7 @@ class RequestAdapter(val reqList : ArrayList<chatDataClass>) : RecyclerView.Adap
 
         holder.senderImage.setOnClickListener {
             val bundle = bundleOf("FriendId" to currentItem.senderId.toString())
-            holder.itemView.findNavController().navigate(R.id.action_requestFragment_to_friendProfileFragment , bundle)
+            holder.itemView.findNavController().navigate(R.id.action_requestFragment_to_friendProfileFragment, bundle)
         }
 
         val senderRef = FirebaseDatabase.getInstance().getReference("Users").child(currentItem.senderId.toString())

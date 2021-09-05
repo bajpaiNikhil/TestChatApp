@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.testchatapp.LoginFragment"
+        android:name="com.example.testchatapp.Authentication.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/friendFragment"
-        android:name="com.example.testchatapp.FriendFragment"
+        android:name="com.example.testchatapp.Lists.Friends.FriendFragment"
         android:label="fragment_channel"
         tools:layout="@layout/fragment_friend">
         <action
@@ -114,7 +114,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.testchatapp.ProfileFragment"
+        android:name="com.example.testchatapp.Profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -141,7 +141,7 @@
     </fragment>
     <fragment
         android:id="@+id/requestFragment"
-        android:name="com.example.testchatapp.RequestFragment"
+        android:name="com.example.testchatapp.Lists.Request.RequestFragment"
         android:label="fragment_request"
         tools:layout="@layout/fragment_request" >
         <action
@@ -168,7 +168,7 @@
     </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.example.testchatapp.ChangePasswordFragment"
+        android:name="com.example.testchatapp.Profile.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" >
         <action
@@ -181,7 +181,7 @@
     </fragment>
     <fragment
         android:id="@+id/friendProfileFragment"
-        android:name="com.example.testchatapp.FriendProfileFragment"
+        android:name="com.example.testchatapp.Profile.FriendProfileFragment"
         android:label="fragment_friend_profile"
         tools:layout="@layout/fragment_friend_profile" />
 </navigation>

@@ -47,5 +47,7 @@
     <string name="add">add</string>
     <string name="reject">reject</string>
     <string name="textview_name">TextView</string>
+    <string name="Registration_Complete">Registration Complete</string>
+    <string name="users">Users</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

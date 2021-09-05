@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgrounddesignimage"
-    tools:context=".FriendProfileFragment">
+    tools:context=".Profile.FriendProfileFragment">
 
     <TextView
         android:id="@+id/textView3"

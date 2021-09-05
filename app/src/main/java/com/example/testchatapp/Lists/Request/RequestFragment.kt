@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.Lists.Request
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -14,6 +14,9 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testchatapp.Chat.chatDataClass
+import com.example.testchatapp.Lists.Friends.FriendsList
+import com.example.testchatapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -23,12 +26,12 @@ import com.google.firebase.database.ValueEventListener
 
 class RequestFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    lateinit var auth : FirebaseAuth
-    lateinit var requestList : ArrayList<chatDataClass>
-    lateinit var recyclerView : RecyclerView
-    var friendListIs = mutableListOf<String>()
-    var searchText = ""
-    var flag = 0
+    private lateinit var auth : FirebaseAuth
+    private lateinit var requestList : ArrayList<chatDataClass>
+    private lateinit var recyclerView : RecyclerView
+    private var friendListIs = mutableListOf<String>()
+    private var searchText = ""
+    private var flag = 0
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)

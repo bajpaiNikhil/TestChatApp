@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.Lists.Friends
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.testchatapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -30,21 +31,21 @@ import kotlin.collections.ArrayList
 
 class FriendFragment : Fragment() {
 
-    lateinit var recyclerView: RecyclerView
-    lateinit var friendList: ArrayList<FriendsList>
-    var friendListIs = mutableListOf<String>()
-    lateinit var connectionList: ArrayList<FriendsDetails>
-    lateinit var userProfileLinearLayout: LinearLayout
-    lateinit var userProfileImageView: CircleImageView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var friendList: ArrayList<FriendsList>
+    private var friendListIs = mutableListOf<String>()
+    private lateinit var connectionList: ArrayList<FriendsDetails>
 
-    lateinit var auth: FirebaseAuth
+    private lateinit var userProfileLinearLayout: LinearLayout
+    private lateinit var userProfileImageView: CircleImageView
+    private lateinit var auth: FirebaseAuth
 
-    var searchText = ""
-    var currentLanguage = ""
-    var flag = 0
-    var bundle: Bundle? = null
-    lateinit var profileTv: TextView
-    lateinit var locale: Locale
+    private var searchText = ""
+    private var currentLanguage = ""
+    private var flag = 0
+    private var bundle: Bundle? = null
+    private lateinit var profileTv: TextView
+    private lateinit var locale: Locale
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -241,7 +242,7 @@ class FriendFragment : Fragment() {
                     addNewFriends.setOnClickListener {
                         val bundle = bundleOf("friendListIs" to friendListIs)
                         findNavController().navigate(
-                                R.id.action_friendFragment_to_userFragment3,
+                            R.id.action_friendFragment_to_userFragment3,
                                 bundle
                             )
                     }

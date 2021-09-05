@@ -8,7 +8,7 @@
     android:background="@drawable/backgrounddesignimage"
     android:backgroundTint="#207E75"
     android:backgroundTintMode="screen"
-    tools:context=".ProfileFragment">
+    tools:context=".Profile.ProfileFragment">
 
     <TextView
         android:id="@+id/profileText"

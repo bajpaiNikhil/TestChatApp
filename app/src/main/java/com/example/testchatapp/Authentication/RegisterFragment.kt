@@ -16,25 +16,25 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class RegisterFragment : Fragment() {
-    lateinit var emailR: EditText
-    lateinit var passwordR: EditText
-    lateinit var usernameR: EditText
-    lateinit var phoneNumberR: EditText
-    lateinit var confirmPasswordR: EditText
-    lateinit var designationR: EditText
-    lateinit var cityRS: Spinner
-    var cityNameR = ""
-    lateinit var  forgetPassQuesR: Spinner
-    var forgetPassQuesString = ""
-    lateinit var forgetPassAns: EditText
-    lateinit var registerButton : Button
-    lateinit var loginTextView: TextView
+    private lateinit var emailR: EditText
+    private lateinit var passwordR: EditText
+    private lateinit var usernameR: EditText
+    private lateinit var phoneNumberR: EditText
+    private lateinit var confirmPasswordR: EditText
+    private lateinit var designationR: EditText
+    private lateinit var cityRS: Spinner
+    private var cityNameR = ""
+    private lateinit var  forgetPassQuesR: Spinner
+    private var forgetPassQuesString = ""
+    private lateinit var forgetPassAns: EditText
+    private lateinit var registerButton : Button
+    private lateinit var loginTextView: TextView
 
     private var currentLanguage = "en"
-    lateinit var locale: Locale
-
+    private lateinit var locale: Locale
+    private
     lateinit var auth : FirebaseAuth
-    lateinit var db : FirebaseDatabase
+    private lateinit var db : FirebaseDatabase
 
     override fun onCreateView(
         inflater : LayoutInflater, container : ViewGroup?,
@@ -161,7 +161,7 @@ class RegisterFragment : Fragment() {
                         auth.createUserWithEmailAndPassword(eMail, passWord).addOnCompleteListener {
                             if (it.isSuccessful) {
                                 addUserInDb()
-                                Toast.makeText(context, "Registration Complete", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, getString(R.string.Registration_Complete), Toast.LENGTH_SHORT)
                                     .show()
                                 findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                             } else {

@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testchatapp.Chat.chatAdapter
+import com.example.testchatapp.Chat.chatDataClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -28,17 +30,16 @@ class ChatFragment : Fragment() {
 
     private var userId : String? = null
 
-    lateinit var auth : FirebaseAuth
-    lateinit var db : FirebaseDatabase
-    lateinit var tvName: TextView
-    lateinit var buttonSendClick : AppCompatImageButton
-    lateinit var backImageView: ImageView
-    lateinit var messageTextView : TextView
-    lateinit var recyclerView : RecyclerView
-    lateinit var onlineImageView: ImageView
-    lateinit var offlineImageView: ImageView
-    lateinit var statusTextView: TextView
-
+    private lateinit var auth : FirebaseAuth
+    private lateinit var db : FirebaseDatabase
+    private lateinit var tvName: TextView
+    private lateinit var buttonSendClick : AppCompatImageButton
+    private lateinit var backImageView: ImageView
+    private lateinit var messageTextView : TextView
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var onlineImageView: ImageView
+    private lateinit var offlineImageView: ImageView
+    private lateinit var statusTextView: TextView
     lateinit var menuPress : ImageView
 
     lateinit var chatList : ArrayList<chatDataClass>
@@ -252,7 +253,7 @@ class ChatFragment : Fragment() {
 
 
     private fun findUserToChat() {
-       val ref = FirebaseDatabase.getInstance().getReference("Users").child(userId!!)
+        val ref = FirebaseDatabase.getInstance().getReference("Users").child(userId!!)
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot : DataSnapshot) {
                 val user = snapshot.getValue(userToChar::class.java)

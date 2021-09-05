@@ -1,16 +1,16 @@
-package com.example.testchatapp
+package com.example.testchatapp.Lists.GlobalUsers
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.testchatapp.R
+import com.example.testchatapp.UserDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -36,7 +36,7 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
 
     override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : UserHolder {
 
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_user , parent  ,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent  ,false)
         auth = Firebase.auth
         return UserHolder(view)
 
@@ -70,12 +70,6 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
 
         holder.userNameIs.text = currentItem.usernameR
         holder.userEmail.text  = currentItem.emailR
-//
-//        val hashMap: HashMap<String, String> = HashMap()
-//
-//        hashMap["senderId"] = auth.currentUser?.uid.toString()
-//        hashMap["receiverId"] = currentItem.userId.toString()
-//        hashMap["message"] = "SENT YOU A FRIEND REQUEST!!"
 
 
         holder.addButton.setOnClickListener {
