@@ -66,7 +66,7 @@ class LoginFragment : Fragment() {
             val eMail = emailL.text.toString()
             val passWord = passL.text.toString()
             if(eMail.isEmpty() || passWord.isEmpty()) {
-                Toast.makeText(context, "please enter all fields", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.please_enter_all_fields), Toast.LENGTH_LONG).show()
             }
             else{
                 Log.d("login", userName)
@@ -78,7 +78,7 @@ class LoginFragment : Fragment() {
                                 .setValue("Active")
                             findNavController().navigate(R.id.action_loginFragment_to_friendFragment)
                         } else {
-                            Toast.makeText(context, "Something wrong...", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, getString(R.string.somethingWrong), Toast.LENGTH_LONG).show()
                         }
                     }
             }

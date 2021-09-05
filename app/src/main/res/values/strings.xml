@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lets Chat</string>
+    <string name="app_name" translatable="false">Lets Chat</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -48,6 +48,24 @@
     <string name="reject">reject</string>
     <string name="textview_name">TextView</string>
     <string name="Registration_Complete">Registration Complete</string>
-    <string name="users">Users</string>
+    <string name="users" translatable="false">Users</string>
+    <string name="selectACity" translatable="false">Select a city</string>
+    <string name="Mumbai">Mumbai</string>
+    <string name="Delhi">Delhi</string>
+    <string name="Kolkata">Kolkata</string>
+    <string name="Bengaluru">Bengaluru</string>
+    <string name="Hyderabad">Hyderabad</string>
+    <string name="Chennai">Chennai</string>
+    <string name="Ahmedabad">Ahmedabad</string>
+    <string name="Pune">Pune</string>
+    <string name="Surat">Surat</string>
+    <string name="Visakhapatnam">Visakhapatnam</string>
+    <string name="Other">Other</string>
+    <string name="SelectAQuestion">Select a question</string>
+    <string name="FavouriteDish">Favourite Dish?</string>
+    <string name="BirthPlace">Birth Place?</string>
+    <string name="petName">First Pet\'s Name?</string>
+    <string name="please_enter_all_fields">please enter all fields</string>
+    <string name="somethingWrong">Something wrong...</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

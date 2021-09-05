@@ -62,18 +62,18 @@ class RegisterFragment : Fragment() {
         // city spinner
         cityRS = view.findViewById(R.id.cityRS)
         val cityList: MutableList<String?> = ArrayList()
-        cityList.add(0, "Select a city")
-        cityList.add("Mumbai")
-        cityList.add("Delhi")
-        cityList.add("Kolkata")
-        cityList.add("Bengaluru")
-        cityList.add("Hyderabad")
-        cityList.add("Chennai")
-        cityList.add("Ahmedabad")
-        cityList.add("Pune")
-        cityList.add("Surat")
-        cityList.add("Visakhapatnam")
-        cityList.add("Other")
+        cityList.add(0, getString(R.string.selectACity))
+        cityList.add(getString(R.string.Mumbai))
+        cityList.add(getString(R.string.Delhi))
+        cityList.add(getString(R.string.Kolkata))
+        cityList.add(getString(R.string.Bengaluru))
+        cityList.add(getString(R.string.Hyderabad))
+        cityList.add(getString(R.string.Chennai))
+        cityList.add(getString(R.string.Ahmedabad))
+        cityList.add(getString(R.string.Pune))
+        cityList.add(getString(R.string.Surat))
+        cityList.add(getString(R.string.Visakhapatnam))
+        cityList.add(getString(R.string.Other))
 
         val cityArrayAdapter: ArrayAdapter<String?>? =
             context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, cityList) }
@@ -86,7 +86,7 @@ class RegisterFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (parent?.getItemAtPosition(position) == "Select a city") {
+                if (parent?.getItemAtPosition(position) == getString(R.string.selectACity)) {
                     // no code to be added here
                 }
                 else {
@@ -103,10 +103,10 @@ class RegisterFragment : Fragment() {
         // forget password question's spinner
         forgetPassQuesR = view.findViewById(R.id.forgetPassQuesRS)
         val quesList: MutableList<String?> = ArrayList()
-        quesList.add(0, "Select a question")
-        quesList.add("Favourite Dish?")
-        quesList.add("Birth Place?")
-        quesList.add("First Pet's Name?")
+        quesList.add(0, getString(R.string.SelectAQuestion))
+        quesList.add(getString(R.string.FavouriteDish))
+        quesList.add(getString(R.string.BirthPlace))
+        quesList.add(getString(R.string.petName))
 
         val quesArrayAdapter: ArrayAdapter<String?>? =
             context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, quesList) }
@@ -119,7 +119,7 @@ class RegisterFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (parent?.getItemAtPosition(position) == "Select a question") {
+                if (parent?.getItemAtPosition(position) == getString(R.string.SelectAQuestion)) {
                     // no code to be added here
                 }
                 else {
