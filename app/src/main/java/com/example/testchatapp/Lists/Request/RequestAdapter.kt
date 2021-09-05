@@ -140,24 +140,8 @@ class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerV
                                     override fun onCancelled(error: DatabaseError) {
                                         TODO("Not yet implemented")
                                     }
-
                                 })
-
-
                             }
-
-//                            //Add to friend to receiver
-//                            val hashMapUserOne : HashMap<String , String> = HashMap()
-//                            hashMapUserOne["FriendId"] = connectionSnapshot?.senderId.toString()
-//                            FirebaseDatabase.getInstance().getReference("Users")
-//                                .child(connectionSnapshot?.receiverId.toString()).child("Friends").push().setValue(hashMapUserOne)
-//
-//                            //Add to friend to sender
-//                            val hashMapUserTwo : HashMap<String , String> = HashMap()
-//                            hashMapUserTwo["FriendId"] = connectionSnapshot?.receiverId.toString()
-//                            FirebaseDatabase.getInstance().getReference("Users")
-//                                .child(connectionSnapshot?.senderId.toString()).child("Friends").push().setValue(hashMapUserTwo)
-
                             //Delete request in db
                             if(connectionSnapshot?.senderId == currentItem.senderId &&
                                 connectionSnapshot?.receiverId == currentItem.receiverId ){
@@ -176,8 +160,7 @@ class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerV
 
             })
 
-
-
+            holder.itemView.findNavController().navigate(R.id.action_requestFragment_to_friendFragment)
         }
 
         holder.rejectButton.setOnClickListener {
@@ -200,11 +183,8 @@ class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerV
                         }
                     }
                 }
-
                 override fun onCancelled(error : DatabaseError) {
-
                 }
-
             })
         }
     }

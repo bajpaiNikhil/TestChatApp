@@ -145,45 +145,50 @@ class RegisterFragment : Fragment() {
         }
         registerButton.setOnClickListener {
             val eMail = emailR.text.toString()
+            if(eMail.isEmpty()){
+                emailR.setError("PLEASE ENTER YOUR EMAIL")
+            }
             val passWord = passwordR.text.toString()
+            if(passWord.isEmpty()){
+                passwordR.setError("PLEASE ENTER YOUR passWord")
+            }
             val confirmPassword = confirmPasswordR.text.toString()
+            if(confirmPassword.isEmpty()){
+                confirmPasswordR.setError("PLEASE ENTER YOUR confirmPassword")
+            }
             val phoneNumber = phoneNumberR.text.toString()
+            if(phoneNumber.isEmpty()){
+                phoneNumberR.setError("PLEASE ENTER YOUR phoneNumber")
+            }
             val designation = designationR.text.toString()
+            if(designation.isEmpty()){
+                designationR.setError("PLEASE ENTER YOUR designation")
+            }
             val city = cityNameR
             val forgetPassQues = forgetPassQuesString
-            val forgetPassAns = forgetPassAns.text.toString()
+            val forgetPassAnsIs = forgetPassAns.text.toString()
+            if(forgetPassAnsIs.isEmpty()){
+                forgetPassAns.setError("PLEASE ENTER YOUR Response")
+            }
 
-            if(eMail.isNotEmpty() && passWord.isNotEmpty() && confirmPassword.isNotEmpty() && phoneNumber.isNotEmpty()
-                && designation.isNotEmpty() && city.isNotEmpty() && forgetPassQues.isNotEmpty() && forgetPassAns.isNotEmpty()
-                ) {
-                if(passWord.length>8 && passWord == confirmPassword) {
-                    if (phoneNumber.length == 10) {
-                        auth.createUserWithEmailAndPassword(eMail, passWord).addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                addUserInDb()
-                                Toast.makeText(context, getString(R.string.Registration_Complete), Toast.LENGTH_SHORT)
-                                    .show()
-                                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    "Registration InComplete",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+            if(passWord.length>8 && passWord == confirmPassword) {
+                if (phoneNumber.length == 10) {
+                    auth.createUserWithEmailAndPassword(eMail, passWord).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            addUserInDb()
+                            Toast.makeText(context, getString(R.string.Registration_Complete), Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                        } else {
+                            Toast.makeText(context, "Registration InComplete", Toast.LENGTH_LONG).show()
                         }
-                    }
-                    else{
-                        Toast.makeText(context, "Phone Number should be of 10 Digits", Toast.LENGTH_SHORT).show()
                     }
                 }
                 else{
-                    Toast.makeText(context, "Password length should be greater than 8", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Phone Number should be of 10 Digits", Toast.LENGTH_LONG).show()
                 }
             }
             else{
-                Toast.makeText(context, "Please check if all fields are filled", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(context, "Password length should be greater than 8", Toast.LENGTH_LONG).show()
             }
         }
     }

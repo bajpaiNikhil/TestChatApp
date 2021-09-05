@@ -106,7 +106,7 @@ class ProfileFragment : Fragment() {
                                     1 -> {
                                         FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
                                         profileText.text ="प्रोफ़ाइल"
-                                        logOut.text = "लॉग आउट"
+                                        logOut.text  = "लॉग आउट"
                                         passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
                                     }
                                     2 -> {

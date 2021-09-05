@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.services
 
 import android.annotation.TargetApi
 import android.content.BroadcastReceiver

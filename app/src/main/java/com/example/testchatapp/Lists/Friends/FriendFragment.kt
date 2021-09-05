@@ -79,6 +79,7 @@ class FriendFragment : Fragment() {
                 TODO("Not yet implemented")
             }
         })
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_friend, container, false)
     }

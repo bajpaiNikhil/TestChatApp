@@ -56,6 +56,9 @@ class LoginFragment : Fragment() {
 
         if(auth.currentUser != null){
             findNavController().navigate(R.id.action_loginFragment_to_friendFragment)
+            FirebaseDatabase.getInstance().getReference("Users")
+                .child(auth.currentUser?.uid.toString()).child("status")
+                .setValue("Active")
         }
 
         registerTextView.setOnClickListener {

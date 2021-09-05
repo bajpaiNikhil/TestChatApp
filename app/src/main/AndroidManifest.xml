@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestChatApp">
         <activity
-            android:name=".SplashActivity"
+            android:name=".services.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".services.MainActivity"
             android:exported="true">
         </activity>
 
