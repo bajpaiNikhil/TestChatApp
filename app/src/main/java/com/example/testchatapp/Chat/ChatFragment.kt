@@ -129,8 +129,7 @@ class ChatFragment : Fragment() {
 
                     // add a list
                     val fontSizeArray = arrayOf(getString(R.string.Small), getString(R.string.Medium), getString(
-                                            R.string.Large), getString(R.string.Extra_Large), getString(
-                                                                    R.string.Default))
+                                            R.string.Large), getString(R.string.Extra_Large), getString(R.string.Default))
                     builder.setItems(fontSizeArray) { dialog, which ->
 
                         when (which) {

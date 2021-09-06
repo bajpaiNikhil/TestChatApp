@@ -164,7 +164,7 @@ class ProfileFragment : Fragment() {
     private fun dialog(string: String){
         val builder = AlertDialog.Builder(context)
         builder.setCancelable(false)
-        builder.setTitle("Language")
+        builder.setTitle(getString(R.string.Language))
         builder.setMessage("Changed to $string")
         builder.setPositiveButton("yes") { _, _ ->
             if (string == getString(R.string.Hindi)) {

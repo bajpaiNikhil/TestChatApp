@@ -49,6 +49,7 @@
     <string name="textview_name">TextView</string>
     <string name="Registration_Complete">Registration Complete</string>
     <string name="users">Users</string>
+    <string name="Default">Default</string>
     <string name="selectACity">Select a city</string>
     <string name="Mumbai">Mumbai</string>
     <string name="Delhi">Delhi</string>
@@ -57,6 +58,7 @@
     <string name="Hyderabad">Hyderabad</string>
     <string name="Chennai">Chennai</string>
     <string name="Ahmedabad">Ahmedabad</string>
+
     <string name="Pune">Pune</string>
     <string name="Surat">Surat</string>
     <string name="Visakhapatnam">Visakhapatnam</string>
@@ -66,7 +68,7 @@
     <string name="BirthPlace">Birth Place?</string>
     <string name="petName">First Pet\'s Name?</string>
     <string name="please_enter_all_fields">please enter all fields</string>
-    <string name="somethingWrong">Something wrong...</string>
+    <string name="somethingWrong">Something wrong…</string>
     <string name="Select_a_language">Select a language</string>
     <string name="Hindi">Hindi</string>
     <string name="French">French</string>
@@ -92,7 +94,6 @@
     <string name="Coral">Coral</string>
     <string name="DimGrey">DimGrey</string>
     <string name="Snow">Snow</string>
-    <string name="Default">Default</string>
     <string name="Choose_Font_Colour">Choose Font Colour</string>
     <string name="cursive">cursive</string>
     <string name="casual">casual</string>
@@ -109,5 +110,6 @@
     <string name="Saved_Successfully">Saved Successfully</string>
     <string name="Please_make_sure_to_enter_all_the_fields">Please make sure to enter all the fields</string>
     <string name="English">English</string>
+    <string name="Language">Language</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
