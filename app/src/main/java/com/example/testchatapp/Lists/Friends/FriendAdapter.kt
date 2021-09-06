@@ -53,7 +53,6 @@ class FriendAdapter(private val friendList : ArrayList<FriendsDetails>, val list
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userImageUrl = snapshot.child("userProfileImgUrl").value
                 if(snapshot.child("userProfileImgUrl").exists()) {
-                    Log.d("FriendAdapter", "userProfileImhUrl : $userImageUrl")
                     holder.userImage?.let {
                         Glide.with(it).load(userImageUrl).into(holder.userImage)
                     }

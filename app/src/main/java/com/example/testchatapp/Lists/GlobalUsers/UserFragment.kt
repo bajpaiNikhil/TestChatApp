@@ -77,7 +77,6 @@ class UserFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.userRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        Log.d("userFragment" , "userConnection $userConnection")
 
         getUser()
         searchView.setOnQueryTextListener(object  : SearchView.OnQueryTextListener{
@@ -112,13 +111,11 @@ class UserFragment : Fragment() {
                         if(userIs?.userId != auth.currentUser?.uid){
                             if(userIs?.userId !in userConnection){
                                 if(userIs?.usernameR?.lowercase()?.contains(searchText.lowercase()) == true){
-                                    Log.d("userFragment" , "${userIs?.userId} , $userConnection , ${userIs?.userId !in userConnection}")
                                     userArrayList.add(userIs!!)
                                 }
                             }
                         }
                     }
-                    Log.d("userFragment" , "userArrayList $userArrayList")
                     recyclerView.adapter = UserAdapter(userArrayList)
                 }
             }

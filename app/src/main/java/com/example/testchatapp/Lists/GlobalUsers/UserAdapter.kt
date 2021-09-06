@@ -45,13 +45,12 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder : UserHolder, position : Int) {
         val currentItem = userList[position]
         rId = currentItem.userId.toString()
-        Log.d("UserFragment" , rId!!)
+
         val userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentItem.userId.toString())
         userRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userImageUrl = snapshot.child("userProfileImgUrl").value
                 if(snapshot.child("userProfileImgUrl").exists()) {
-                    Log.d("FriendAdapter", "userProfileImhUrl : $userImageUrl")
                     holder.userImage?.let {
                         Glide.with(it).load(userImageUrl).into(holder.userImage)
                     }
@@ -74,15 +73,14 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
 
         holder.addButton.setOnClickListener {
 
-            Log.d("UserFragment" , "button is pressed")
+
 
             val builder = AlertDialog.Builder(holder.itemView.context)
             builder.setCancelable(false)
             builder.setTitle("Add ${currentItem.usernameR}")
-            builder.setMessage("u sure ?")
+            builder.setMessage("Are you sure ?")
             builder.setPositiveButton("yes") { _, _ ->
-                Log.d("UserFragment", "yes is pressed ${currentItem.userId}")
-                Log.d("UserFragment", "herr again ${rId!!}")
+
 
                 val hashMap: HashMap<String, String> = HashMap()
 
@@ -93,7 +91,7 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
             }
             builder.setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
-                Log.d("UserFragment", "No is pressed")
+
             }
             builder.create().show()
         }

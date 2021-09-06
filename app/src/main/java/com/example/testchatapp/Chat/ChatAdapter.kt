@@ -89,7 +89,6 @@ class chatAdapter(private val chatList : ArrayList<chatDataClass>) : RecyclerVie
                     holder.message.textSize = sizeText.toFloat()
                     holder.message.setTextColor(Color.parseColor(fontColor))
                     holder.message.typeface = Typeface.create(fontStyle , Typeface.NORMAL)
-                    Log.d("chatAdapter" , "$sizeText HEhEHEHAHAHAA")
                 }
 
             }
@@ -118,6 +117,9 @@ class chatAdapter(private val chatList : ArrayList<chatDataClass>) : RecyclerVie
                 TODO("Not yet implemented")
             }
         })
+
+
+
 
         holder.message.text = currentItem.message
     }

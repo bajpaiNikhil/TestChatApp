@@ -55,7 +55,7 @@ class FriendProfileFragment : Fragment() {
                 val friendEmailIs = snapshot.child("emailR").value.toString()
                 val friendPhNoIs = snapshot.child("phoneNumberR").value.toString()
                 if (snapshot.child("userProfileImgUrl").exists()) {
-                    Log.d("FPF" , "$friendImageUrl")
+
                     context?.let { Glide.with(it).load(friendImageUrl).into(friendImage)}
                     friendEmail.text = friendEmailIs
                     friendUserName.text = friendNameIs

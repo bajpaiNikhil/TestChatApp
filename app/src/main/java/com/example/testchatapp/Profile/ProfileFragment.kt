@@ -83,9 +83,9 @@ class ProfileFragment : Fragment() {
                     val languageKey = snapshot.value.toString()
                     if (languageKey == "") {
                         val language: MutableList<String?> = ArrayList()
-                        language.add(0, "Select a language")
-                        language.add("Hindi")
-                        language.add("French")
+                        language.add(0, getString(R.string.Select_a_language))
+                        language.add(getString(R.string.Hindi))
+                        language.add(getString(R.string.French))
                         language.add("English")
 
                         val languageAdapter: ArrayAdapter<String?>? =
@@ -230,10 +230,10 @@ class ProfileFragment : Fragment() {
                 }
                 else{
                     val language: MutableList<String?> = ArrayList()
-                    language.add(0, "Select a language")
-                    language.add("Hindi")
-                    language.add("French")
-                    language.add("English")
+                    language.add(0, getString(R.string.Select_a_language))
+                    language.add(getString(R.string.Hindi))
+                    language.add(getString(R.string.French))
+                    language.add(getString(R.string.English))
 
                     val languageAdapter: ArrayAdapter<String?>? =
                         context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
@@ -272,7 +272,7 @@ class ProfileFragment : Fragment() {
                         }
 
                         override fun onNothingSelected(parent: AdapterView<*>?) {
-                            TODO("Not yet implemented")
+                            //do nothing
                         }
 
                     }
@@ -280,7 +280,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                //do nothing
             }
         })
 
@@ -368,7 +368,7 @@ class ProfileFragment : Fragment() {
         }
 
         passwordEditText.setOnClickListener{
-            Log.d("dialog", "Reached till here")
+
             findNavController().navigate(R.id.action_profileFragment_to_changePasswordFragment2)
         }
 

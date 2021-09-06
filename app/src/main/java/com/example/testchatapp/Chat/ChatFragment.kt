@@ -97,7 +97,7 @@ class ChatFragment : Fragment() {
         buttonSendClick.setOnClickListener {
             val message = messageTextView.text.toString()
             if (message.isEmpty()) {
-                Toast.makeText(context, "type the message you goose", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.Type_the_message), Toast.LENGTH_SHORT).show()
             } else {
                 sendMessage(auth.currentUser?.uid!!, userId!!, message)
                 messageTextView.text = ""
@@ -117,19 +117,20 @@ class ChatFragment : Fragment() {
 
     private fun showPopUpMenu() {
         val pMenu = PopupMenu(context , menuPress)
-        pMenu.menu.add("Font Size")
-        pMenu.menu.add("Font Colour")
-        pMenu.menu.add("Font Style")
+        pMenu.menu.add(getString(R.string.Font_Size))
+        pMenu.menu.add(getString(R.string.Font_Colour))
+        pMenu.menu.add(getString(R.string.Font_Style))
 
         pMenu.setOnMenuItemClickListener {
             when(it.title){
-                "Font Size"  -> {
-                    Log.d("chatFrag" ,"${it.title} found ")
+                getString(R.string.Font_Size)  -> {
                     val builder = AlertDialog.Builder(context)
-                    builder.setTitle("Choose the Font Size")
+                    builder.setTitle(getString(R.string.Choose_the_Font_Size))
 
                     // add a list
-                    val fontSizeArray = arrayOf("Small", "Medium", "Large", "Extra Large", "Default")
+                    val fontSizeArray = arrayOf(getString(R.string.Small), getString(R.string.Medium), getString(
+                                            R.string.Large), getString(R.string.Extra_Large), getString(
+                                                                    R.string.Default))
                     builder.setItems(fontSizeArray) { dialog, which ->
 
                         when (which) {
@@ -137,28 +138,28 @@ class ChatFragment : Fragment() {
                                 val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontSize").setValue(14)
 
-                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             1 -> {
                                 val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontSize").setValue(16)
-                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             2 -> {
                                 val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontSize").setValue(20)
-                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             3 -> {
                                 val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontSize").setValue(24)
-                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             4 -> {
                                 val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontSize").setValue(18)
                                 Log.d("chatFrag" ,"$which found ")
-                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
 
                         }
@@ -169,79 +170,79 @@ class ChatFragment : Fragment() {
                     dialog.show()
                     Toast.makeText(context , "Font . " , Toast.LENGTH_LONG).show()
                 }
-                "Font Colour" -> {
-                    Log.d("chatFrag" , "${it.title} found")
+                getString(R.string.Font_Colour) -> {
                     val builder = AlertDialog.Builder(context)
                     builder.setTitle("Choose Font Colour")
 
                     // add a list
-                    val fontColorArray = arrayOf("Crimson", "Coral", "DimGrey", "Snow", "Default")
+                    val fontColorArray = arrayOf(getString(R.string.Crimson), getString(R.string.Coral), getString(
+                                            R.string.DimGrey), getString(R.string.Snow), getString(R.string.Default))
                     builder.setItems(fontColorArray) { dialog, which ->
                         when (which) {
                             0 -> {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontColor").setValue("#DC143C")
-                                Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
+                                 }
                             1 -> {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontColor").setValue("#FF7F50")
-                                Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
+                                 }
                             2 -> {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontColor").setValue("#696969")
-                                Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
+                                 }
                             3 -> {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontColor").setValue("#FFFAFA")
-                                Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
+                                 }
                             4 -> {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontColor").setValue("#36454F")
-                                Toast.makeText(context,"item Clicked ${fontColorArray[which]}" , Toast.LENGTH_SHORT).show() }
+                                }
                         }
                     }
 
                     // create and show the alert dialog
                     val dialog = builder.create()
                     dialog.show()
-                    Toast.makeText(context , "Language . " , Toast.LENGTH_LONG).show()
                 }
-                "Font Style" -> {
-                    Log.d("chatFrag" , "${it.title} found")
+                getString(R.string.Font_Style) -> {
+
                     val builder = AlertDialog.Builder(context)
-                    builder.setTitle("Choose Font Colour")
+                    builder.setTitle(getString(R.string.Choose_Font_Colour))
 
                     // add a list
-                    val fontStyleArray = arrayOf("cursive", "casual", "serif-monospace", "sans-serif-smallcaps", "serif")
+                    val fontStyleArray = arrayOf(getString(R.string.cursive), getString(R.string.casual),
+                        getString(R.string.serif_monospace), getString(R.string.sans_serif_smallcaps), getString(R.string.serif))
                     builder.setItems(fontStyleArray) { dialog, which ->
                         when (which) {
                             0 -> {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontStyle").setValue("cursive")
-                                Toast.makeText(context,"item Clicked ${fontStyleArray[which]}" , Toast.LENGTH_SHORT).show() }
+                                 }
                             1 -> {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontStyle").setValue("casual")
-                                Toast.makeText(context,"item Clicked ${fontStyleArray[which]}" , Toast.LENGTH_SHORT).show() }
+                                 }
                             2 -> {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontStyle").setValue("serif-monospace")
-                                Toast.makeText(context,"item Clicked ${fontStyleArray[which]}" , Toast.LENGTH_SHORT).show() }
+                                }
                             3 -> {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontStyle").setValue("sans-serif-smallcaps")
-                                Toast.makeText(context,"item Clicked ${fontStyleArray[which]}" , Toast.LENGTH_SHORT).show() }
+                                 }
                             4 -> {
                                 val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontStyle").setValue("serif")
-                                Toast.makeText(context,"item Clicked ${fontStyleArray[which]}" , Toast.LENGTH_SHORT).show() }
+                                 }
                         }
                     }
 
                     // create and show the alert dialog
                     val dialog = builder.create()
                     dialog.show()
-                    Toast.makeText(context , "Language . " , Toast.LENGTH_LONG).show()
+
                 }
                 else     -> {}
             }
@@ -269,7 +270,7 @@ class ChatFragment : Fragment() {
                             if(snapshot.exists()){
                                 val language = snapshot.value.toString()
                                 if (language == "") {
-                                    statusTextView.text = "Online"
+                                    statusTextView.text = getString(R.string.Online)
                                 } else if (language == "hi") {
                                     statusTextView.text = "ऑनलाइन"
                                 } else if (language == "fr") {
@@ -277,7 +278,7 @@ class ChatFragment : Fragment() {
                                     }
                             }
                             else{
-                                statusTextView.text = "Online"
+                                statusTextView.text = getString(R.string.Online)
                             }
                         }
 
@@ -294,7 +295,7 @@ class ChatFragment : Fragment() {
                             if(snapshot.exists()){
                                 val language = snapshot.value.toString()
                                 if (language == "") {
-                                    statusTextView.text = "Offline"
+                                    statusTextView.text = getString(R.string.Offline)
                                 } else if (language == "hi") {
                                     statusTextView.text = "ऑफ़लाइन"
                                 } else if (language == "fr") {
@@ -302,7 +303,7 @@ class ChatFragment : Fragment() {
                                 }
                             }
                             else{
-                                statusTextView.text = "Offline"
+                                statusTextView.text = getString(R.string.Offline)
                             }
                         }
 
@@ -325,6 +326,7 @@ class ChatFragment : Fragment() {
         hashMap.put("senderId" , senderId)
         hashMap.put("receiverId" , receiverId)
         hashMap.put("message" , message)
+        hashMap.put("isRead" , "False")
         val ref = FirebaseDatabase.getInstance().reference
         ref.child("Chat").push().setValue(hashMap)
 
@@ -371,18 +373,15 @@ class ChatFragment : Fragment() {
         }
 
         override fun onSwiped(viewHolder : RecyclerView.ViewHolder, direction : Int) {
-            Log.d("chatFragment" , "swiped$viewHolder" )
-            Log.d("chatFragment" , "message Position ${viewHolder.adapterPosition}")
-            Log.d("chatFragment" , "message Position ${chatList[viewHolder.adapterPosition]}")
-            Log.d("chatFragment" , "message Position ${chatList[viewHolder.adapterPosition].message}")
+
             val builder = AlertDialog.Builder(context!!)
             builder.setCancelable(false)
-            builder.setTitle("Delete message ?")
-            builder.setMessage("Are you sure you want to Delete")
+            builder.setTitle(getString(R.string.Delete_message))
+            builder.setMessage(getString(R.string.Are_you_sure_you_want_to_Delete))
 
             builder.setPositiveButton("YES" , DialogInterface.OnClickListener { dialog, which ->
 
-                Toast.makeText(context , "Message Deleted" , Toast.LENGTH_SHORT).show()
+                Toast.makeText(context , getString(R.string.Message_Deleted) , Toast.LENGTH_SHORT).show()
 
                 val delMessage = chatList[viewHolder.adapterPosition].message
                 chatList.removeAt(viewHolder.adapterPosition)
@@ -395,10 +394,6 @@ class ChatFragment : Fragment() {
                             val delRef = FirebaseDatabase.getInstance().getReference("Chat").child(child.key.toString())
                             delRef.removeValue()
                             break
-//                            Log.d("chatFragment" , "push id is ${child.key}" )
-//                            Log.d("chatFragment", " user ref ${child.ref.toString()}")
-//                            Log.d("chatFragment", " user ref ${child.value.toString()}")
-//                            break
                         }
                     }
 

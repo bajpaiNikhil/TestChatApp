@@ -146,29 +146,29 @@ class RegisterFragment : Fragment() {
         registerButton.setOnClickListener {
             val eMail = emailR.text.toString()
             if(eMail.isEmpty()){
-                emailR.setError("PLEASE ENTER YOUR EMAIL")
+                emailR.setError(getString(R.string.PLEASE_ENTER_YOUR_EMAIL))
             }
             val passWord = passwordR.text.toString()
             if(passWord.isEmpty()){
-                passwordR.setError("PLEASE ENTER YOUR passWord")
+                passwordR.setError(getString(R.string.PLEASE_ENTER_YOUR_passWord))
             }
             val confirmPassword = confirmPasswordR.text.toString()
             if(confirmPassword.isEmpty()){
-                confirmPasswordR.setError("PLEASE ENTER YOUR confirmPassword")
+                confirmPasswordR.setError(getString(R.string.PLEASE_ENTER_YOUR_confirm_passWord))
             }
             val phoneNumber = phoneNumberR.text.toString()
             if(phoneNumber.isEmpty()){
-                phoneNumberR.setError("PLEASE ENTER YOUR phoneNumber")
+                phoneNumberR.setError(getString(R.string.PLEASE_ENTER_OUR_phoneNumber))
             }
             val designation = designationR.text.toString()
             if(designation.isEmpty()){
-                designationR.setError("PLEASE ENTER YOUR designation")
+                designationR.setError(getString(R.string.PLEASE_ENTER_YOUR_designation))
             }
             val city = cityNameR
             val forgetPassQues = forgetPassQuesString
             val forgetPassAnsIs = forgetPassAns.text.toString()
             if(forgetPassAnsIs.isEmpty()){
-                forgetPassAns.setError("PLEASE ENTER YOUR Response")
+                forgetPassAns.setError(getString(R.string.PLEASE_ENTER_YOUR_Response))
             }
 
             if(passWord.length>8 && passWord == confirmPassword) {
@@ -179,16 +179,16 @@ class RegisterFragment : Fragment() {
                             Toast.makeText(context, getString(R.string.Registration_Complete), Toast.LENGTH_SHORT).show()
                             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                         } else {
-                            Toast.makeText(context, "Registration InComplete", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, getString(R.string.Registration_InComplete), Toast.LENGTH_LONG).show()
                         }
                     }
                 }
                 else{
-                    Toast.makeText(context, "Phone Number should be of 10 Digits", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.Phone_Number_should_be_of_10_Digits), Toast.LENGTH_LONG).show()
                 }
             }
             else{
-                Toast.makeText(context, "Password length should be greater than 8", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.Password_length_should_be_greater_than_8), Toast.LENGTH_LONG).show()
             }
         }
     }

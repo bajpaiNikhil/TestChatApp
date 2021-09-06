@@ -54,12 +54,12 @@ class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerV
                 if(snapshot.exists()){
 
                     val senderName = snapshot.child("usernameR").value
-                    Log.d("requestAdapter" , "username : ${senderName.toString()}")
+
                     holder.senderName.text = senderName.toString()
 
                     val senderImageUrl = snapshot.child("userProfileImgUrl").value
                     if(snapshot.child("userProfileImgUrl").exists()) {
-                        Log.d("FriendAdapter", "userProfileImhUrl : $senderImageUrl")
+
                         holder.senderImage?.let {
                             Glide.with(it).load(senderImageUrl).into(holder.senderImage)
 
@@ -107,8 +107,6 @@ class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerV
         })
 
         addRequestButton.setOnClickListener {
-//            Toast.makeText(holder.itemView.context , "Add button is pressed" , Toast.LENGTH_SHORT).show()
-            Log.d("requestAdapter" , "Add button is clicked")
 
             val ref = FirebaseDatabase.getInstance().getReference("Request")
             ref.addValueEventListener(object : ValueEventListener{
@@ -145,7 +143,6 @@ class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerV
                             //Delete request in db
                             if(connectionSnapshot?.senderId == currentItem.senderId &&
                                 connectionSnapshot?.receiverId == currentItem.receiverId ){
-                                Log.d("requestAdapter" , "push id ${addSnapshot.key}")
                                 val requestDeleteRef = FirebaseDatabase.getInstance().getReference("Request").child(addSnapshot.key.toString())
                                 requestDeleteRef.removeValue()
 
@@ -164,19 +161,18 @@ class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerV
         }
 
         holder.rejectButton.setOnClickListener {
-//            Toast.makeText(holder.itemView.context , "Reject button is pressed" , Toast.LENGTH_SHORT).show()
 
-            Log.d("requestAdapter" , "Reject button is clicked")
+
             val ref = FirebaseDatabase.getInstance().getReference("Request")
             ref.addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot : DataSnapshot) {
                     if(snapshot.exists()){
                         for(rejectRequest in snapshot.children){
                             val delRequest = rejectRequest.getValue(chatDataClass::class.java)
-                            Log.d("requestAdapter" , "push id 11  ${rejectRequest.key}")
+
                             if(delRequest?.senderId == currentItem.senderId &&
                                 delRequest?.receiverId == currentItem.receiverId ){
-                                Log.d("requestAdapter" , "push id ${rejectRequest.key}")
+
                                 val requestDeleteRef = FirebaseDatabase.getInstance().getReference("Request").child(rejectRequest.key.toString())
                                 requestDeleteRef.removeValue()
                             }

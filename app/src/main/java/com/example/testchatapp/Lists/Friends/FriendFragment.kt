@@ -121,10 +121,10 @@ class FriendFragment : Fragment() {
 
                 //EditText
                 val photoUrl = snapshot.child("userProfileImgUrl").value
-                Log.d("ff" , "we reached till ${photoUrl.toString().length}")
+
                 if (snapshot.child("userProfileImgUrl").exists()) {
                     if (snapshot.child("userProfileImgUrl").exists()) {
-                        Log.d("ProfileFragment", "ImageUrl : $photoUrl")
+
                         bundle = bundleOf("currentUserImgUrl" to photoUrl)
                         context?.let { Glide.with(it).load(photoUrl).into(userProfileImageView) }
                     } else {
@@ -154,7 +154,6 @@ class FriendFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.child("appLanguage").exists()) {
                     currentLanguage = snapshot.child("appLanguage").value.toString()
-                    Log.d("fff", "language key : $currentLanguage")
 
                     if(currentLanguage == ""){
                         userProfileLinearLayout.setOnClickListener {
@@ -273,8 +272,7 @@ class FriendFragment : Fragment() {
                         friendList.add(friendsId!!)
                         //Log.d("FriendsFragment", "Friends Id is ${friendsId?.FriendId}")
                     }
-                    Log.d("FriendsFragment", "Friend list is ${friendListIs}")
-                    Log.d("FriendsFragment", "Friends Id is ${friendList}")
+
                 }
             }
 
@@ -304,7 +302,7 @@ class FriendFragment : Fragment() {
                         )
                     }
                     recyclerView.adapter = FriendAdapter(connectionList, ::onItemSelected)
-                    Log.d("FriendList", "conneciton list $connectionList")
+
                 }
             }
 

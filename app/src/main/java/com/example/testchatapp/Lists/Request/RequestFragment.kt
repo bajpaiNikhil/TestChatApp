@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class RequestFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private lateinit var auth : FirebaseAuth
     private lateinit var requestList : ArrayList<chatDataClass>
     private lateinit var recyclerView : RecyclerView
@@ -110,8 +110,7 @@ class RequestFragment : Fragment() {
                     requestList.clear()
                     for(requestSnapshot in snapshot.children){
                         val requestIs = requestSnapshot.getValue(chatDataClass::class.java)
-                        Log.d("requestFragment" , " content is ${requestIs?.message}" +
-                                "${requestIs?.receiverId} , ${requestIs?.senderId} , ${auth.currentUser?.uid.toString()}")
+
                         if(requestIs?.receiverId == auth.currentUser?.uid.toString()){
                             if(requestIs.receiverId?.lowercase()?.contains(searchText.lowercase()) == true){
                                 requestList.add(requestIs)
@@ -147,7 +146,6 @@ class RequestFragment : Fragment() {
                         friendListIs.add(friendsId?.FriendId.toString())
                         //Log.d("FriendsFragment", "Friends Id is ${friendsId?.FriendId}")
                     }
-                    Log.d("RequestFragment", "Friend list is ${friendListIs}")
                 }
 
             }

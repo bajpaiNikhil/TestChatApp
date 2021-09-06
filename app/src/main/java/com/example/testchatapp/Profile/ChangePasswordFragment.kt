@@ -119,9 +119,6 @@ class ChangePasswordFragment : Fragment() {
                     val newPassword = newPasswordET.text.toString()
                     val confirmPassword = confirmPasswordET.text.toString()
 
-                    Log.i("dialog", password)
-                    Log.i("dialog", newPassword)
-                    Log.i("dialog", confirmPassword)
 
                     if (confirmPassword == newPassword) {
                         val userCurrent = auth.currentUser
@@ -131,32 +128,20 @@ class ChangePasswordFragment : Fragment() {
                             if (p0.isSuccessful) {
                                 userCurrent.updatePassword(confirmPassword).addOnCompleteListener { p01 ->
                                     if (p01.isSuccessful) {
-                                        Toast.makeText(
-                                            context,
-                                            "password Changed",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        Toast.makeText(context, getString(R.string.password_Changed), Toast.LENGTH_SHORT).show()
                                     } else {
-                                        Toast.makeText(
-                                            context,
-                                            "password Changed",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        Toast.makeText(context, getString(R.string.password_Not_Changed), Toast.LENGTH_SHORT).show()
                                     }
                                 }
                             }
                         }
-                        Toast.makeText(context, "Saved Sucessfully", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, getString(R.string.Saved_Successfully), Toast.LENGTH_LONG).show()
                     }
                 }
                 findNavController().navigate(R.id.action_changePasswordFragment_to_profileFragment)
             }
             else{
-                Toast.makeText(
-                    context,
-                    "Please make sure to enter all the fields",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, getString(R.string.Please_make_sure_to_enter_all_the_fields), Toast.LENGTH_SHORT).show()
             }
         }
     }
