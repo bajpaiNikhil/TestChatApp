@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.SearchView
@@ -15,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.testchatapp.Data.FriendsList
+import com.example.testchatapp.Data.UserDetail
 import com.example.testchatapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth
@@ -34,7 +35,7 @@ class FriendFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var friendList: ArrayList<FriendsList>
     private var friendListIs = mutableListOf<String>()
-    private lateinit var connectionList: ArrayList<FriendsDetails>
+    private lateinit var connectionList: ArrayList<UserDetail>
 
     private lateinit var userProfileLinearLayout: LinearLayout
     private lateinit var userProfileImageView: CircleImageView
@@ -185,14 +186,14 @@ class FriendFragment : Fragment() {
                 if (snapshot.exists()) {
                     connectionList.clear()
                     for (friendSnapshot in snapshot.children) {
-                        val friendAre = friendSnapshot.getValue(FriendsDetails::class.java)
+                        val friendAre = friendSnapshot.getValue(UserDetail::class.java)
                         if (friendAre?.userId in friendListIs) {
                             if(friendAre?.usernameR?.lowercase()?.contains(searchText.lowercase()) == true){
                                 connectionList.add(friendAre)
                             }
                         }
                     }
-                    fun onItemSelected(friendsDetails: FriendsDetails) {
+                    fun onItemSelected(friendsDetails: UserDetail) {
                         val bundle = bundleOf("userId" to friendsDetails.userId)
                         findNavController().navigate(
                             R.id.action_friendFragment_to_chatFragment,
@@ -211,13 +212,13 @@ class FriendFragment : Fragment() {
     }
 }
 
-
-data class FriendsList(
-    val FriendId : String? = ""
-)
-data class FriendsDetails(
-    val userId : String? = "",
-    val emailR : String? = "",
-    val usernameR : String? = "",
-    var status : String = ""
-)
+//
+//data class FriendsList(
+//    val FriendId : String? = ""
+//)
+//data class FriendsDetails(
+//    val userId : String? = "",
+//    val emailR : String? = "",
+//    val usernameR : String? = "",
+//    var status : String = ""
+//)

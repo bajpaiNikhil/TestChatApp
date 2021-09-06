@@ -1,18 +1,16 @@
 package com.example.testchatapp.Lists.Request
 
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.testchatapp.Chat.chatDataClass
+import com.example.testchatapp.Data.chatDataClass
 import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -146,7 +144,6 @@ class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerV
                                 connectionSnapshot?.receiverId == currentItem.receiverId ){
                                 val requestDeleteRef = FirebaseDatabase.getInstance().getReference("Request").child(addSnapshot.key.toString())
                                 requestDeleteRef.removeValue()
-
                             }
                         }
                     }

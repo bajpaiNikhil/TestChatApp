@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.Chat
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testchatapp.Chat.chatAdapter
-import com.example.testchatapp.Chat.chatDataClass
+import com.example.testchatapp.Data.chatDataClass
+import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -129,7 +129,8 @@ class ChatFragment : Fragment() {
 
                     // add a list
                     val fontSizeArray = arrayOf(getString(R.string.Small), getString(R.string.Medium), getString(
-                                            R.string.Large), getString(R.string.Extra_Large), getString(R.string.Default))
+                        R.string.Large
+                    ), getString(R.string.Extra_Large), getString(R.string.Default))
                     builder.setItems(fontSizeArray) { dialog, which ->
 
                         when (which) {
@@ -137,28 +138,24 @@ class ChatFragment : Fragment() {
                                 val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontSize").setValue(14)
 
-//                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             1 -> {
                                 val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontSize").setValue(16)
-//                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             2 -> {
                                 val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontSize").setValue(20)
-//                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             3 -> {
                                 val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontSize").setValue(24)
-//                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
                             }
                             4 -> {
                                 val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
                                     .child("chatCharacteristics").child("fontSize").setValue(18)
                                 Log.d("chatFrag" ,"$which found ")
-//                                Toast.makeText(context,"item Clicked ${fontSizeArray[which]}" , Toast.LENGTH_SHORT).show()
+
                             }
 
                         }
@@ -175,7 +172,8 @@ class ChatFragment : Fragment() {
 
                     // add a list
                     val fontColorArray = arrayOf(getString(R.string.Crimson), getString(R.string.Coral), getString(
-                                            R.string.DimGrey), getString(R.string.Snow), getString(R.string.Default))
+                        R.string.DimGrey
+                    ), getString(R.string.Snow), getString(R.string.Default))
                     builder.setItems(fontColorArray) { dialog, which ->
                         when (which) {
                             0 -> {
@@ -212,7 +210,9 @@ class ChatFragment : Fragment() {
 
                     // add a list
                     val fontStyleArray = arrayOf(getString(R.string.cursive), getString(R.string.casual),
-                        getString(R.string.serif_monospace), getString(R.string.sans_serif_smallcaps), getString(R.string.serif))
+                        getString(R.string.serif_monospace), getString(R.string.sans_serif_smallcaps), getString(
+                            R.string.serif
+                        ))
                     builder.setItems(fontStyleArray) { dialog, which ->
                         when (which) {
                             0 -> {

@@ -68,7 +68,7 @@
     <string name="petName">Le nom de votre premier animal de compagnie?</string>
     <string name="please_enter_all_fields">veuillez saisir tous les champs</string>
     <string name="somethingWrong">Quelque chose ne va pas...</string>
-    <string name="Select_a_language">Sélectionnez une langue</string>
+    <string name="change_language">changer de langue</string>
     <string name="Hindi">hindi</string>
     <string name="French">français</string>
     <string name="PLEASE_ENTER_YOUR_EMAIL">VEUILLEZ ENTRER VOTRE EMAIL</string>
@@ -110,4 +110,8 @@
     <string name="Saved_Successfully">Enregistré avec succès</string>
     <string name="Please_make_sure_to_enter_all_the_fields">Veuillez vous assurer de saisir tous les champs</string>
     <string name="Language">Langue</string>
+    <string name="current_language">langue courante</string>
+    <string name="Changed_to">changé en</string>
+    <string name="Yes">Oui</string>
+    <string name="No">Non</string>
 </resources>

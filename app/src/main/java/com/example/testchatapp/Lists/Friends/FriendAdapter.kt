@@ -1,6 +1,5 @@
 package com.example.testchatapp.Lists.Friends
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import androidx.navigation.findNavController
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.testchatapp.Data.UserDetail
 import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class FriendAdapter(private val friendList : ArrayList<FriendsDetails>, val listener : (FriendsDetails)->Unit) : RecyclerView.Adapter<FriendAdapter.FriendHolder>() {
+class FriendAdapter(private val friendList : ArrayList<UserDetail>, val listener : (UserDetail)->Unit) : RecyclerView.Adapter<FriendAdapter.FriendHolder>() {
     lateinit var auth: FirebaseAuth
 
     class FriendHolder(view : View) : RecyclerView.ViewHolder(view) {

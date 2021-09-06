@@ -1,17 +1,17 @@
-package com.example.testchatapp
+package com.example.testchatapp.Lists.GlobalUsers
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testchatapp.Lists.GlobalUsers.UserAdapter
+import com.example.testchatapp.Data.UserDetail
+import com.example.testchatapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -26,7 +26,7 @@ class UserFragment : Fragment() {
     private lateinit var auth :  FirebaseAuth
     private lateinit var db   : FirebaseDatabase
     private lateinit var recyclerView : RecyclerView
-    private lateinit var userArrayList : ArrayList<UserDetails>
+    private lateinit var userArrayList : ArrayList<UserDetail>
     private var friendListIs = mutableListOf<String>()
 
     private var userConnection = mutableListOf<String>()
@@ -107,7 +107,7 @@ class UserFragment : Fragment() {
                 if(snapshot.exists()){
                     userArrayList.clear()
                     for(userSnapShot in snapshot.children){
-                        val userIs = userSnapShot.getValue(UserDetails::class.java)
+                        val userIs = userSnapShot.getValue(UserDetail::class.java)
                         if(userIs?.userId != auth.currentUser?.uid){
                             if(userIs?.userId !in userConnection){
                                 if(userIs?.usernameR?.lowercase()?.contains(searchText.lowercase()) == true){
@@ -126,10 +126,3 @@ class UserFragment : Fragment() {
         })
     }
 }
-
-data class UserDetails(
-    val userId : String? = "",
-    val emailR : String? = "",
-    val usernameR : String? = "",
-    var status : String = ""
-)

@@ -1,7 +1,6 @@
 package com.example.testchatapp.Lists.GlobalUsers
 
 import android.app.AlertDialog
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.testchatapp.Data.UserDetail
 import com.example.testchatapp.R
-import com.example.testchatapp.UserDetails
+//import com.example.testchatapp.UserDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -20,10 +20,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<UserAdapter.UserHolder>() {
+class UserAdapter(val userList : ArrayList<UserDetail>) : RecyclerView.Adapter<UserAdapter.UserHolder>() {
     lateinit var auth : FirebaseAuth
-
-    var rId : String? = ""
 
     class UserHolder(view : View) : RecyclerView.ViewHolder(view) {
 
@@ -44,7 +42,6 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder : UserHolder, position : Int) {
         val currentItem = userList[position]
-        rId = currentItem.userId.toString()
 
         val userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentItem.userId.toString())
         userRef.addValueEventListener(object : ValueEventListener{
@@ -73,14 +70,11 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
 
         holder.addButton.setOnClickListener {
 
-
-
             val builder = AlertDialog.Builder(holder.itemView.context)
             builder.setCancelable(false)
             builder.setTitle("Add ${currentItem.usernameR}")
             builder.setMessage("Are you sure ?")
-            builder.setPositiveButton("yes") { _, _ ->
-
+            builder.setPositiveButton("Yes") { _, _ ->
 
                 val hashMap: HashMap<String, String> = HashMap()
 
@@ -96,6 +90,7 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
             builder.create().show()
         }
     }
+
 
     override fun getItemCount() : Int {
         return userList.size

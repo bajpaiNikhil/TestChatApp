@@ -40,7 +40,6 @@ class FriendProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("FPF" , userId)
         friendImage = view.findViewById(R.id.friendImageView)
         friendEmail = view.findViewById(R.id.fEmailTV)
         friendUserName = view.findViewById(R.id.fNameTV)

@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.Authentication
 
 
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.fragment.findNavController
+import com.example.testchatapp.Data.UserDetail
+import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -170,7 +172,7 @@ class RegisterFragment : Fragment() {
                 forgetPassAns.setError(getString(R.string.PLEASE_ENTER_YOUR_Response))
             }
 
-            if(passWord.length>8 && passWord == confirmPassword) {
+            if(passWord.length>8 && passWord == confirmPassword && eMail.isEmpty() && designation.isEmpty() && forgetPassAnsIs.isEmpty() && city.isEmpty() && forgetPassQues.isEmpty() )  {
                 if (phoneNumber.length == 10) {
                     auth.createUserWithEmailAndPassword(eMail, passWord).addOnCompleteListener {
                         if (it.isSuccessful) {
@@ -202,37 +204,5 @@ class RegisterFragment : Fragment() {
         val UserObj = UserDetail(auth.currentUser?.uid.toString(), email,userName,phoneNumber , "InActive", designation,city,forgetPassQues,forgetPassAns)
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.child(auth.currentUser?.uid.toString()).setValue(UserObj)
-    }
-}
-class UserDetail() {
-    var userId : String = "" // primary key
-    var emailR : String = ""
-    var usernameR : String = ""
-    var phoneNumberR : String = ""
-    var status : String = ""
-    var designation : String =""
-    var city : String =""
-    var forgetPassQues : String=""
-    var forgetPassAns: String =""
-    constructor(
-        userId : String,
-        emailR : String,
-        usernameR : String,
-        phoneNumberR : String,
-        status : String,
-        designation : String,
-        city : String,
-        forgetPassQues : String,
-        forgetPassAns : String
-    ) : this(){
-        this.userId             = userId
-        this.emailR             = emailR
-        this.usernameR          = usernameR
-        this.phoneNumberR       = phoneNumberR
-        this.status             = status
-        this.designation        = designation
-        this.city               = city
-        this.forgetPassQues     = forgetPassQues
-        this.forgetPassAns      = forgetPassAns
     }
 }
