@@ -48,8 +48,8 @@
     <string name="reject">reject</string>
     <string name="textview_name">TextView</string>
     <string name="Registration_Complete">Registration Complete</string>
-    <string name="users" translatable="false">Users</string>
-    <string name="selectACity" translatable="false">Select a city</string>
+    <string name="users">Users</string>
+    <string name="selectACity">Select a city</string>
     <string name="Mumbai">Mumbai</string>
     <string name="Delhi">Delhi</string>
     <string name="Kolkata">Kolkata</string>
