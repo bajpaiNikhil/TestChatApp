@@ -58,7 +58,6 @@
     <string name="Hyderabad">Hyderabad</string>
     <string name="Chennai">Chennai</string>
     <string name="Ahmedabad">Ahmedabad</string>
-
     <string name="Pune">Pune</string>
     <string name="Surat">Surat</string>
     <string name="Visakhapatnam">Visakhapatnam</string>
@@ -69,7 +68,7 @@
     <string name="petName">First Pet\'s Name?</string>
     <string name="please_enter_all_fields">please enter all fields</string>
     <string name="somethingWrong">Something wrong…</string>
-    <string name="Select_a_language">Select a language</string>
+    <string name="change_language">Change language</string>
     <string name="Hindi">Hindi</string>
     <string name="French">French</string>
     <string name="PLEASE_ENTER_YOUR_EMAIL">PLEASE ENTER YOUR EMAIL</string>
@@ -111,5 +110,9 @@
     <string name="Please_make_sure_to_enter_all_the_fields">Please make sure to enter all the fields</string>
     <string name="English">English</string>
     <string name="Language">Language</string>
+    <string name="current_language">Current Language</string>
+    <string name="Changed_to">Change to</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

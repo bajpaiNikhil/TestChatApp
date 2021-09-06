@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.get
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.testchatapp.R
@@ -45,7 +46,7 @@ class ProfileFragment : Fragment() {
     private var imageName: String = ""
 
     private lateinit var logOut: Button
-    private lateinit var locale: Locale
+    lateinit var builder : AlertDialog.Builder
 
     // For FireBase
     private lateinit var auth: FirebaseAuth
@@ -70,6 +71,8 @@ class ProfileFragment : Fragment() {
 
         logOut = view.findViewById(R.id.logOut)
 
+        builder = AlertDialog.Builder(context)
+
         val languageRef = FirebaseDatabase.getInstance().getReference("Users")
             .child(auth.currentUser?.uid.toString()).child("appLanguage")
 
@@ -78,10 +81,11 @@ class ProfileFragment : Fragment() {
         profileText = view.findViewById(R.id.profileText)
 
         val language: MutableList<String?> = ArrayList()
-        language.add(0, getString(R.string.Select_a_language))
-        language.add(getString(R.string.Hindi))
-        language.add(getString(R.string.French))
-        language.add(getString(R.string.English))
+        language.add(0, getString(R.string.change_language))
+        language.add(1,getString(R.string.Hindi))
+        language.add(2,getString(R.string.French))
+        language.add(3,getString(R.string.English))
+
 
         val languageAdapter: ArrayAdapter<String?>? =
             context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
@@ -162,11 +166,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun dialog(string: String){
-        val builder = AlertDialog.Builder(context)
+
         builder.setCancelable(false)
         builder.setTitle(getString(R.string.Language))
-        builder.setMessage("Changed to $string")
-        builder.setPositiveButton("yes") { _, _ ->
+        builder.setMessage("${getString(R.string.Changed_to)} $string")
+        builder.setPositiveButton(getString(R.string.Yes)) { _, _ ->
             if (string == getString(R.string.Hindi)) {
                 FirebaseDatabase.getInstance().getReference("Users")
                     .child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
@@ -181,7 +185,7 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.loginFragment)
         }
 
-        builder.setNegativeButton("No") { dialog, _ ->
+        builder.setNegativeButton(getString(R.string.No)) { dialog, _ ->
             dialog.cancel()
         }
         builder.create().show()

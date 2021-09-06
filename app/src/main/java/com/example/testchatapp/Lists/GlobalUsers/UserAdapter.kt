@@ -1,6 +1,7 @@
 package com.example.testchatapp.Lists.GlobalUsers
 
 import android.app.AlertDialog
+import android.provider.Settings.Global.getString
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -73,14 +74,11 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
 
         holder.addButton.setOnClickListener {
 
-
-
             val builder = AlertDialog.Builder(holder.itemView.context)
             builder.setCancelable(false)
             builder.setTitle("Add ${currentItem.usernameR}")
             builder.setMessage("Are you sure ?")
-            builder.setPositiveButton("yes") { _, _ ->
-
+            builder.setPositiveButton("Yes") { _, _ ->
 
                 val hashMap: HashMap<String, String> = HashMap()
 
@@ -96,6 +94,7 @@ class UserAdapter(val userList : ArrayList<UserDetails>) : RecyclerView.Adapter<
             builder.create().show()
         }
     }
+
 
     override fun getItemCount() : Int {
         return userList.size

@@ -67,7 +67,7 @@
     <string name="petName">पहले पालतू पशु का नाम?</string>
     <string name="please_enter_all_fields">कृपया सभी फ़ील्ड दर्ज करें</string>
     <string name="somethingWrong">कुछ गलत...</string>
-    <string name="Select_a_language">भाषा चुनें</string>
+    <string name="change_language">भाषा बदलें</string>
     <string name="Hindi">हिंदी</string>
     <string name="French">फ्रेंच</string>
     <string name="PLEASE_ENTER_YOUR_EMAIL">अपना ईमेल दर्ज करें</string>
@@ -110,4 +110,8 @@
     <string name="Please_make_sure_to_enter_all_the_fields">कृपया सभी क्षेत्रों में प्रवेश करना सुनिश्चित करें</string>
     <string name="English">अंग्रेज़ी</string>
     <string name="Language">भाषा</string>
+    <string name="current_language">वर्तमान भाषा</string>
+    <string name="Changed_to">बदल के</string>
+    <string name="Yes">हां</string>
+    <string name="No">नहीं</string>
 </resources>
