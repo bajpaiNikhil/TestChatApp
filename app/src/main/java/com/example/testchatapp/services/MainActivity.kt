@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         networkConnection.observe(this , Observer { isConnected ->
             if (isConnected) {
                 //do nothing
-                Toast.makeText(this@MainActivity, "Welcome", Toast.LENGTH_LONG).show()
+//                Toast.makeText(this@MainActivity, "Welcome", Toast.LENGTH_LONG).show()
             } else {
                 AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_dialog_alert)

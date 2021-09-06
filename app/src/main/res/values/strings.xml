@@ -88,7 +88,6 @@
     <string name="Medium">Medium</string>
     <string name="Large">Large</string>
     <string name="Extra_Large">Extra Large</string>
-    <string name="Default">Default</string>
     <string name="Crimson">Crimson</string>
     <string name="Coral">Coral</string>
     <string name="DimGrey">DimGrey</string>
@@ -109,9 +108,6 @@
     <string name="password_Not_Changed">password Not Changed</string>
     <string name="Saved_Successfully">Saved Successfully</string>
     <string name="Please_make_sure_to_enter_all_the_fields">Please make sure to enter all the fields</string>
-    <string name="Select_a_language">Select a language</string>
-    <string name="Hindi">Hindi</string>
-    <string name="French">French</string>
     <string name="English">English</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

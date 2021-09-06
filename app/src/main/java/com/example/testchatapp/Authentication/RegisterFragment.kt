@@ -32,8 +32,7 @@ class RegisterFragment : Fragment() {
 
     private var currentLanguage = "en"
     private lateinit var locale: Locale
-    private
-    lateinit var auth : FirebaseAuth
+    private lateinit var auth : FirebaseAuth
     private lateinit var db : FirebaseDatabase
 
     override fun onCreateView(

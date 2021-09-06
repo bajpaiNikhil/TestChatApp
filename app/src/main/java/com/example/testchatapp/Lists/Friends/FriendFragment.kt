@@ -51,34 +51,13 @@ class FriendFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+        auth = Firebase.auth
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        auth = Firebase.auth
-
-        val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users")
-            .child(auth.currentUser?.uid.toString())
-        appLanguageRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.child("appLanguage").exists()) {
-                    currentLanguage = snapshot.child("appLanguage").value.toString()
-                    Log.d("fff", "language key : $currentLanguage")
-                    locale = Locale(currentLanguage)
-                    val res = resources
-                    val dm = res.displayMetrics
-                    val conf = res.configuration
-                    conf.locale = locale
-                    res.updateConfiguration(conf, dm)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_friend, container, false)
@@ -147,116 +126,35 @@ class FriendFragment : Fragment() {
 
         friendList = arrayListOf()
         connectionList = arrayListOf()
+        profileTv.text = getString(R.string.profile)
 
-        val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users")
-            .child(auth.currentUser?.uid.toString())
-        appLanguageRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.child("appLanguage").exists()) {
-                    currentLanguage = snapshot.child("appLanguage").value.toString()
+        userProfileLinearLayout.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_friendFragment_to_profileFragment,
+                bundle
+            )
+        }
 
-                    if(currentLanguage == ""){
-                        userProfileLinearLayout.setOnClickListener {
-                            findNavController().navigate(R.id.action_friendFragment_to_profileFragment, bundle)
-                        }
+        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
+        requests.setTitle(getString(R.string.request))
+        requests.setOnClickListener {
+            findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
+        }
 
-                        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
-                        requests.setOnClickListener {
-                            findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
-                        }
+        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
+        addNewFriends.setTitle(getString(R.string.find_friends))
+        addNewFriends.setOnClickListener {
+            val bundle = bundleOf("friendListIs" to friendListIs)
+            findNavController().navigate(
+                R.id.action_friendFragment_to_userFragment3,
+                bundle
+            )
+        }
 
-                        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
-                        addNewFriends.setOnClickListener {
-                            val bundle = bundleOf("friendListIs" to friendListIs)
-                            findNavController().navigate(R.id.action_friendFragment_to_userFragment3, bundle)
-                        }
-
-                        val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
-                        friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
-                        friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
-                    }
-                    else if(currentLanguage == "hi"){
-
-                        profileTv.text = "प्रोफ़ाइल"
-                        userProfileLinearLayout.setOnClickListener {
-                            findNavController().navigate(R.id.action_friendFragment_to_profileFragment, bundle)
-                        }
-
-                        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
-                        requests.setTitle("प्रार्थना")
-                        requests.setOnClickListener {
-                            findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
-                        }
-
-                        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
-                        addNewFriends.setTitle("मित्रों को खोजें")
-                        addNewFriends.setOnClickListener {
-                            val bundle = bundleOf("friendListIs" to friendListIs)
-                            findNavController().navigate(R.id.action_friendFragment_to_userFragment3, bundle)
-                        }
-
-                        val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
-                        friendsList.setTitle("मित्रों की सूची")
-                        friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
-                        friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
-                    }
-                    else if(currentLanguage == "fr"){
-                        profileTv.text = "Profil"
-                        userProfileLinearLayout.setOnClickListener {
-                            findNavController().navigate(R.id.action_friendFragment_to_profileFragment, bundle)
-                        }
-
-                        val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
-                        requests.setTitle("demander")
-                        requests.setOnClickListener {
-                            findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
-                        }
-
-                        val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
-                        addNewFriends.setTitle("Retrouver des amis")
-                        addNewFriends.setOnClickListener {
-                            val bundle = bundleOf("friendListIs" to friendListIs)
-                            findNavController().navigate(R.id.action_friendFragment_to_userFragment3, bundle)
-                        }
-
-                        val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
-                        friendsList.setTitle("Liste d'amis")
-                        friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
-                        friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
-                    }
-                }
-                else{
-                    userProfileLinearLayout.setOnClickListener {
-                        findNavController().navigate(
-                            R.id.action_friendFragment_to_profileFragment,
-                            bundle
-                        )
-                    }
-
-                    val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
-                    requests.setOnClickListener {
-                        findNavController().navigate(R.id.action_friendFragment_to_requestFragment)
-                    }
-
-                    val addNewFriends = view.findViewById<BottomNavigationItemView>(R.id.Add_Friends)
-                    addNewFriends.setOnClickListener {
-                        val bundle = bundleOf("friendListIs" to friendListIs)
-                        findNavController().navigate(
-                            R.id.action_friendFragment_to_userFragment3,
-                                bundle
-                            )
-                    }
-
-                    val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
-                    friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
-                    friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
+        val friendsList = view.findViewById<BottomNavigationItemView>(R.id.FriendsList)
+        friendsList.setTitle(getString(R.string.friends_list))
+        friendsList.setIconTintList(ColorStateList.valueOf(Color.BLUE))
+        friendsList.setTextColor(ColorStateList.valueOf(Color.BLUE))
 
     }
 

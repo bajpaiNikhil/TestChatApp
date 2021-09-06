@@ -260,57 +260,15 @@ class ChatFragment : Fragment() {
                 val user = snapshot.getValue(userToChar::class.java)
                 tvName.text = user?.usernameR.toString()
                 val userStatus = snapshot.child("status").value
-                val languageRef = FirebaseDatabase.getInstance().getReference("Users")
-                    .child(auth.currentUser?.uid.toString()).child("appLanguage")
                 if(userStatus == "Active") {
                     onlineImageView.visibility = View.VISIBLE
                     statusTextView.visibility = View.VISIBLE
-                    languageRef.addValueEventListener(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            if(snapshot.exists()){
-                                val language = snapshot.value.toString()
-                                if (language == "") {
-                                    statusTextView.text = getString(R.string.Online)
-                                } else if (language == "hi") {
-                                    statusTextView.text = "ऑनलाइन"
-                                } else if (language == "fr") {
-                                    statusTextView.text = "en ligne"
-                                    }
-                            }
-                            else{
-                                statusTextView.text = getString(R.string.Online)
-                            }
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-                    })
+                    statusTextView.text = getString(R.string.Online)
                 }
                 else{
                     offlineImageView.visibility = View.VISIBLE
                     statusTextView.visibility = View.VISIBLE
-                    languageRef.addValueEventListener(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            if(snapshot.exists()){
-                                val language = snapshot.value.toString()
-                                if (language == "") {
-                                    statusTextView.text = getString(R.string.Offline)
-                                } else if (language == "hi") {
-                                    statusTextView.text = "ऑफ़लाइन"
-                                } else if (language == "fr") {
-                                    statusTextView.text = "Hors-ligne"
-                                }
-                            }
-                            else{
-                                statusTextView.text = getString(R.string.Offline)
-                            }
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-                    })
+                    statusTextView.text = getString(R.string.Offline)
                 }
             }
 
@@ -326,7 +284,6 @@ class ChatFragment : Fragment() {
         hashMap.put("senderId" , senderId)
         hashMap.put("receiverId" , receiverId)
         hashMap.put("message" , message)
-        hashMap.put("isRead" , "False")
         val ref = FirebaseDatabase.getInstance().reference
         ref.child("Chat").push().setValue(hashMap)
 

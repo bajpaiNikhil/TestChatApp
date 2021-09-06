@@ -1,6 +1,7 @@
 package com.example.testchatapp.Profile
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -43,6 +45,7 @@ class ProfileFragment : Fragment() {
     private var imageName: String = ""
 
     private lateinit var logOut: Button
+    private lateinit var locale: Locale
 
     // For FireBase
     private lateinit var auth: FirebaseAuth
@@ -53,7 +56,6 @@ class ProfileFragment : Fragment() {
             imageUrl = it.getString("currentUserImgUrl")
         }
         auth = Firebase.auth
-
     }
 
     override fun onCreateView(
@@ -75,217 +77,44 @@ class ProfileFragment : Fragment() {
         passwordChangeTextView = view.findViewById(R.id.passTv)
         profileText = view.findViewById(R.id.profileText)
 
-//        val language: MutableList<String?> = ArrayList()
+        val language: MutableList<String?> = ArrayList()
+        language.add(0, getString(R.string.Select_a_language))
+        language.add(getString(R.string.Hindi))
+        language.add(getString(R.string.French))
+        language.add(getString(R.string.English))
 
-        languageRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    val languageKey = snapshot.value.toString()
-                    if (languageKey == "") {
-                        val language: MutableList<String?> = ArrayList()
-                        language.add(0, getString(R.string.Select_a_language))
-                        language.add(getString(R.string.Hindi))
-                        language.add(getString(R.string.French))
-                        language.add("English")
+        val languageAdapter: ArrayAdapter<String?>? =
+            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
+        languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        languageSpinner.adapter = languageAdapter
+        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
 
-                        val languageAdapter: ArrayAdapter<String?>? =
-                            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
-                        languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        languageSpinner.adapter = languageAdapter
-                        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                            override fun onItemSelected(
-                                parent: AdapterView<*>?,
-                                view: View?,
-                                position: Int,
-                                id: Long
-                            ) {
-
-                                when (position) {
-                                    0 -> {
-                                    }
-                                    1 -> {
-                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
-                                        profileText.text ="प्रोफ़ाइल"
-                                        logOut.text  = "लॉग आउट"
-                                        passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
-                                    }
-                                    2 -> {
-                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
-                                        profileText.text ="Profil"
-                                        logOut.text ="Se déconnecter"
-                                        passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
-                                    }
-                                    3 -> {
-                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
-                                        profileText.text ="Profile"
-                                        logOut.text ="Logout"
-                                        passwordChangeTextView.text ="Click here to change Password"
-                                    }
-                                }
-                            }
-
-                            override fun onNothingSelected(parent: AdapterView<*>?) {
-                                TODO("Not yet implemented")
-                            }
-
-                        }
-                    } else if (languageKey == "hi") {
-                        val language: MutableList<String?> = ArrayList()
-                        language.add(0, "एक भाषा का चयन करें")
-                        language.add("हिंदी")
-                        language.add("फ़्रेंच")
-                        language.add("अंग्रेज़ी")
-
-                        val languageAdapter: ArrayAdapter<String?>? =
-                            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
-                        languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        languageSpinner.adapter = languageAdapter
-                        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                            override fun onItemSelected(
-                                parent: AdapterView<*>?,
-                                view: View?,
-                                position: Int,
-                                id: Long
-                            ) {
-
-                                when (position) {
-                                    0 -> {
-                                    }
-                                    1 -> {
-                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
-                                        profileText.text ="प्रोफ़ाइल"
-                                        logOut.text = "लॉग आउट"
-                                        passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
-                                    }
-                                    2 -> {
-                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
-                                        profileText.text ="Profil"
-                                        logOut.text ="Se déconnecter"
-                                        passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
-                                    }
-                                    3 -> {
-                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
-                                        profileText.text ="Profile"
-                                        logOut.text ="Logout"
-                                        passwordChangeTextView.text ="Click here to change Password"
-                                    }
-                                }
-                            }
-
-
-                            override fun onNothingSelected(parent: AdapterView<*>?) {
-                                TODO("Not yet implemented")
-                            }
-
-                        }
-                    } else if (languageKey == "fr") {
-                        val language: MutableList<String?> = ArrayList()
-                        language.add(0, "sélectionner une langue")
-                        language.add("Hindi")
-                        language.add("français")
-                        language.add("Anglais")
-
-                        val languageAdapter: ArrayAdapter<String?>? =
-                            context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
-                        languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        languageSpinner.adapter = languageAdapter
-                        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                            override fun onItemSelected(
-                                parent: AdapterView<*>?,
-                                view: View?,
-                                position: Int,
-                                id: Long
-                            ) {
-
-                                when (position) {
-                                    0 -> {
-                                    }
-                                    1 -> {
-                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
-                                        profileText.text ="प्रोफ़ाइल"
-                                        logOut.text = "लॉग आउट"
-                                        passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
-                                    }
-                                    2 -> {
-                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
-                                        profileText.text ="Profil"
-                                        logOut.text ="Se déconnecter"
-                                        passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
-                                    }
-                                    3 -> {
-                                        FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
-                                        profileText.text ="Profile"
-                                        logOut.text ="Logout"
-                                        passwordChangeTextView.text ="Click here to change Password"
-                                    }
-                                }
-                            }
-
-
-                            override fun onNothingSelected(parent: AdapterView<*>?) {
-                                TODO("Not yet implemented")
-                            }
-                        }
+                when (position) {
+                    0 -> {
                     }
-                }
-                else{
-                    val language: MutableList<String?> = ArrayList()
-                    language.add(0, getString(R.string.Select_a_language))
-                    language.add(getString(R.string.Hindi))
-                    language.add(getString(R.string.French))
-                    language.add(getString(R.string.English))
-
-                    val languageAdapter: ArrayAdapter<String?>? =
-                        context?.let { ArrayAdapter<String?>(it, android.R.layout.simple_list_item_1, language) }
-                    languageAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    languageSpinner.adapter = languageAdapter
-                    languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                        override fun onItemSelected(
-                            parent: AdapterView<*>?,
-                            view: View?,
-                            position: Int,
-                            id: Long
-                        ) {
-
-                            when (position) {
-                                0 -> {
-                                }
-                                1 -> {
-                                    FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
-                                    profileText.text ="प्रोफ़ाइल"
-                                    logOut.text = "लॉग आउट"
-                                    passwordChangeTextView.text ="पासवर्ड बदलने के लिए यहां क्लिक करें"
-                                }
-                                2 -> {
-                                    FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
-                                    profileText.text ="Profil"
-                                    logOut.text ="Se déconnecter"
-                                    passwordChangeTextView.text ="Cliquez ici pour changer le mot de passe"
-                                }
-                                3 -> {
-                                    FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
-                                    profileText.text ="Profile"
-                                    logOut.text ="Logout"
-                                    passwordChangeTextView.text ="Click here to change Password"
-                                }
-                            }
-                        }
-
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
-                            //do nothing
-                        }
-
+                    1 -> {
+                        dialog(getString(R.string.Hindi))
+                    }
+                    2 -> {
+                        dialog(getString(R.string.French))
+                    }
+                    3 -> {
+                        dialog(getString(R.string.English))
                     }
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                //do nothing
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
             }
-        })
 
-
-
+        }
 
     // For Edit Text Display
         userNameEditText = view.findViewById(R.id.userNameEt)
@@ -332,6 +161,31 @@ class ProfileFragment : Fragment() {
         return view
     }
 
+    private fun dialog(string: String){
+        val builder = AlertDialog.Builder(context)
+        builder.setCancelable(false)
+        builder.setTitle("Language")
+        builder.setMessage("Changed to $string")
+        builder.setPositiveButton("yes") { _, _ ->
+            if (string == getString(R.string.Hindi)) {
+                FirebaseDatabase.getInstance().getReference("Users")
+                    .child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("hi")
+            } else if (string == getString(R.string.French)) {
+                FirebaseDatabase.getInstance().getReference("Users")
+                    .child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("fr")
+            } else {
+                FirebaseDatabase.getInstance().getReference("Users")
+                    .child(auth.currentUser?.uid.toString()).child("appLanguage").setValue("")
+            }
+
+            findNavController().navigate(R.id.loginFragment)
+        }
+
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.cancel()
+        }
+        builder.create().show()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

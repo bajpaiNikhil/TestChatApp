@@ -11,7 +11,10 @@ import com.example.testchatapp.R
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
@@ -39,7 +42,6 @@ class LoginFragment : Fragment() {
         conf.locale = locale
         res.updateConfiguration(conf, dm)
 
-        auth = Firebase.auth
 
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
@@ -54,12 +56,13 @@ class LoginFragment : Fragment() {
         profile = view.findViewById(R.id.profile)
         loginLayout = view.findViewById(R.id.loginLayout)
 
+        auth = Firebase.auth
+
         if(auth.currentUser != null){
-            findNavController().navigate(R.id.action_loginFragment_to_friendFragment)
-            FirebaseDatabase.getInstance().getReference("Users")
-                .child(auth.currentUser?.uid.toString()).child("status")
-                .setValue("Active")
+            loginLayout.visibility = View.INVISIBLE
+            callLanguageCheck()
         }
+
 
         registerTextView.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
@@ -79,13 +82,52 @@ class LoginFragment : Fragment() {
                             FirebaseDatabase.getInstance().getReference("Users")
                                 .child(auth.currentUser?.uid.toString()).child("status")
                                 .setValue("Active")
-                            findNavController().navigate(R.id.action_loginFragment_to_friendFragment)
+                            callLanguageCheck()
                         } else {
                             Toast.makeText(context, getString(R.string.somethingWrong), Toast.LENGTH_LONG).show()
                         }
                     }
             }
         }
+    }
+
+    private fun callLanguageCheck() {
+        val appLanguageRef = FirebaseDatabase.getInstance().getReference("Users")
+            .child(auth.currentUser?.uid.toString())
+        appLanguageRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.child("appLanguage").exists()) {
+                    currentLanguage = snapshot.child("appLanguage").value.toString()
+                    Log.d("fff", "language key : $currentLanguage")
+                    locale = Locale(currentLanguage)
+                    val res = resources
+                    val dm = res.displayMetrics
+                    val conf = res.configuration
+                    conf.locale = locale
+                    res.updateConfiguration(conf, dm)
+                    if(auth.currentUser!=null) {
+                        userNavigate()
+                    }
+                }
+                else{
+                    if(auth.currentUser!=null) {
+                        userNavigate()
+                    }
+                }
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    private fun userNavigate() {
+        findNavController().navigate(R.id.friendFragment)
+        FirebaseDatabase.getInstance().getReference("Users")
+            .child(auth.currentUser?.uid.toString()).child("status")
+            .setValue("Active")
     }
 }
 

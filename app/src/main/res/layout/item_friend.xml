@@ -36,55 +36,36 @@
             android:id="@+id/FriendUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:maxLines="1"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/FriendUserImage"
-            app:layout_constraintTop_toTopOf="@+id/FriendUserImage"
+            app:layout_constraintBottom_toBottomOf="@+id/onlineIv"
+            app:layout_constraintStart_toEndOf="@+id/onlineIv"
+            app:layout_constraintTop_toTopOf="@+id/onlineIv"
+            app:layout_constraintVertical_bias="0.571"
             tools:text="UserName" />
 
         <ImageView
             android:id="@+id/onlineIv"
             android:layout_width="22dp"
             android:layout_height="20dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toStartOf="@+id/FriendUserName"
-            app:layout_constraintTop_toBottomOf="@+id/FriendUserName"
+            android:layout_marginStart="26dp"
+            app:layout_constraintBottom_toBottomOf="@+id/FriendUserImage"
+            app:layout_constraintStart_toEndOf="@+id/FriendUserImage"
+            app:layout_constraintTop_toTopOf="@+id/FriendUserImage"
             app:srcCompat="@android:drawable/presence_online" />
 
         <ImageView
             android:id="@+id/offlineIv"
-            android:layout_width="22dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="-22dp"
+            android:layout_width="16dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="-20dp"
             app:layout_constraintBottom_toBottomOf="@+id/onlineIv"
             app:layout_constraintStart_toEndOf="@+id/onlineIv"
             app:layout_constraintTop_toTopOf="@+id/onlineIv"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@android:drawable/ic_notification_overlay" />
-
-        <TextView
-            android:id="@+id/statusTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/status"
-            app:layout_constraintBottom_toBottomOf="@+id/onlineIv"
-            app:layout_constraintStart_toEndOf="@+id/offlineIv"
-            app:layout_constraintTop_toTopOf="@+id/onlineIv" />
-
-        <TextView
-            android:id="@+id/messageCountTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

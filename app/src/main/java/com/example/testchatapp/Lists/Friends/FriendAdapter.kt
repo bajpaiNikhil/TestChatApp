@@ -71,58 +71,12 @@ class FriendAdapter(private val friendList : ArrayList<FriendsDetails>, val list
 
         holder.userNameIs.text = currentItem.usernameR
 
-        val languageRef = FirebaseDatabase.getInstance().getReference("Users")
-            .child(auth.currentUser?.uid.toString()).child("appLanguage")
-
         if(currentItem.status == "Active") {
             holder.onlineImage.visibility = View.VISIBLE
 
-            languageRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if(snapshot.exists()){
-                        val language = snapshot.value.toString()
-                        if (language == "") {
-                            holder.statusTextView.text = "Online"
-                        } else if (language == "hi") {
-                            holder.statusTextView.text = "ऑनलाइन"
-                        } else if (language == "fr") {
-                            holder.statusTextView.text = "en ligne"
-                        }
-                    }
-                    else{
-                        holder.statusTextView.text = "Online"
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
         }
         else{
             holder.offlineImage.visibility = View.VISIBLE
-
-            languageRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if(snapshot.exists()){
-                        val language = snapshot.value.toString()
-                        if (language == "") {
-                            holder.statusTextView.text = "Offline"
-                        } else if (language == "hi") {
-                            holder.statusTextView.text = "ऑफ़लाइन"
-                        } else if (language == "fr") {
-                            holder.statusTextView.text = "Hors-ligne"
-                        }
-                    }
-                    else{
-                        holder.statusTextView.text = "Offline"
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
         }
 
         holder.itemView.setOnClickListener{
