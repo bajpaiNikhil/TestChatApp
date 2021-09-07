@@ -50,6 +50,9 @@ class RequestFragment : Fragment() {
 
         val requests = view.findViewById<BottomNavigationItemView>(R.id.Request)
         requests.setIconTintList(ColorStateList.valueOf(Color.BLUE))
+
+
+
         requests.setTextColor(ColorStateList.valueOf(Color.BLUE))
 
 
