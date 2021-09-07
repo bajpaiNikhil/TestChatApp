@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CD32A8CA"
-    tools:context=".Lists.Friends.FriendFragment">
+    tools:context=".lists.friends.FriendFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout2"

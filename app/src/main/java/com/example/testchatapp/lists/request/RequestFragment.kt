@@ -1,4 +1,4 @@
-package com.example.testchatapp.Lists.Request
+package com.example.testchatapp.lists.request
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -13,8 +13,8 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testchatapp.Data.FriendsList
-import com.example.testchatapp.Data.chatDataClass
+import com.example.testchatapp.data.FriendsList
+import com.example.testchatapp.data.ChatDataClass
 
 import com.example.testchatapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener
 class RequestFragment : Fragment() {
 
     private lateinit var auth : FirebaseAuth
-    private lateinit var requestList : ArrayList<chatDataClass>
+    private lateinit var requestList : ArrayList<ChatDataClass>
     private lateinit var recyclerView : RecyclerView
     private var friendListIs = mutableListOf<String>()
     private var searchText = ""
@@ -112,7 +112,7 @@ class RequestFragment : Fragment() {
                 if(snapshot.exists()){
                     requestList.clear()
                     for(requestSnapshot in snapshot.children){
-                        val requestIs = requestSnapshot.getValue(chatDataClass::class.java)
+                        val requestIs = requestSnapshot.getValue(ChatDataClass::class.java)
 
                         if(requestIs?.receiverId == auth.currentUser?.uid.toString()){
                             if(requestIs.receiverId?.lowercase()?.contains(searchText.lowercase()) == true){

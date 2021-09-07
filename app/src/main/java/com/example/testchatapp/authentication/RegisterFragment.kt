@@ -1,4 +1,4 @@
-package com.example.testchatapp.Authentication
+package com.example.testchatapp.authentication
 
 
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.fragment.findNavController
-import com.example.testchatapp.Data.UserDetail
+import com.example.testchatapp.data.UserDetail
 import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase

@@ -8,7 +8,6 @@ import android.content.IntentFilter
 import android.net.*
 import android.os.Build
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProvider
 
 class NetworkConnection(private val context: Context ):LiveData<Boolean>() {
 

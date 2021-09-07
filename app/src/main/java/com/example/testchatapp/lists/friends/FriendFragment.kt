@@ -1,4 +1,4 @@
-package com.example.testchatapp.Lists.Friends
+package com.example.testchatapp.lists.friends
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.testchatapp.Data.FriendsList
-import com.example.testchatapp.Data.UserDetail
+import com.example.testchatapp.data.FriendsList
+import com.example.testchatapp.data.UserDetail
 import com.example.testchatapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth

@@ -1,6 +1,6 @@
-package com.example.testchatapp.Data
+package com.example.testchatapp.data
 
-data class chatDataClass(var senderId : String? = null ,var receiverId : String? = null,var message : String? = null)
+data class ChatDataClass(var senderId : String? = null, var receiverId : String? = null, var message : String? = null)
 
 
 data class UserDetail(

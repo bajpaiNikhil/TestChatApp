@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.testchatapp.Authentication.LoginFragment"
+        android:name="com.example.testchatapp.authentication.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.testchatapp.Authentication.RegisterFragment"
+        android:name="com.example.testchatapp.authentication.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/userFragment"
-        android:name="com.example.testchatapp.Lists.GlobalUsers.UserFragment"
+        android:name="com.example.testchatapp.lists.globalUsers.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" >
         <action
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/friendFragment"
-        android:name="com.example.testchatapp.Lists.Friends.FriendFragment"
+        android:name="com.example.testchatapp.lists.friends.FriendFragment"
         android:label="fragment_channel"
         tools:layout="@layout/fragment_friend">
         <action
@@ -101,7 +101,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.testchatapp.Chat.ChatFragment"
+        android:name="com.example.testchatapp.chat.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
         <action
@@ -114,7 +114,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.testchatapp.Profile.ProfileFragment"
+        android:name="com.example.testchatapp.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -141,7 +141,7 @@
     </fragment>
     <fragment
         android:id="@+id/requestFragment"
-        android:name="com.example.testchatapp.Lists.Request.RequestFragment"
+        android:name="com.example.testchatapp.lists.request.RequestFragment"
         android:label="fragment_request"
         tools:layout="@layout/fragment_request" >
         <action
@@ -168,7 +168,7 @@
     </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.example.testchatapp.Profile.ChangePasswordFragment"
+        android:name="com.example.testchatapp.profile.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" >
         <action
@@ -181,7 +181,7 @@
     </fragment>
     <fragment
         android:id="@+id/friendProfileFragment"
-        android:name="com.example.testchatapp.Profile.FriendProfileFragment"
+        android:name="com.example.testchatapp.profile.FriendProfileFragment"
         android:label="fragment_friend_profile"
         tools:layout="@layout/fragment_friend_profile" />
 </navigation>
