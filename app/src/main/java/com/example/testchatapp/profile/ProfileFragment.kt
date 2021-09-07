@@ -1,4 +1,4 @@
-package com.example.testchatapp.Profile
+package com.example.testchatapp.profile
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.view.get
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.testchatapp.R
@@ -21,7 +20,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import java.util.*
 import kotlin.collections.ArrayList
 
 

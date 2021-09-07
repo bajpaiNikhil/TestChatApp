@@ -1,4 +1,4 @@
-package com.example.testchatapp.Lists.Friends
+package com.example.testchatapp.lists.friends
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.testchatapp.Data.UserDetail
+import com.example.testchatapp.data.UserDetail
 import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

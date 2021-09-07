@@ -7,7 +7,7 @@
     android:background="@drawable/gradient"
     android:padding="16dp"
     android:scrollbarThumbVertical="@null"
-    tools:context=".Authentication.RegisterFragment">
+    tools:context=".authentication.RegisterFragment">
 
 
     <ScrollView

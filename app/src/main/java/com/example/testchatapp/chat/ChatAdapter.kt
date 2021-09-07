@@ -1,4 +1,4 @@
-package com.example.testchatapp.Chat
+package com.example.testchatapp.chat
 
 import android.graphics.Color
 import android.graphics.Typeface
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.testchatapp.Data.chatDataClass
+import com.example.testchatapp.data.ChatDataClass
 import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class chatAdapter(private val chatList : ArrayList<chatDataClass>) : RecyclerView.Adapter<chatAdapter.ChatHolder>() {
+class ChatAdapter(private val chatList : ArrayList<ChatDataClass>) : RecyclerView.Adapter<ChatAdapter.ChatHolder>() {
 
 
     private val MESSAGE_TYPE_LEFT = 0

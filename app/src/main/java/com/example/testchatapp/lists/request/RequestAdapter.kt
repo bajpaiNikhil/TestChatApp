@@ -1,4 +1,4 @@
-package com.example.testchatapp.Lists.Request
+package com.example.testchatapp.lists.request
 
 
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.testchatapp.Data.chatDataClass
+import com.example.testchatapp.data.ChatDataClass
 import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerView.Adapter<RequestAdapter.requestHolder>() {
+class RequestAdapter(private val reqList : ArrayList<ChatDataClass>) : RecyclerView.Adapter<RequestAdapter.requestHolder>() {
     lateinit var auth: FirebaseAuth
     lateinit var addRequestButton: Button
 
@@ -112,7 +112,7 @@ class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerV
                 override fun onDataChange(snapshot : DataSnapshot) {
                     if(snapshot.exists()){
                         for(addSnapshot in snapshot.children){
-                            val connectionSnapshot = addSnapshot.getValue(chatDataClass::class.java)
+                            val connectionSnapshot = addSnapshot.getValue(ChatDataClass::class.java)
 
                             if((connectionSnapshot?.senderId == currentItem.senderId) && (connectionSnapshot?.receiverId == currentItem.receiverId)){
 
@@ -166,7 +166,7 @@ class RequestAdapter(private val reqList : ArrayList<chatDataClass>) : RecyclerV
                 override fun onDataChange(snapshot : DataSnapshot) {
                     if(snapshot.exists()){
                         for(rejectRequest in snapshot.children){
-                            val delRequest = rejectRequest.getValue(chatDataClass::class.java)
+                            val delRequest = rejectRequest.getValue(ChatDataClass::class.java)
 
                             if(delRequest?.senderId == currentItem.senderId &&
                                 delRequest?.receiverId == currentItem.receiverId ){

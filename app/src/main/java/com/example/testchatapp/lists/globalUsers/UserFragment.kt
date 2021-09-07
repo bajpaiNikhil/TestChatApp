@@ -1,4 +1,4 @@
-package com.example.testchatapp.Lists.GlobalUsers
+package com.example.testchatapp.lists.globalUsers
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testchatapp.Data.UserDetail
+import com.example.testchatapp.data.UserDetail
 import com.example.testchatapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.firebase.auth.FirebaseAuth

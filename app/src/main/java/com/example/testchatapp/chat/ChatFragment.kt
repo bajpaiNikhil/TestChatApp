@@ -1,4 +1,4 @@
-package com.example.testchatapp.Chat
+package com.example.testchatapp.chat
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testchatapp.Data.chatDataClass
+import com.example.testchatapp.data.ChatDataClass
 import com.example.testchatapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -42,7 +42,7 @@ class ChatFragment : Fragment() {
     private lateinit var statusTextView: TextView
     lateinit var menuPress : ImageView
 
-    lateinit var chatList : ArrayList<chatDataClass>
+    lateinit var chatList : ArrayList<ChatDataClass>
 
 
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -297,7 +297,7 @@ class ChatFragment : Fragment() {
                 chatList.clear()
                 if(snapshot.exists()){
                     for(chatSnapshot in snapshot.children){
-                        val chatUser = chatSnapshot.getValue(chatDataClass::class.java)
+                        val chatUser = chatSnapshot.getValue(ChatDataClass::class.java)
 
                         if(chatUser!!.senderId.equals(senderId) && chatUser.receiverId.equals(receiverId) ||
                             chatUser.senderId.equals(receiverId) && chatUser.receiverId.equals(senderId)   ){
@@ -305,7 +305,7 @@ class ChatFragment : Fragment() {
                         }
                     }
 
-                    recyclerView.adapter = chatAdapter(chatList)
+                    recyclerView.adapter = ChatAdapter(chatList)
                     val touchHelper = ItemTouchHelper(messageDeleteCallBack())
                     touchHelper.attachToRecyclerView(recyclerView)
 
