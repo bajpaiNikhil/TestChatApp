@@ -115,8 +115,10 @@ class ChatFragment : Fragment() {
             findNavController().navigate(R.id.action_chatFragment_to_friendFragment)
         }
         menuPress.setOnClickListener {
-            showPopUpMenu()
-//            findNavController().navigate(R.id.action_chatFragment_to_bottomSheetMenuFragment)
+
+            //showPopUpMenu()
+
+            findNavController().navigate(R.id.action_chatFragment_to_bottomSheetMenuFragment)
 
         }
     }

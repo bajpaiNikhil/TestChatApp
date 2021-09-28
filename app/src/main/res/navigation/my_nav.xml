@@ -220,7 +220,7 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/bottomSheetMenuFragment"
         android:name="com.example.testchatapp.BottomSheetMenuFragment"
         android:label="fragment_bottom_sheet_menu"
@@ -228,5 +228,5 @@
         <action
             android:id="@+id/action_bottomSheetMenuFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
-    </fragment>
+    </dialog>
 </navigation>
