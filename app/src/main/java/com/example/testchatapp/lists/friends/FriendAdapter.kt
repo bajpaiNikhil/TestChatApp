@@ -48,7 +48,7 @@ class FriendAdapter(private val friendList : ArrayList<UserDetail>, val listener
             holder.itemView.findNavController().navigate(R.id.action_friendFragment_to_friendProfileFragment, bundle)
         }
 
-        val userImageRef = FirebaseDatabase.getInstance().getReference(R.string.users.toString()).child(currentItem.userId.toString())
+        val userImageRef = FirebaseDatabase.getInstance().getReference("Users").child(currentItem.userId.toString())
         userImageRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userImageUrl = snapshot.child("userProfileImgUrl").value

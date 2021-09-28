@@ -13,17 +13,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
-        val networkConnection = NetworkConnection(applicationContext)
-        networkConnection.observe(this , Observer { isConnected ->
-            if (isConnected) {
-                //do nothing
-            } else {
-                AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setTitle("Internet Connection Alert")
-                    .setMessage("Please Check Your Internet Connection")
-                    .setPositiveButton("Close") { dialogInterface, i -> finish() }.show()
-            }
-        })
+//        val networkConnection = NetworkConnection(applicationContext)
+//        networkConnection.observe(this , Observer { isConnected ->
+//            if (isConnected) {
+//                //do nothing
+//            } else {
+//                AlertDialog.Builder(this)
+//                    .setIcon(android.R.drawable.ic_dialog_alert)
+//                    .setTitle("Internet Connection Alert")
+//                    .setMessage("Please Check Your Internet Connection")
+//                    .setPositiveButton("Close") { dialogInterface, i -> finish() }.show()
+//            }
+//        })
     }
 }

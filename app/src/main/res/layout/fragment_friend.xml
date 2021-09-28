@@ -7,6 +7,7 @@
     android:background="#CD32A8CA"
     tools:context=".lists.friends.FriendFragment">
 
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
@@ -60,6 +61,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -84,6 +86,7 @@
                 tools:listitem="@layout/item_friend">
 
             </androidx.recyclerview.widget.RecyclerView>
+
         </LinearLayout>
     </ScrollView>
 

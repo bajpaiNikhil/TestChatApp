@@ -2,6 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/aladin</item>
+        <item>@font/aldrich</item>
         <item>@font/alfa_slab_one</item>
         <item>@font/allura</item>
         <item>@font/almendra_bold</item>

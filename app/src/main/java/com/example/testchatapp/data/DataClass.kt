@@ -18,3 +18,6 @@ data class UserDetail(
 data class FriendsList(
     val FriendId : String? = ""
 )
+data class JokesCategory(
+    val value : String? = null
+)

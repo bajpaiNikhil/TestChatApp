@@ -101,7 +101,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.testchatapp.chat.ChatFragment"
+        android:name="com.example.testchatapp.Chat.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
         <action
@@ -111,6 +111,16 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_chatFragment_to_categoryAreFragment"
+            app:destination="@id/categoryAreFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_chatFragment_to_bottomSheetMenuFragment"
+            app:destination="@id/bottomSheetMenuFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -184,4 +194,39 @@
         android:name="com.example.testchatapp.profile.FriendProfileFragment"
         android:label="fragment_friend_profile"
         tools:layout="@layout/fragment_friend_profile" />
+    <fragment
+        android:id="@+id/jokeFragment"
+        android:name="com.example.testchatapp.JokeFragment"
+        android:label="fragment_joke"
+        tools:layout="@layout/fragment_joke" >
+        <action
+            android:id="@+id/action_jokeFragment_to_chatFragment"
+            app:destination="@id/chatFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryAreFragment"
+        android:name="com.example.testchatapp.CategoryAreFragment"
+        android:label="fragment_category_are"
+        tools:layout="@layout/fragment_category_are" >
+        <action
+            android:id="@+id/action_categoryAreFragment_to_jokeFragment"
+            app:destination="@id/jokeFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/bottomSheetMenuFragment"
+        android:name="com.example.testchatapp.BottomSheetMenuFragment"
+        android:label="fragment_bottom_sheet_menu"
+        tools:layout="@layout/fragment_bottom_sheet_menu" >
+        <action
+            android:id="@+id/action_bottomSheetMenuFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
 </navigation>

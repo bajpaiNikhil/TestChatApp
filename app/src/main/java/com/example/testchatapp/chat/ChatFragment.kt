@@ -1,4 +1,4 @@
-package com.example.testchatapp.chat
+package com.example.testchatapp.Chat
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -10,12 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testchatapp.data.ChatDataClass
 import com.example.testchatapp.R
+import com.example.testchatapp.chat.ChatAdapter
+import com.example.testchatapp.data.UserDetail
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -86,6 +89,7 @@ class ChatFragment : Fragment() {
         offlineImageView.visibility = View.INVISIBLE
         statusTextView.visibility = View.INVISIBLE
 
+
         menuPress.setOnClickListener {
             showPopUpMenu()
         }
@@ -112,6 +116,8 @@ class ChatFragment : Fragment() {
         }
         menuPress.setOnClickListener {
             showPopUpMenu()
+//            findNavController().navigate(R.id.action_chatFragment_to_bottomSheetMenuFragment)
+
         }
     }
 
@@ -123,6 +129,7 @@ class ChatFragment : Fragment() {
 
         pMenu.setOnMenuItemClickListener {
             when(it.title){
+
                 getString(R.string.Font_Size)  -> {
                     val builder = AlertDialog.Builder(context)
                     builder.setTitle(getString(R.string.Choose_the_Font_Size))
@@ -164,7 +171,6 @@ class ChatFragment : Fragment() {
                     // create and show the alert dialog
                     val dialog = builder.create()
                     dialog.show()
-                    Toast.makeText(context , "Font . " , Toast.LENGTH_LONG).show()
                 }
                 getString(R.string.Font_Colour) -> {
                     val builder = AlertDialog.Builder(context)
@@ -256,7 +262,7 @@ class ChatFragment : Fragment() {
         val ref = FirebaseDatabase.getInstance().getReference("Users").child(userId!!)
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot : DataSnapshot) {
-                val user = snapshot.getValue(userToChar::class.java)
+                val user = snapshot.getValue(UserDetail::class.java)
                 tvName.text = user?.usernameR.toString()
                 val userStatus = snapshot.child("status").value
                 if(userStatus == "Active") {
@@ -278,13 +284,18 @@ class ChatFragment : Fragment() {
         })
     }
 
-    private fun sendMessage(senderId : String , receiverId : String , message : String ){
+    private fun sendMessage(senderId : String, receiverId : String, message : String ){
         val hashMap : HashMap<String , String> = HashMap()
-        hashMap.put("senderId" , senderId)
-        hashMap.put("receiverId" , receiverId)
-        hashMap.put("message" , message)
-        val ref = FirebaseDatabase.getInstance().reference
-        ref.child("Chat").push().setValue(hashMap)
+        hashMap["senderId"] = senderId
+        hashMap["receiverId"] = receiverId
+        hashMap["message"] = message
+        if(message  == "command-/-Joke"){
+            val bundle  = bundleOf("userId" to userId)
+            findNavController().navigate(R.id.action_chatFragment_to_categoryAreFragment , bundle)
+        }else{
+            val ref = FirebaseDatabase.getInstance().reference
+            ref.child("Chat").push().setValue(hashMap)
+        }
 
     }
 
@@ -370,7 +381,3 @@ class ChatFragment : Fragment() {
 
 }
 
-data class userToChar(
-    val usernameR : String? = "",
-    val status : String ? =""
-)

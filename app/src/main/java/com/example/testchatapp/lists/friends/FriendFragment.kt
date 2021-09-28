@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.SearchView
@@ -18,6 +19,7 @@ import com.example.testchatapp.data.FriendsList
 import com.example.testchatapp.data.UserDetail
 import com.example.testchatapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -48,6 +50,10 @@ class FriendFragment : Fragment() {
     private lateinit var profileTv: TextView
     private lateinit var locale: Locale
 
+    //FAB for group
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -73,6 +79,7 @@ class FriendFragment : Fragment() {
         recyclerView = view.findViewById(R.id.FriendRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         profileTv = view.findViewById(R.id.profileTextView)
+
 
         val friendSearchViewIs = view.findViewById<SearchView>(R.id.friendSearchView)
 
@@ -121,6 +128,8 @@ class FriendFragment : Fragment() {
 
             }
         })
+
+
 
 
         findFriends()
@@ -193,6 +202,7 @@ class FriendFragment : Fragment() {
                             }
                         }
                     }
+
                     fun onItemSelected(friendsDetails: UserDetail) {
                         val bundle = bundleOf("userId" to friendsDetails.userId)
                         findNavController().navigate(
@@ -201,10 +211,8 @@ class FriendFragment : Fragment() {
                         )
                     }
                     recyclerView.adapter = FriendAdapter(connectionList, ::onItemSelected)
-
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
