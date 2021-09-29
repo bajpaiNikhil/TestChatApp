@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.Chat.Joke
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.example.testchatapp.R
 import com.example.testchatapp.data.JokesCategory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -80,7 +81,7 @@ class JokeFragment : Fragment() {
                     jokeBtn?.setOnClickListener { b->
                         sendJoke(auth.currentUser?.uid!! , jokeToSend , it.value!!)
                         val bundle = bundleOf("userId" to jokeToSend)
-                        findNavController().navigate(R.id.action_jokeFragment_to_chatFragment , bundle)
+                        findNavController().navigate(R.id.action_jokeFragment_to_chatFragment, bundle)
                     }
 
                 }

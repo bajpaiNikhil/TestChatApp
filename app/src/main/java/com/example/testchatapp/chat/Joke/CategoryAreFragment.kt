@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.Chat.Joke
 
 import android.os.Bundle
 import android.util.Log
@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.NotificationCompat.getCategory
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.testchatapp.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,7 +59,7 @@ class CategoryAreFragment : Fragment() {
                 fun onItemSelected(s: String) {
                     Log.d("NameFragment" , s)
                     val bundle = bundleOf("itemPicked" to s , "jokesToSend" to jokesToSend)
-                    findNavController().navigate(R.id.action_categoryAreFragment_to_jokeFragment , bundle)
+                    findNavController().navigate(R.id.action_categoryAreFragment_to_jokeFragment, bundle)
 
                 }
                 jCat?.let {

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#CD32A8CA"
     android:backgroundTint="#CD32A8CA"
-    tools:context=".CategoryAreFragment">
+    tools:context=".Chat.Joke.CategoryAreFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rView"

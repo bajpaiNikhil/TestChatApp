@@ -196,7 +196,7 @@
         tools:layout="@layout/fragment_friend_profile" />
     <fragment
         android:id="@+id/jokeFragment"
-        android:name="com.example.testchatapp.JokeFragment"
+        android:name="com.example.testchatapp.Chat.Joke.JokeFragment"
         android:label="fragment_joke"
         tools:layout="@layout/fragment_joke" >
         <action
@@ -209,7 +209,7 @@
     </fragment>
     <fragment
         android:id="@+id/categoryAreFragment"
-        android:name="com.example.testchatapp.CategoryAreFragment"
+        android:name="com.example.testchatapp.Chat.Joke.CategoryAreFragment"
         android:label="fragment_category_are"
         tools:layout="@layout/fragment_category_are" >
         <action
@@ -222,7 +222,7 @@
     </fragment>
     <dialog
         android:id="@+id/bottomSheetMenuFragment"
-        android:name="com.example.testchatapp.BottomSheetMenuFragment"
+        android:name="com.example.testchatapp.Chat.Joke.BottomSheetMenuFragment"
         android:label="fragment_bottom_sheet_menu"
         tools:layout="@layout/fragment_bottom_sheet_menu" >
         <action

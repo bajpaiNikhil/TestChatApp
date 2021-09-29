@@ -90,10 +90,6 @@ class ChatFragment : Fragment() {
         statusTextView.visibility = View.INVISIBLE
 
 
-        menuPress.setOnClickListener {
-            showPopUpMenu()
-        }
-
         findUserToChat()
 
         chatList.clear()
@@ -116,149 +112,10 @@ class ChatFragment : Fragment() {
         }
         menuPress.setOnClickListener {
 
-            //showPopUpMenu()
-
             findNavController().navigate(R.id.action_chatFragment_to_bottomSheetMenuFragment)
 
         }
     }
-
-    private fun showPopUpMenu() {
-        val pMenu = PopupMenu(context , menuPress)
-        pMenu.menu.add(getString(R.string.Font_Size))
-        pMenu.menu.add(getString(R.string.Font_Colour))
-        pMenu.menu.add(getString(R.string.Font_Style))
-
-        pMenu.setOnMenuItemClickListener {
-            when(it.title){
-
-                getString(R.string.Font_Size)  -> {
-                    val builder = AlertDialog.Builder(context)
-                    builder.setTitle(getString(R.string.Choose_the_Font_Size))
-
-                    // add a list
-                    val fontSizeArray = arrayOf(getString(R.string.Small), getString(R.string.Medium), getString(
-                        R.string.Large
-                    ), getString(R.string.Extra_Large), getString(R.string.Default))
-                    builder.setItems(fontSizeArray) { dialog, which ->
-
-                        when (which) {
-                            0 -> {
-                                val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontSize").setValue(14)
-
-                            }
-                            1 -> {
-                                val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontSize").setValue(16)
-                            }
-                            2 -> {
-                                val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontSize").setValue(20)
-                            }
-                            3 -> {
-                                val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontSize").setValue(24)
-                            }
-                            4 -> {
-                                val sizePicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontSize").setValue(18)
-                                Log.d("chatFrag" ,"$which found ")
-
-                            }
-
-                        }
-                    }
-
-                    // create and show the alert dialog
-                    val dialog = builder.create()
-                    dialog.show()
-                }
-                getString(R.string.Font_Colour) -> {
-                    val builder = AlertDialog.Builder(context)
-                    builder.setTitle("Choose Font Colour")
-
-                    // add a list
-                    val fontColorArray = arrayOf(getString(R.string.Crimson), getString(R.string.Coral), getString(
-                        R.string.DimGrey
-                    ), getString(R.string.Snow), getString(R.string.Default))
-                    builder.setItems(fontColorArray) { dialog, which ->
-                        when (which) {
-                            0 -> {
-                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontColor").setValue("#DC143C")
-                                 }
-                            1 -> {
-                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontColor").setValue("#FF7F50")
-                                 }
-                            2 -> {
-                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontColor").setValue("#696969")
-                                 }
-                            3 -> {
-                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontColor").setValue("#FFFAFA")
-                                 }
-                            4 -> {
-                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontColor").setValue("#36454F")
-                                }
-                        }
-                    }
-
-                    // create and show the alert dialog
-                    val dialog = builder.create()
-                    dialog.show()
-                }
-                getString(R.string.Font_Style) -> {
-
-                    val builder = AlertDialog.Builder(context)
-                    builder.setTitle(getString(R.string.Choose_Font_Colour))
-
-                    // add a list
-                    val fontStyleArray = arrayOf(getString(R.string.cursive), getString(R.string.casual),
-                        getString(R.string.serif_monospace), getString(R.string.sans_serif_smallcaps), getString(
-                            R.string.serif
-                        ))
-                    builder.setItems(fontStyleArray) { dialog, which ->
-                        when (which) {
-                            0 -> {
-                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontStyle").setValue("cursive")
-                                 }
-                            1 -> {
-                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontStyle").setValue("casual")
-                                 }
-                            2 -> {
-                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontStyle").setValue("serif-monospace")
-                                }
-                            3 -> {
-                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontStyle").setValue("sans-serif-smallcaps")
-                                 }
-                            4 -> {
-                                val colorPicked = FirebaseDatabase.getInstance().getReference("Users").child(auth.currentUser?.uid.toString())
-                                    .child("chatCharacteristics").child("fontStyle").setValue("serif")
-                                 }
-                        }
-                    }
-
-                    // create and show the alert dialog
-                    val dialog = builder.create()
-                    dialog.show()
-
-                }
-                else     -> {}
-            }
-            true
-        }
-
-        pMenu.show()
-    }
-
 
     private fun findUserToChat() {
         val ref = FirebaseDatabase.getInstance().getReference("Users").child(userId!!)

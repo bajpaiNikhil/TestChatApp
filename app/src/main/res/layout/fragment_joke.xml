@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CD32A8CA"
-    tools:context=".JokeFragment">
+    tools:context=".Chat.Joke.JokeFragment">
 
     <TextView
         android:id="@+id/JokeTitleTV"

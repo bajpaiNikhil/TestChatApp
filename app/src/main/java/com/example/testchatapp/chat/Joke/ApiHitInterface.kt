@@ -1,4 +1,4 @@
-package com.example.testchatapp
+package com.example.testchatapp.Chat.Joke
 
 
 import com.example.testchatapp.data.JokesCategory
@@ -29,9 +29,6 @@ interface ApiHitInterface {
 
             val retrofitObj = builder.build()
             return retrofitObj.create(ApiHitInterface::class.java)
-
         }
-
     }
-
 }
